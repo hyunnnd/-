@@ -284,3 +284,4 @@
 
 - 이 특성 덕분에 **Belady’s Anomaly가 발생하지 않음**
 - **LRU는 Stack 알고리즘에 해당됨**
+
