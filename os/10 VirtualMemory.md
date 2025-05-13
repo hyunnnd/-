@@ -140,3 +140,31 @@
 - **Zero-fill-on-demand**:
   - 프레임을 할당하기 전에 내용을 0으로 초기화
 - 시스템 부팅 시, 모든 사용 가능한 메모리는 free-frame list에 등록됨
+
+
+## 📘Performance of Demand Paging
+
+- **효과적인 접근 시간(Effective Access Time, EAT)**: EAT = (1 - p) * ma + p * page_fault_time
+- `ma`: 메모리 접근 시간 (10~200 ns)
+- `p`: 페이지 폴트 확률
+- page_fault_time: 
+  - 인터럽트 처리 (1~100 μs)
+  - 디스크에서 페이지 읽기 (~8 ms)
+  - 프로세스 재시작 (1~100 μs)
+- **페이지 폴트율은 매우 낮게 유지되어야 함**
+
+
+## 📘 Demand Paging Optimizations
+
+- **스왑 공간 I/O**는 파일 시스템 I/O보다 빠름
+  - 이유: 더 큰 단위로 할당되고 관리 오버헤드 적음
+
+- 프로그램 실행 방식:
+  1. 전체 파일을 스왑 공간으로 복사 후 실행
+  2. 처음엔 파일 시스템에서 demand paging, 이후는 스왑 공간에서 처리
+
+- **모바일 시스템**:
+  - 스왑 지원 안함
+  - 파일 시스템에서 demand page 후, 읽기 전용 페이지 재사용
+
+
