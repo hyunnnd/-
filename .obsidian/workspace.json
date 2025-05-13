@@ -37,12 +37,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "os/10 VirtualMemory.md",
+                "file": "os/4 Threads & Concurrency.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "10 VirtualMemory"
+              "title": "4 Threads & Concurrency"
             }
           }
         ],
@@ -119,7 +119,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "os/10 VirtualMemory.md",
+                "file": "os/4 Threads & Concurrency.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -129,7 +129,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "10 VirtualMemory 의 백링크"
+              "title": "4 Threads & Concurrency 의 백링크"
             }
           },
           {
@@ -138,12 +138,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "os/10 VirtualMemory.md",
+                "file": "os/4 Threads & Concurrency.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "10 VirtualMemory 의 나가는 링크"
+              "title": "4 Threads & Concurrency 의 나가는 링크"
             }
           },
           {
@@ -205,8 +205,8 @@
   },
   "active": "0d85e1e8de7d0804",
   "lastOpenFiles": [
-    "사진/Pasted image 20250513180159.png",
     "os/10 VirtualMemory.md",
+    "사진/Pasted image 20250513180159.png",
     "os/4 Threads & Concurrency.md",
     "사진/Pasted image 20250513175946.png",
     "사진/Pasted image 20250513143623.png",
