@@ -247,11 +247,9 @@
 - 이는 일부 교체 알고리즘이 비직관적인 동작을 할 수 있음을 시사
 
 
+## 📘 Optimal Page Replacement
 
-## 📘 슬라이드 요약: Optimal Page Replacement (슬라이드 29)
-
-- **OPT (Optimal Replacement)**: 앞으로 **가장 오랫동안 사용되지 않을 페이지**를 교체
-- 페이지 폴트 수: **9 (이론적으로 최소)**
+- **OPT (Optimal Replacement)**: 앞으로 **가장 오랫동안 사용되지 않을 페이지**를 교체(이론적으로 최소)
 - 단점:
   - **미래 접근 정보가 필요**하므로 실질 구현은 불가능
-  - 성능 비교를 위한 **기준(Benchmark)**으로 사용됨
+  - 성능 비교를 위한 **기준(Benchmark)** 으로 사용됨
