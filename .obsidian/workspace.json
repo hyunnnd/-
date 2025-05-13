@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "f822c0048382473e",
+        "id": "cb02aeae98fdaa54",
         "type": "tabs",
         "children": [
           {
-            "id": "6d2fa81410d8e74b",
+            "id": "cf30195121294b0b",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "os/10/무제.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "무제"
+              "title": "새 탭"
             }
           }
         ]
@@ -150,13 +146,23 @@
               "icon": "lucide-list",
               "title": "Outline of Welcome"
             }
+          },
+          {
+            "id": "e4302c89679393ec",
+            "type": "leaf",
+            "state": {
+              "type": "git-history-view",
+              "state": {},
+              "icon": "history",
+              "title": "History"
+            }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -169,13 +175,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "41bfe5628e1a01bf",
+  "active": "cf30195121294b0b",
   "lastOpenFiles": [
-    "os/10/무제.md",
-    "os/10",
+    "os/10 VirtualMemory.md",
+    "os/10 VirtualMemory/무제.md",
+    "os/10 VirtualMemory",
     "os",
     "무제 1.md",
-    "무제.md",
     "Welcome.md"
   ]
 }
