@@ -11,6 +11,18 @@
             "id": "acdb28947866ce21",
             "type": "leaf",
             "state": {
+              "type": "image",
+              "state": {
+                "file": "사진/Pasted image 20250513141303.png"
+              },
+              "icon": "lucide-image",
+              "title": "Pasted image 20250513141303"
+            }
+          },
+          {
+            "id": "f0451b14145e8e03",
+            "type": "leaf",
+            "state": {
               "type": "markdown",
               "state": {
                 "file": "os/10 VirtualMemory.md",
@@ -21,7 +33,8 @@
               "title": "10 VirtualMemory"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -178,13 +191,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "acdb28947866ce21",
+  "active": "f0451b14145e8e03",
   "lastOpenFiles": [
-    "Pasted image 20250513141303.png",
-    "Pasted image 20250513141257.png",
+    "사진/Pasted image 20250513141303.png",
+    "사진/Pasted image 20250513141257.png",
+    "os/10 VirtualMemory.md",
     "사진",
     "사진/Pasted image 20250513141000.png",
-    "os/10 VirtualMemory.md",
     "os/4 Threads & Concurrency.md",
     "conflict-files-obsidian-git.md",
     "os/10 VirtualMemory/무제.md",
