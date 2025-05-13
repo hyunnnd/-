@@ -179,3 +179,17 @@
 - 추가 개념:
   - `vfork()`: 논리적으로 부모와 메모리를 공유하는 방법 (현재는 거의 사용 안 함)
   - 많은 OS는 COW나 힙/스택 확장을 위해 **Zero-fill-on-demand (ZFOD)** 프레임을 별도로 유지
+
+
+## 📘 Two Major Problems in Demand Paging
+
+- Demand Paging에서 주요 문제 두 가지:
+  1. **Page Replacement Algorithm**
+     - 페이지를 교체할 때 어떤 페이지를 제거할 것인가?
+     - 초기 접근과 재접근 모두에서 **낮은 페이지 폴트율**이 이상적
+
+  2. **Frame Allocation Algorithm**
+     - 각 프로세스에 **얼마나 많은 프레임을 할당할 것인가?**
+     - 어떤 프레임을 교체 대상으로 정할 것인가?
+
+- 작은 개선만으로도 성능이 크게 향상될 수 있음
