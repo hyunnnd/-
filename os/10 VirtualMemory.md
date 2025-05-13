@@ -249,7 +249,16 @@
 
 ## 📘 Optimal Page Replacement
 
-- **OPT (Optimal Replacement)**: 앞으로 **가장 오랫동안 사용되지 않을 페이지**를 교체(이론적으로 최소)
+- **OPT (Optimal Replacement)**: 앞으로 **가장 오랫동안 사용되지 않을 페이지**를 교체
 - 단점:
   - **미래 접근 정보가 필요**하므로 실질 구현은 불가능
   - 성능 비교를 위한 **기준(Benchmark)** 으로 사용됨
+
+
+## 📘 LRU Page Replacement 
+
+- **LRU (Least Recently Used)**: **가장 오랫동안 사용되지 않은 페이지**를 교체
+- 페이지 폴트 수: **12**
+- 장점:
+  - 좋은 성능, 현실적으로 많이 사용됨
+  - **참조 지역성(locality of reference)** 가정을 따름
