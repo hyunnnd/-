@@ -484,5 +484,17 @@ void* func2(void* arg) {
         sleep(1);
     }
 }
+
+int main() {
+pthread_tthread_one, thread_two; 
+// create thread_oneand thread_two
+pthread_create(&thread_one, NULL, func1, NULL);
+pthread_create(&thread_two, NULL, func2, NULL); 
+
+// waiting for when threads are completed
+pthread_join(thread_one, NULL); 
+pthread_join(thread_two, NULL); 
+return 0;
+}
 ```
 func1이 func2를 종료시키고 본인은 정상 종료함
