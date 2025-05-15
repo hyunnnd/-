@@ -23,14 +23,12 @@
             "id": "9db05360833ba1ac",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "os/4 Threads & Concurrency.md",
-                "mode": "source",
-                "source": false
+                "file": "사진/Pasted image 20250515123626.png"
               },
-              "icon": "lucide-file",
-              "title": "4 Threads & Concurrency"
+              "icon": "lucide-image",
+              "title": "Pasted image 20250515123626"
             }
           }
         ],
@@ -107,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "os/4 Threads & Concurrency.md",
+                "file": "사진/Pasted image 20250515123626.png",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -117,7 +115,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "4 Threads & Concurrency 의 백링크"
+              "title": "Pasted image 20250515123626 의 백링크"
             }
           },
           {
@@ -126,12 +124,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "os/4 Threads & Concurrency.md",
+                "file": "사진/Pasted image 20250515123626.png",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "4 Threads & Concurrency 의 나가는 링크"
+              "title": "Pasted image 20250515123626 의 나가는 링크"
             }
           },
           {
@@ -155,13 +153,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "os/4 Threads & Concurrency.md",
+                "file": "사진/Pasted image 20250515123626.png",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "4 Threads & Concurrency 의 개요"
+              "title": "Pasted image 20250515123626 의 개요"
             }
           }
         ]
@@ -182,12 +180,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "9db05360833ba1ac",
+  "active": "92e69c83964ffadd",
   "lastOpenFiles": [
-    "Pasted image 20250515122852.png",
+    "os/4 Threads & Concurrency.md",
+    "사진/Pasted image 20250515123626.png",
+    "사진/Pasted image 20250515122852.png",
     "사진/Pasted image 20250515114931.png",
     "사진/Pasted image 20250515121825.png",
-    "os/4 Threads & Concurrency.md",
     "os/10 VirtualMemory.md",
     "conflict-files-obsidian-git.md"
   ]

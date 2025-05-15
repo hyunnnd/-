@@ -542,23 +542,47 @@ int pthread_setcancelstate(int state, int *oldstate);
     - 취소 요청은 **대기(pending)** 상태로 남음
 - **비동기 취소(Asynchronous cancellation)**는 요청 즉시 취소됨 → **자원 해제 미보장 위험**
 
-## 📘 Linux Thread Implementation
+## 슬라이드 38: 예제 – Thread Cancellation
 
-- Linux는 **스레드를 특별하게 취급하지 않고**, **프로세스처럼 관리**
-- 스레드는 **같은 주소 공간을 공유하는 경량 프로세스(Lightweight Process, LWP)**로 간주됨
-
-### 📌 clone() 시스템 호출
+### 🔹 코드 요약
 
 ```c
-int clone(int (*fn)(void *), void *child_stack, int flags, void *arg);
+pthread_setcanceltype(*(int*)arg, NULL);  // 스레드 내에서 취소 타입 설정
 ```
-clone()은 fork()와 유사하지만, 세부 자원 공유 여부를 플래그로 지정 가능
-예: 주소 공간, 파일 디스크립터, 신호 핸들러 등을 공유할지 여부를 설정
+- 취소 방식(비동기 / 지연)은 `arg`로 전달
+- `counter`를 40억까지 증가시키는 반복 루프 실행
 
-📌 플래그 예시
-CLONE_VM: 주소 공간 공유
-CLONE_FS: 파일 시스템 정보 공유
-CLONE_FILES: 파일 디스크립터 테이블 공유
-CLONE_SIGHAND: 시그널 핸들러 공유
-![[Pasted image 20250515122852.png]]
-⬅ 그림 설명: 프로세스가 clone() 호출 시 특정 자원을 공유하며 실행되는 두 개의 LWP 구조를 보여줌
+```c
+pthread_cancel(thread);  // 3초 뒤 스레드 취소 요청 pthread_join(thread, NULL);  // 스레드 종료 대기
+```
+### 🔹 주요 실행 흐름
+
+1. 첫 번째 스레드: **비동기 취소 방식**
+    - 3초 후 `pthread_cancel()` → 즉시 종료
+    - 종료 시점의 `counter` 출력
+2. 두 번째 스레드: **지연 취소 방식**
+    - `pthread_testcancel()`이 주석 처리되어 있어 → 취소 요청에 **응답하지 않음**
+    - 따라서 종료되지 않음
+![[Pasted image 20250515123626.png]]
+> ❗ `pthread_testcancel()`을 명시적으로 호출해야 지연 취소 방식에서 정상 종료 가능
+### 🔹 결과 요약
+
+| 방식               | 반응 시점      | 특징               |
+| ---------------- | ---------- | ---------------- |
+| 비동기 취소 (async)   | 즉시         | 불안정, 자원 누수 위험 있음 |
+| 지연 취소 (deferred) | 취소 지점 도달 시 | 안정적, 명시적 취소 필요   |
+
+
+## 📘 슬라이드 39: Thread-Local Storage
+
+- 하나의 **프로세스 내 모든 스레드는 전역 변수**를 공유함
+- **Thread-local storage (TLS)**는 **각 스레드마다 고유한 데이터 복사본**을 가짐
+
+```c
+__thread int tls;  // pthread에서 사용
+```
+- 각 스레드는 독립된 `int tls` 변수를 가짐
+- **일반 지역 변수와 다름**: 지역 변수는 함수 호출 중에만 존재
+- **TLS는 함수 호출 간에도 유지되며**, 정적 변수와 유사함
+- TLS는 **각 스레드에 대해 고유하게 유지**됨
+- 스레드 생성 과정을 직접 제어할 수 없는 경우(예: **스레드 풀**)에 유용함
