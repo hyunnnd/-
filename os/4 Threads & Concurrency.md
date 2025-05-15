@@ -241,20 +241,14 @@ int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
 ### 🔹 매개변수:
 
 - `thread`: 생성된 스레드의 ID를 저장할 변수
-    
 - `attr`: 스레드 속성 설정 (NULL 시 기본 속성 사용)
-    
 - `start_routine`: 스레드가 실행할 함수
-    
 - `arg`: 스레드 함수로 전달할 인자
-    
 
 ### 🔹 반환값:
 
 - 성공: 0
-    
 - 실패: 오류 코드
-    
 
 > 스레드는 **start_routine 함수에서 시작하여 종료**됨
 
@@ -270,16 +264,12 @@ int pthread_join(pthread_t thread, void **retval);
 ### 🔹 매개변수:
 
 - `thread`: 대기할 스레드의 ID
-    
 - `retval`: 종료된 스레드가 반환한 값 (필요 없으면 NULL)
-    
 
 ### 🔹 특징:
 
 - **차단 함수**: 대상 스레드가 끝날 때까지 호출자 스레드는 실행되지 않음
-    
 - 부모 스레드가 종료되면 **자식 스레드도 강제 종료됨**
-    
 
 > `pthread_join`은 스레드 간의 **종속성 제어** 및 **자원 회수**에 필수적
 
@@ -331,3 +321,41 @@ int main() {
 
 ![[Pasted image 20250515114931.png]]
 
+
+## 📘 슬라이드 요약: Example – Passing Argument to Thread (슬라이드 29)
+
+```c
+#include <stdio.h>
+#include <pthread.h>
+
+int sum = 0;
+
+void *thread_summation(void *arg) {
+    int start = ((int*)arg)[0];
+    int end = ((int*)arg)[1];
+    while (start <= end) {
+        sum += start;
+        start++;
+    }
+    return NULL;
+}
+
+int main() {
+    pthread_t id_t1, id_t2;
+    int range1[] = {1, 5};
+    int range2[] = {6, 10};
+
+    pthread_create(&id_t1, NULL, thread_summation, (void *)range1);
+    pthread_create(&id_t2, NULL, thread_summation, (void *)range2);
+
+    pthread_join(id_t1, NULL);
+    pthread_join(id_t2, NULL);
+
+    printf("result: %d\n", sum);
+    return 0;
+} 
+```
+🔹 핵심:
+배열을 인자로 전달하여 범위 설정
+전역 변수 sum에 누적 합 저장
+결과: 1 + 2 + ... + 10 = 55
