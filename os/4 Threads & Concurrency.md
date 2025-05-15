@@ -443,3 +443,46 @@ for (int i = 0; i < NUM_THREADS; i++)
 🔹 핵심:
 스레드 ID를 배열로 관리
 반복문으로 스레드 생성 및 정리
+
+
+## 📘 Pthread Cancel
+
+- **pthread_cancel()**: 실행 중인 스레드에 취소 요청을 보냄
+
+```c
+#include <pthread.h>
+int pthread_cancel(pthread_t thread);
+```
+🔹 특징:
+	thread: 취소할 대상 스레드 ID
+	실제로 즉시 종료되지 않을 수 있음 (해당 스레드의 상태와 속성에 따라 다름)
+	취소 동작은 cancelability state와 cancelability type에 의해 제어됨
+	안전한 취소를 위해 스레드 측에서도 적절한 설정 필요
+
+
+## 📘 Example – Pthread Cancel
+
+- 두 개의 스레드가 있으며, **counter 값이 5가 되면 다른 스레드를 종료시킴**
+
+```c
+void* func1(void* arg) {
+    while (1) {
+        printf("Thread #1 (counter=%d)\n", counter);
+        if (counter == 5) {
+            pthread_cancel(tmp_thread);  // 다른 스레드 취소 요청
+            pthread_exit(NULL);          // 자신 종료
+        }
+        sleep(1);
+    }
+}
+
+void* func2(void* arg) {
+    tmp_thread = pthread_self();  // 자신의 스레드 ID 저장
+    while (1) {
+        printf("Thread #2 (counter=%d)\n", counter);
+        counter++;
+        sleep(1);
+    }
+}
+```
+func1이 func2를 종료시키고 본인은 정상 종료함
