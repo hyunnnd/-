@@ -401,8 +401,8 @@ int main() {
 ```
 🔹 핵심:
 구조체 인자를 전달하고, 동적 할당된 구조체를 리턴 받아 사용
-결과: 10, 20 
-	returned 
+결과: 10 20 
+	returned 1 2
 주의: malloc 없이 스택 변수 반환 시 위험 (다음 슬라이드에서 설명)
 
 
@@ -424,3 +424,22 @@ void *mythread(void *arg) {
 ### 🔹 해결책:
 
 - 반환할 데이터는 **힙(heap)** 에 `malloc`으로 동적 할당하여 반환해야 함
+
+
+## 📘 Multiple Threads
+
+- **여러 개의 스레드를 생성하고 모두 조인하는 예제**
+
+```c
+#define NUM_THREADS 10
+pthread_t workers[NUM_THREADS];
+
+for (int i = 0; i < NUM_THREADS; i++)
+    pthread_create(&workers[i], NULL, thread_worker, (void *)arg);
+
+for (int i = 0; i < NUM_THREADS; i++)
+    pthread_join(workers[i], NULL);
+```
+🔹 핵심:
+스레드 ID를 배열로 관리
+반복문으로 스레드 생성 및 정리
