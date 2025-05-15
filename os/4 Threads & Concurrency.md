@@ -510,28 +510,46 @@ func1이 func2를 종료시키고 본인은 정상 종료함
 
 ```c
 int pthread_setcanceltype(int type, int *oldtype);
+```
+`type`:
+- `PTHREAD_CANCEL_ASYNCHRONOUS`: 즉시 종료
+- `PTHREAD_CANCEL_DEFERRED`: 특정 지점에서만 종료 (기본값)
+
+```c
 int pthread_setcancelstate(int state, int *oldstate);
 ```
-type:
-
-PTHREAD_CANCEL_ASYNCHRONOUS: 즉시 종료
-
-PTHREAD_CANCEL_DEFERRED: 특정 지점에서만 종료 (기본값)
-
-state:
-
-PTHREAD_CANCEL_DISABLE: 취소 요청은 보류
-
-PTHREAD_CANCEL_ENABLE: 취소 요청 수락
+`state`:
+- `PTHREAD_CANCEL_DISABLE`: 취소 요청은 보류 
+- `PTHREAD_CANCEL_ENABLE`: 취소 요청 수락
 
 🔹 Deferred Cancellation의 특징
 취소 지점(cancellation point)에서만 반응
 → 예: pthread_testcancel()
+### 🔹 요약
 
-🔹 요약
-Asynchronous: 즉시 종료, 위험
+|타입|설명|안전성|
+|---|---|---|
+|`PTHREAD_CANCEL_ASYNCHRONOUS`|즉시 종료|낮음 (위험)|
+|`PTHREAD_CANCEL_DEFERRED`|취소 지점에서만 종료 (기본값)|높음 (권장)|
 
-Deferred: 안전하지만 스레드 협조 필요 (권장)
 
-복사
-편집
+## 📘 Linux Thread Implementation
+
+- Linux는 **스레드를 특별하게 취급하지 않고**, **프로세스처럼 관리**
+- 스레드는 **같은 주소 공간을 공유하는 경량 프로세스(Lightweight Process, LWP)**로 간주됨
+
+### 📌 clone() 시스템 호출
+
+```c
+int clone(int (*fn)(void *), void *child_stack, int flags, void *arg);
+```
+clone()은 fork()와 유사하지만, 세부 자원 공유 여부를 플래그로 지정 가능
+예: 주소 공간, 파일 디스크립터, 신호 핸들러 등을 공유할지 여부를 설정
+
+📌 플래그 예시
+CLONE_VM: 주소 공간 공유
+CLONE_FS: 파일 시스템 정보 공유
+CLONE_FILES: 파일 디스크립터 테이블 공유
+CLONE_SIGHAND: 시그널 핸들러 공유
+![[Pasted image 20250515122852.png]]
+⬅ 그림 설명: 프로세스가 clone() 호출 시 특정 자원을 공유하며 실행되는 두 개의 LWP 구조를 보여줌
