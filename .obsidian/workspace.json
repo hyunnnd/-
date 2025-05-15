@@ -23,12 +23,14 @@
             "id": "9db05360833ba1ac",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "사진/Pasted image 20250515123626.png"
+                "file": "os/4 Threads & Concurrency.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "Pasted image 20250515123626"
+              "icon": "lucide-file",
+              "title": "4 Threads & Concurrency"
             }
           }
         ],
@@ -180,14 +182,14 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "92e69c83964ffadd",
+  "active": "9db05360833ba1ac",
   "lastOpenFiles": [
+    "conflict-files-obsidian-git.md",
     "os/4 Threads & Concurrency.md",
     "사진/Pasted image 20250515123626.png",
     "사진/Pasted image 20250515122852.png",
     "사진/Pasted image 20250515114931.png",
     "사진/Pasted image 20250515121825.png",
-    "os/10 VirtualMemory.md",
-    "conflict-files-obsidian-git.md"
+    "os/10 VirtualMemory.md"
   ]
 }
