@@ -1,41 +1,54 @@
 {
   "main": {
-    "id": "466c21869e6ce90e",
+    "id": "91176e2a46f8be4c",
     "type": "split",
     "children": [
       {
-        "id": "cb02aeae98fdaa54",
+        "id": "bc89fd9bb6a8acdd",
         "type": "tabs",
         "children": [
           {
-            "id": "0d85e1e8de7d0804",
+            "id": "f9897f8f6767356a",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "사진/Pasted image 20250515121825.png"
+              },
+              "icon": "lucide-image",
+              "title": "Pasted image 20250515121825"
+            }
+          },
+          {
+            "id": "9db05360833ba1ac",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "os/10 VirtualMemory.md",
+                "file": "os/4 Threads & Concurrency.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "10 VirtualMemory"
+              "title": "4 Threads & Concurrency"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "2f8b6c231e3ad162",
+    "id": "cffaae7c16cff51a",
     "type": "split",
     "children": [
       {
-        "id": "304840eb4dfea1b6",
+        "id": "1b879da17ff85137",
         "type": "tabs",
         "children": [
           {
-            "id": "41bfe5628e1a01bf",
+            "id": "92e69c83964ffadd",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -48,7 +61,7 @@
             }
           },
           {
-            "id": "0c2444835bea2042",
+            "id": "dd675d917d612719",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -61,17 +74,17 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-search",
-              "title": "Search"
+              "title": "검색"
             }
           },
           {
-            "id": "70adbfd280cf930d",
+            "id": "b2c558af5eac0b2d",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
               "state": {},
               "icon": "lucide-bookmark",
-              "title": "Bookmarks"
+              "title": "북마크"
             }
           }
         ]
@@ -81,20 +94,20 @@
     "width": 300
   },
   "right": {
-    "id": "87d1eea742953826",
+    "id": "3514c0b41604fcc8",
     "type": "split",
     "children": [
       {
-        "id": "4041b18784b53bd0",
+        "id": "7f5ff39bc10eff99",
         "type": "tabs",
         "children": [
           {
-            "id": "143fa32ebff802d3",
+            "id": "17034234bc9da889",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "os/10 VirtualMemory.md",
+                "file": "os/4 Threads & Concurrency.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,25 +117,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "10 VirtualMemory 의 백링크"
+              "title": "4 Threads & Concurrency 의 백링크"
             }
           },
           {
-            "id": "0aad3e14ee8a920c",
+            "id": "c72532226c7ae755",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "os/10 VirtualMemory.md",
+                "file": "os/4 Threads & Concurrency.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "10 VirtualMemory 의 나가는 링크"
+              "title": "4 Threads & Concurrency 의 나가는 링크"
             }
           },
           {
-            "id": "9721257738e9ee1d",
+            "id": "4142985e438676e7",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -133,32 +146,22 @@
                 "searchQuery": ""
               },
               "icon": "lucide-tags",
-              "title": "Tags"
+              "title": "태그"
             }
           },
           {
-            "id": "93d27a9df9994b94",
+            "id": "f4c098d0ca902863",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "os/10 VirtualMemory.md",
+                "file": "os/4 Threads & Concurrency.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "10 VirtualMemory 의 개요"
-            }
-          },
-          {
-            "id": "e4302c89679393ec",
-            "type": "leaf",
-            "state": {
-              "type": "git-history-view",
-              "state": {},
-              "icon": "history",
-              "title": "History"
+              "title": "4 Threads & Concurrency 의 개요"
             }
           },
           {
@@ -176,7 +179,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 215.5
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -189,27 +193,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0d85e1e8de7d0804",
+  "active": "9db05360833ba1ac",
   "lastOpenFiles": [
-    "사진/Pasted image 20250513143623.png",
-    "사진/Pasted image 20250513141303.png",
-    "os/10 VirtualMemory.md",
-    "사진/Pasted image 20250513185816.png",
+    "Pasted image 20250515122852.png",
+    "사진/Pasted image 20250515114931.png",
+    "사진/Pasted image 20250515121825.png",
     "os/4 Threads & Concurrency.md",
-    "사진/Pasted image 20250513185728.png",
-    "사진/Pasted image 20250513185654.png",
-    "사진/Pasted image 20250513183245.png",
-    "사진/Pasted image 20250513182957.png",
-    "사진/Pasted image 20250513182928.png",
-    "사진/Pasted image 20250513180159.png",
-    "사진/Pasted image 20250513175946.png",
-    "사진/Pasted image 20250513142552.png",
-    "사진",
-    "conflict-files-obsidian-git.md",
-    "os/10 VirtualMemory/무제.md",
-    "os/10 VirtualMemory",
-    "os",
-    "무제 1.md",
-    "Welcome.md"
+    "os/10 VirtualMemory.md",
+    "conflict-files-obsidian-git.md"
   ]
 }

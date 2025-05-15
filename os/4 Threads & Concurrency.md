@@ -191,3 +191,374 @@
 - 그 외에는 드물게 사용
 
 > 두 가지 방식의 절충형 → **Two-Level Model**로도 불림
+
+
+
+## 📘 Thread Libraries
+
+- **스레드 라이브러리**는 스레드 생성을 위한 **API를 제공**
+
+### 🔹 구현 방식:
+1. **사용자 수준(User-level)**:
+   - 커널 개입 없이 사용자 공간에서만 관리
+   - 전환 빠름, 하지만 커널은 스레드 존재를 인식하지 못함
+
+2. **커널 수준(Kernel-level)**:
+   - 스레드 생성/관리 모두 커널이 수행
+   - 병렬 실행 가능, 시스템 호출 필요
+
+> 라이브러리는 프로그래머가 직접 스레드 생성·관리하지 않고도 멀티스레딩 구현 가능
+
+
+
+## 📘 Pthreads
+
+- **Pthreads (POSIX Threads)**: POSIX 표준 (IEEE 1003.1c)에 따른 스레드 API
+- UNIX 계열 운영체제(Solaris, Linux, macOS 등)에서 널리 사용
+
+### 🔹 특징:
+- Pthreads는 **명세(specification)**이며, 구현은 시스템에 따라 다름 not implementation
+- 사용자 수준 또는 커널 수준 모두 구현 가능
+
+### 🔹 제공 기능:
+- 스레드 생성 (`pthread_create`)
+- 동기화 (`pthread_join`, mutex 등)
+- 종료, 취소 등 다양한 API
+
+> POSIX 표준에 따라 다양한 시스템에서 **이식성 높은 멀티스레딩** 구현 가능
+
+
+
+## 📘 pthread_create
+
+- **pthread_create()**: 새로운 스레드를 생성하는 함수 
+```c
+#include <pthread.h>
+int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
+                   void *(*start_routine) (void *), void *arg);
+                   
+```
+### 🔹 매개변수:
+
+- `thread`: 생성된 스레드의 ID를 저장할 변수
+- `attr`: 스레드 속성 설정 (NULL 시 기본 속성 사용)
+- `start_routine`: 스레드가 실행할 함수
+- `arg`: 스레드 함수로 전달할 인자
+
+### 🔹 반환값:
+
+- 성공: 0
+- 실패: 오류 코드
+
+> 스레드는 **start_routine 함수에서 시작하여 종료**됨
+
+
+## 📘 pthread_join 
+
+- **pthread_join()**: 특정 스레드가 종료될 때까지 호출한 스레드를 **대기 상태로 만듦** , 이미  종료됬다면 즉시 실행(맞는지 체크해보기)
+```c
+#include <pthread.h>
+int pthread_join(pthread_t thread, void **retval);
+```
+
+### 🔹 매개변수:
+
+- `thread`: 대기할 스레드의 ID
+- `retval`: 종료된 스레드가 반환한 값 (필요 없으면 NULL)
+
+### 🔹 특징:
+
+- **차단 함수**: 대상 스레드가 끝날 때까지 호출자 스레드는 실행되지 않음
+- 부모 스레드가 종료되면 **자식 스레드도 강제 종료됨**
+
+> `pthread_join`은 스레드 간의 **종속성 제어** 및 **자원 회수**에 필수적
+
+
+
+## 📘 Compiling and Running
+
+### 🔹 컴파일 방법:
+- 반드시 `pthread.h` 헤더 포함
+- **`-pthread` 옵션 추가 필요**
+
+```bash
+$ gcc -o main main.c -Wall -pthread
+```
+>최신 gcc는 `-pthread` 옵션을 자동으로 포함하기도 함
+
+
+
+## 📘 Example – Thread Creation
+
+```c
+#include <stdio.h>
+#include <pthread.h>
+
+void *mythread(void *arg) {
+    printf("%s\n", (char *) arg);
+    return NULL;
+}
+
+int main() {
+    pthread_t p1, p2;
+
+    printf("main: begin\n");
+    pthread_create(&p1, NULL, mythread, "A");
+    pthread_create(&p2, NULL, mythread, "B");
+
+    pthread_join(p1, NULL);
+    pthread_join(p2, NULL);
+    printf("main: end\n");
+    return 0;
+    }
+```
+
+### 🔹 설명:
+
+- `mythread` 함수는 인자로 받은 문자열을 출력
+- `main` 함수에서 두 개의 스레드를 생성하고 종료될 때까지 대기 (`join`)
+- 실행 결과는 A, B의 출력 순서가 **비결정적** (스케줄러에 따라 달라짐)
+
+![[Pasted image 20250515114931.png]]
+
+
+## 📘 Example – Passing Argument to Thread
+
+```c
+#include <stdio.h>
+#include <pthread.h>
+
+int sum = 0;
+
+void *thread_summation(void *arg) {
+    int start = ((int*)arg)[0];
+    int end = ((int*)arg)[1];
+    while (start <= end) {
+        sum += start;
+        start++;
+    }
+    return NULL;
+}
+
+int main() {
+    pthread_t id_t1, id_t2;
+    int range1[] = {1, 5};
+    int range2[] = {6, 10};
+
+    pthread_create(&id_t1, NULL, thread_summation, (void *)range1);
+    pthread_create(&id_t2, NULL, thread_summation, (void *)range2);
+
+    pthread_join(id_t1, NULL);
+    pthread_join(id_t2, NULL);
+
+    printf("result: %d\n", sum);
+    return 0;
+} 
+```
+🔹 핵심:
+배열을 인자로 전달하여 범위 설정
+전역 변수 sum에 누적 합 저장
+결과: 1 + 2 + ... + 10 = 55
+
+
+## 📘 Example – Return Value from Thread
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+
+typedef struct {
+    int a;
+    int b;
+} myarg_t;
+
+typedef struct {
+    int x;
+    int y;
+} myret_t;
+
+void *mythread(void *arg) {
+    myarg_t *m = (myarg_t *) arg;
+    printf("%d %d\n", m->a, m->b);
+
+    myret_t *r = malloc(sizeof(myret_t));
+    r->x = 1;
+    r->y = 2;
+    return (void *) r;
+}
+
+int main() {
+    pthread_t p;
+    myret_t *m;
+    myarg_t args = {10, 20};
+
+    pthread_create(&p, NULL, mythread, &args);
+    pthread_join(p, (void **) &m);
+    printf("returned %d %d\n", m->x, m->y);
+    return 0;
+}
+```
+🔹 핵심:
+구조체 인자를 전달하고, 동적 할당된 구조체를 리턴 받아 사용
+결과: 10 20 
+	returned 1 2
+주의: malloc 없이 스택 변수 반환 시 위험 (다음 슬라이드에서 설명)
+
+
+## 📘 Dangerous Code
+
+- 스레드에서 **반환값으로 지역 변수(스택 메모리)**를 리턴하면 위험
+
+```c
+void *mythread(void *arg) {
+    myarg_t *m = (myarg_t *) arg;
+    printf("%d %d\n", m->a, m->b);
+
+    myret_t r;  // ❌ 스택에 할당된 변수
+    r.x = 1;
+    r.y = 2;
+    return (void *) &r;  // ⛔ 위험: 함수 종료 시 메모리 해제됨
+}
+```
+### 🔹 해결책:
+
+- 반환할 데이터는 **힙(heap)** 에 `malloc`으로 동적 할당하여 반환해야 함
+
+
+## 📘 Multiple Threads
+
+- **여러 개의 스레드를 생성하고 모두 조인하는 예제**
+
+```c
+#define NUM_THREADS 10
+pthread_t workers[NUM_THREADS];
+
+for (int i = 0; i < NUM_THREADS; i++)
+    pthread_create(&workers[i], NULL, thread_worker, (void *)arg);
+
+for (int i = 0; i < NUM_THREADS; i++)
+    pthread_join(workers[i], NULL);
+```
+🔹 핵심:
+스레드 ID를 배열로 관리
+반복문으로 스레드 생성 및 정리
+
+
+## 📘 Pthread Cancel
+
+- **pthread_cancel()**: 실행 중인 스레드에 취소 요청을 보냄
+
+```c
+#include <pthread.h>
+int pthread_cancel(pthread_t thread);
+```
+🔹 특징:
+	thread: 취소할 대상 스레드 ID
+	실제로 즉시 종료되지 않을 수 있음 (해당 스레드의 상태와 속성에 따라 다름)
+	취소 동작은 cancelability state와 cancelability type에 의해 제어됨
+	안전한 취소를 위해 스레드 측에서도 적절한 설정 필요
+
+
+## 📘 Example – Pthread Cancel
+
+- 두 개의 스레드가 있으며, **counter 값이 5가 되면 다른 스레드를 종료시킴**
+
+```c
+void* func1(void* arg) {
+    while (1) {
+        printf("Thread #1 (counter=%d)\n", counter);
+        if (counter == 5) {
+            pthread_cancel(tmp_thread);  // 다른 스레드 취소 요청
+            pthread_exit(NULL);          // 자신 종료
+        }
+        sleep(1);
+    }
+}
+
+void* func2(void* arg) {
+    tmp_thread = pthread_self();  // 자신의 스레드 ID 저장
+    while (1) {
+        printf("Thread #2 (counter=%d)\n", counter);
+        counter++;
+        sleep(1);
+    }
+}
+
+int main() {
+pthread_tthread_one, thread_two; 
+// create thread_oneand thread_two
+pthread_create(&thread_one, NULL, func1, NULL);
+pthread_create(&thread_two, NULL, func2, NULL); 
+
+// waiting for when threads are completed
+pthread_join(thread_one, NULL); 
+pthread_join(thread_two, NULL); 
+return 0;
+}
+```
+![[Pasted image 20250515121825.png]]
+func1이 func2를 종료시키고 본인은 정상 종료함
+
+
+## 📘 Thread Cancellation
+
+- 스레드는 **자원을 공유**하므로 취소 시 **데이터 무결성**에 주의해야 함  
+  (프로세스는 자원을 독립적으로 가짐)
+
+### 🔹 취소 관련 기본 설정
+
+```c
+int pthread_setcanceltype(int type, int *oldtype);
+```
+`type`:
+- `PTHREAD_CANCEL_ASYNCHRONOUS`: 즉시 종료
+- `PTHREAD_CANCEL_DEFERRED`: 특정 지점에서만 종료 (기본값)
+- 비동기보다 지연 취소가 **안전성 측면에서 선호됨**
+
+```c
+int pthread_setcancelstate(int state, int *oldstate);
+```
+`state`:
+- `PTHREAD_CANCEL_DISABLE`: 취소 요청은 보류 
+- `PTHREAD_CANCEL_ENABLE`: 취소 요청 수락
+- `oldstate`: 이전 상태 저장용 포인터 (필요 없다면 `NULL` 가능)
+
+🔹 Deferred Cancellation의 특징
+- 취소는 스레드 내부에서 **취소 지점**(`pthread_testcancel()`)에 도달해야 발생
+- 취소 발생 시 **clean-up handler**가 호출됨    
+- **스레드 안전성 확보를 위한 중요한 기법**
+### 🔹 요약
+
+|타입|설명|안전성|
+|---|---|---|
+|`PTHREAD_CANCEL_ASYNCHRONOUS`|즉시 종료|낮음 (위험)|
+|`PTHREAD_CANCEL_DEFERRED`|취소 지점에서만 종료 (기본값)|높음 (권장)|
+
+### 취소의 처리 시점
+
+- **지연 취소(Deferred cancellation)** 방식에서는,
+    - 스레드가 명시적으로 **취소 지점**(`pthread_testcancel()`)에 도달해야 취소됨
+    - 취소 요청은 **대기(pending)** 상태로 남음
+- **비동기 취소(Asynchronous cancellation)**는 요청 즉시 취소됨 → **자원 해제 미보장 위험**
+
+## 📘 Linux Thread Implementation
+
+- Linux는 **스레드를 특별하게 취급하지 않고**, **프로세스처럼 관리**
+- 스레드는 **같은 주소 공간을 공유하는 경량 프로세스(Lightweight Process, LWP)**로 간주됨
+
+### 📌 clone() 시스템 호출
+
+```c
+int clone(int (*fn)(void *), void *child_stack, int flags, void *arg);
+```
+clone()은 fork()와 유사하지만, 세부 자원 공유 여부를 플래그로 지정 가능
+예: 주소 공간, 파일 디스크립터, 신호 핸들러 등을 공유할지 여부를 설정
+
+📌 플래그 예시
+CLONE_VM: 주소 공간 공유
+CLONE_FS: 파일 시스템 정보 공유
+CLONE_FILES: 파일 디스크립터 테이블 공유
+CLONE_SIGHAND: 시그널 핸들러 공유
+![[Pasted image 20250515122852.png]]
+⬅ 그림 설명: 프로세스가 clone() 호출 시 특정 자원을 공유하며 실행되는 두 개의 LWP 구조를 보여줌
