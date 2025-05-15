@@ -401,4 +401,26 @@ int main() {
 ```
 🔹 핵심:
 구조체 인자를 전달하고, 동적 할당된 구조체를 리턴 받아 사용
+결과: 10, 20 
+	returned 
 주의: malloc 없이 스택 변수 반환 시 위험 (다음 슬라이드에서 설명)
+
+
+## 📘 Dangerous Code
+
+- 스레드에서 **반환값으로 지역 변수(스택 메모리)**를 리턴하면 위험
+
+```c
+void *mythread(void *arg) {
+    myarg_t *m = (myarg_t *) arg;
+    printf("%d %d\n", m->a, m->b);
+
+    myret_t r;  // ❌ 스택에 할당된 변수
+    r.x = 1;
+    r.y = 2;
+    return (void *) &r;  // ⛔ 위험: 함수 종료 시 메모리 해제됨
+}
+```
+### 🔹 해결책:
+
+- 반환할 데이터는 **힙(heap)** 에 `malloc`으로 동적 할당하여 반환해야 함
