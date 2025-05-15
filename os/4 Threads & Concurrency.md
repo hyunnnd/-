@@ -497,4 +497,6 @@ pthread_join(thread_two, NULL);
 return 0;
 }
 ```
+![[Pasted image 20250515121825.png]]
 func1이 func2를 종료시키고 본인은 정상 종료함
+
