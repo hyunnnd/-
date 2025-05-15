@@ -322,7 +322,7 @@ int main() {
 ![[Pasted image 20250515114931.png]]
 
 
-## 📘 슬라이드 요약: Example – Passing Argument to Thread (슬라이드 29)
+## 📘 Example – Passing Argument to Thread
 
 ```c
 #include <stdio.h>
@@ -359,3 +359,46 @@ int main() {
 배열을 인자로 전달하여 범위 설정
 전역 변수 sum에 누적 합 저장
 결과: 1 + 2 + ... + 10 = 55
+
+
+## 📘 Example – Return Value from Thread
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+
+typedef struct {
+    int a;
+    int b;
+} myarg_t;
+
+typedef struct {
+    int x;
+    int y;
+} myret_t;
+
+void *mythread(void *arg) {
+    myarg_t *m = (myarg_t *) arg;
+    printf("%d %d\n", m->a, m->b);
+
+    myret_t *r = malloc(sizeof(myret_t));
+    r->x = 1;
+    r->y = 2;
+    return (void *) r;
+}
+
+int main() {
+    pthread_t p;
+    myret_t *m;
+    myarg_t args = {10, 20};
+
+    pthread_create(&p, NULL, mythread, &args);
+    pthread_join(p, (void **) &m);
+    printf("returned %d %d\n", m->x, m->y);
+    return 0;
+}
+```
+🔹 핵심:
+구조체 인자를 전달하고, 동적 할당된 구조체를 리턴 받아 사용
+주의: malloc 없이 스택 변수 반환 시 위험 (다음 슬라이드에서 설명)
