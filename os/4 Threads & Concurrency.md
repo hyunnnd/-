@@ -191,3 +191,94 @@
 - 그 외에는 드물게 사용
 
 > 두 가지 방식의 절충형 → **Two-Level Model**로도 불림
+
+
+
+## 📘 Thread Libraries
+
+- **스레드 라이브러리**는 스레드 생성을 위한 **API를 제공**
+
+### 🔹 구현 방식:
+1. **사용자 수준(User-level)**:
+   - 커널 개입 없이 사용자 공간에서만 관리
+   - 전환 빠름, 하지만 커널은 스레드 존재를 인식하지 못함
+
+2. **커널 수준(Kernel-level)**:
+   - 스레드 생성/관리 모두 커널이 수행
+   - 병렬 실행 가능, 시스템 호출 필요
+
+> 라이브러리는 프로그래머가 직접 스레드 생성·관리하지 않고도 멀티스레딩 구현 가능
+
+
+
+## 📘 Pthreads
+
+- **Pthreads (POSIX Threads)**: POSIX 표준 (IEEE 1003.1c)에 따른 스레드 API
+- UNIX 계열 운영체제(Solaris, Linux, macOS 등)에서 널리 사용
+
+### 🔹 특징:
+- Pthreads는 **명세(specification)**이며, 구현은 시스템에 따라 다름 not implementation
+- 사용자 수준 또는 커널 수준 모두 구현 가능
+
+### 🔹 제공 기능:
+- 스레드 생성 (`pthread_create`)
+- 동기화 (`pthread_join`, mutex 등)
+- 종료, 취소 등 다양한 API
+
+> POSIX 표준에 따라 다양한 시스템에서 **이식성 높은 멀티스레딩** 구현 가능
+
+
+
+## 📘 pthread_create
+
+- **pthread_create()**: 새로운 스레드를 생성하는 함수 
+```c
+#include <pthread.h>
+int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
+                   void *(*start_routine) (void *), void *arg);
+                   
+```
+### 🔹 매개변수:
+
+- `thread`: 생성된 스레드의 ID를 저장할 변수
+    
+- `attr`: 스레드 속성 설정 (NULL 시 기본 속성 사용)
+    
+- `start_routine`: 스레드가 실행할 함수
+    
+- `arg`: 스레드 함수로 전달할 인자
+    
+
+### 🔹 반환값:
+
+- 성공: 0
+    
+- 실패: 오류 코드
+    
+
+> 스레드는 **start_routine 함수에서 시작하여 종료**됨
+
+
+## 📘 pthread_join 
+
+- **pthread_join()**: 특정 스레드가 종료될 때까지 호출한 스레드를 **대기 상태로 만듦**
+```c
+#include <pthread.h>
+int pthread_join(pthread_t thread, void **retval);
+```
+
+### 🔹 매개변수:
+
+- `thread`: 대기할 스레드의 ID
+    
+- `retval`: 종료된 스레드가 반환한 값 (필요 없으면 NULL)
+    
+
+### 🔹 특징:
+
+- **차단 함수**: 대상 스레드가 끝날 때까지 호출자 스레드는 실행되지 않음
+    
+- 부모 스레드가 종료되면 **자식 스레드도 강제 종료됨**
+    
+
+> `pthread_join`은 스레드 간의 **종속성 제어** 및 **자원 회수**에 필수적
