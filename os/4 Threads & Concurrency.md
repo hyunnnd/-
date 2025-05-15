@@ -522,6 +522,7 @@ int pthread_setcancelstate(int state, int *oldstate);
 `state`:
 - `PTHREAD_CANCEL_DISABLE`: 취소 요청은 보류 
 - `PTHREAD_CANCEL_ENABLE`: 취소 요청 수락
+- `oldstate`: 이전 상태 저장용 포인터 (필요 없다면 `NULL` 가능)
 
 🔹 Deferred Cancellation의 특징
 - 취소는 스레드 내부에서 **취소 지점**(`pthread_testcancel()`)에 도달해야 발생
@@ -534,6 +535,12 @@ int pthread_setcancelstate(int state, int *oldstate);
 |`PTHREAD_CANCEL_ASYNCHRONOUS`|즉시 종료|낮음 (위험)|
 |`PTHREAD_CANCEL_DEFERRED`|취소 지점에서만 종료 (기본값)|높음 (권장)|
 
+### 취소의 처리 시점
+
+- **지연 취소(Deferred cancellation)** 방식에서는,
+    - 스레드가 명시적으로 **취소 지점**(`pthread_testcancel()`)에 도달해야 취소됨
+    - 취소 요청은 **대기(pending)** 상태로 남음
+- **비동기 취소(Asynchronous cancellation)**는 요청 즉시 취소됨 → **자원 해제 미보장 위험**
 
 ## 📘 Linux Thread Implementation
 
