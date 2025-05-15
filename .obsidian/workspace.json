@@ -160,8 +160,19 @@
               "icon": "history",
               "title": "History"
             }
+          },
+          {
+            "id": "bcc8742d84de4527",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
