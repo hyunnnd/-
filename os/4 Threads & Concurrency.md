@@ -500,3 +500,38 @@ return 0;
 ![[Pasted image 20250515121825.png]]
 func1이 func2를 종료시키고 본인은 정상 종료함
 
+
+## 📘 Thread Cancellation
+
+- 스레드는 **자원을 공유**하므로 취소 시 **데이터 무결성**에 주의해야 함  
+  (프로세스는 자원을 독립적으로 가짐)
+
+### 🔹 취소 관련 기본 설정
+
+```c
+int pthread_setcanceltype(int type, int *oldtype);
+int pthread_setcancelstate(int state, int *oldstate);
+```
+type:
+
+PTHREAD_CANCEL_ASYNCHRONOUS: 즉시 종료
+
+PTHREAD_CANCEL_DEFERRED: 특정 지점에서만 종료 (기본값)
+
+state:
+
+PTHREAD_CANCEL_DISABLE: 취소 요청은 보류
+
+PTHREAD_CANCEL_ENABLE: 취소 요청 수락
+
+🔹 Deferred Cancellation의 특징
+취소 지점(cancellation point)에서만 반응
+→ 예: pthread_testcancel()
+
+🔹 요약
+Asynchronous: 즉시 종료, 위험
+
+Deferred: 안전하지만 스레드 협조 필요 (권장)
+
+복사
+편집
