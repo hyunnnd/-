@@ -282,3 +282,52 @@ int pthread_join(pthread_t thread, void **retval);
     
 
 > `pthread_join`은 스레드 간의 **종속성 제어** 및 **자원 회수**에 필수적
+
+
+
+## 📘 Compiling and Running
+
+### 🔹 컴파일 방법:
+- 반드시 `pthread.h` 헤더 포함
+- **`-pthread` 옵션 추가 필요**
+
+```bash
+$ gcc -o main main.c -Wall -pthread
+```
+>최신 gcc는 `-pthread` 옵션을 자동으로 포함하기도 함
+
+
+
+## 📘 Example – Thread Creation
+
+```c
+#include <stdio.h>
+#include <pthread.h>
+
+void *mythread(void *arg) {
+    printf("%s\n", (char *) arg);
+    return NULL;
+}
+
+int main() {
+    pthread_t p1, p2;
+
+    printf("main: begin\n");
+    pthread_create(&p1, NULL, mythread, "A");
+    pthread_create(&p2, NULL, mythread, "B");
+
+    pthread_join(p1, NULL);
+    pthread_join(p2, NULL);
+    printf("main: end\n");
+    return 0;
+    }
+```
+
+### 🔹 설명:
+
+- `mythread` 함수는 인자로 받은 문자열을 출력
+- `main` 함수에서 두 개의 스레드를 생성하고 종료될 때까지 대기 (`join`)
+- 실행 결과는 A, B의 출력 순서가 **비결정적** (스케줄러에 따라 달라짐)
+
+![[Pasted image 20250515114931.png]]
+
