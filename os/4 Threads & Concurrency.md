@@ -514,6 +514,7 @@ int pthread_setcanceltype(int type, int *oldtype);
 `type`:
 - `PTHREAD_CANCEL_ASYNCHRONOUS`: 즉시 종료
 - `PTHREAD_CANCEL_DEFERRED`: 특정 지점에서만 종료 (기본값)
+- 비동기보다 지연 취소가 **안전성 측면에서 선호됨**
 
 ```c
 int pthread_setcancelstate(int state, int *oldstate);
@@ -523,8 +524,9 @@ int pthread_setcancelstate(int state, int *oldstate);
 - `PTHREAD_CANCEL_ENABLE`: 취소 요청 수락
 
 🔹 Deferred Cancellation의 특징
-취소 지점(cancellation point)에서만 반응
-→ 예: pthread_testcancel()
+- 취소는 스레드 내부에서 **취소 지점**(`pthread_testcancel()`)에 도달해야 발생
+- 취소 발생 시 **clean-up handler**가 호출됨    
+- **스레드 안전성 확보를 위한 중요한 기법**
 ### 🔹 요약
 
 |타입|설명|안전성|
