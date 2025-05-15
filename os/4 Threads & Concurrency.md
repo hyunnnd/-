@@ -261,7 +261,7 @@ int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
 
 ## 📘 pthread_join 
 
-- **pthread_join()**: 특정 스레드가 종료될 때까지 호출한 스레드를 **대기 상태로 만듦**
+- **pthread_join()**: 특정 스레드가 종료될 때까지 호출한 스레드를 **대기 상태로 만듦** , 이미  종료됬다면 즉시 실행(맞는지 체크해보기)
 ```c
 #include <pthread.h>
 int pthread_join(pthread_t thread, void **retval);
