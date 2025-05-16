@@ -1,4 +1,4 @@
-## 📘Background (Virtual Memory)
+ ## 📘Background (Virtual Memory)
 
 - **명령어는 물리 메모리에 있어야 실행 가능함**
   - → 그렇다면 전체 프로그램을 메모리에 올려야 할까?
