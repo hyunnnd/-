@@ -542,7 +542,7 @@ int pthread_setcancelstate(int state, int *oldstate);
     - 취소 요청은 **대기(pending)** 상태로 남음
 - **비동기 취소(Asynchronous cancellation)**는 요청 즉시 취소됨 → **자원 해제 미보장 위험**
 
-## 슬라이드 38: 예제 – Thread Cancellation
+## 📘 예제 – Thread Cancellation
 
 ### 🔹 코드 요약
 
@@ -573,7 +573,7 @@ pthread_cancel(thread);  // 3초 뒤 스레드 취소 요청 pthread_join(thread
 | 지연 취소 (deferred) | 취소 지점 도달 시 | 안정적, 명시적 취소 필요   |
 
 
-## 📘 슬라이드 39: Thread-Local Storage
+## 📘 Thread-Local Storage
 
 - 하나의 **프로세스 내 모든 스레드는 전역 변수**를 공유함
 - **Thread-local storage (TLS)**는 **각 스레드마다 고유한 데이터 복사본**을 가짐
@@ -586,3 +586,58 @@ __thread int tls;  // pthread에서 사용
 - **TLS는 함수 호출 간에도 유지되며**, 정적 변수와 유사함
 - TLS는 **각 스레드에 대해 고유하게 유지**됨
 - 스레드 생성 과정을 직접 제어할 수 없는 경우(예: **스레드 풀**)에 유용함
+
+
+## 📘 Thread-Local Storage in pthread
+
+```c
+`#define THREADS 3 __thread int tls; int global;
+```
+
+- `__thread`로 선언된 `tls`: **스레드마다 독립적인 값** 유지
+- 일반 전역 변수 `global`: **모든 스레드가 공유**
+
+```c
+void *func(void *arg) {     int num = *((int*)arg);     tls = num;     global = num;     sleep(1);     printf("Thread = %d tls = %d global = %d\n", num, tls, global); }
+```
+
+- 각 스레드는 `tls`에 고유한 값을 저장
+- 출력 시 `tls`는 예상한 값 유지, `global`은 마지막 스레드 값으로 덮임
+
+
+## 📘fork() and exec()
+
+### 🔹 fork() 호출 시
+
+- **멀티스레드 프로세스에서 fork()** 호출 시 동작 방식:
+    
+    - 모든 스레드를 복제하는가?
+    - 호출한 **단일 스레드만 복제**하는가?
+
+→ **UNIX는 두 가지 버전 제공**:
+
+- `fork()`: 전체 복제
+- `fork1()`: 하나의 스레드만 복제
+
+### 🔹 exec() 호출 시
+
+- **멀티스레드 프로세스에서 exec()** 호출 시:
+    - 프로세스 전체가 **새로운 프로그램으로 완전히 대체됨**
+    - 모든 기존 스레드는 제거됨
+
+
+## 📘 Linux Threads
+
+### 🔹 Linux에서의 스레드
+
+- Linux는 **스레드를 "태스크(task)"**로 표현함
+- **`clone()` 시스템 호출**을 통해 스레드 생성
+
+### 🔹 clone()의 특징
+
+- `clone()`은 자식 태스크가 부모의 **주소 공간을 공유**하도록 허용
+- **플래그(flags)**를 통해 어떤 자원을 공유할지 지정 가능
+
+### 🔹 내부 구조
+
+- 각 태스크는 `struct task_struct`를 통해 공유 또는 독립적인 **프로세스 관련 데이터 구조**를 참조
