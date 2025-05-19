@@ -51,3 +51,29 @@ while (true) {
     - Producer는 `counter++` 수행
     - Consumer는 `counter--` 수행
 - 이상적으로는 결과가 5로 유지되어야 하지만, **경쟁 조건(race condition)** 발생 시 정확한 결과 보장 불가
+
+
+
+# 동기화 문제 (Synchronization Problem)
+
+### `counter++` 구현
+register₁ = counter  
+register₁ = register₁ + 1  
+counter = register₁
+
+### `counter--` 구현
+register₂ = counter  
+register₂ = register₂ - 1  
+counter = register₂
+
+### 문제 상황: 명령어가 섞여 실행될 경우 (interleaved execution)
+
+| Producer                              | Consumer                              |
+| ------------------------------------- | ------------------------------------- |
+| register₁ = counter *(register₁ = 5)* | register₂ = counter *(register₂ = 5)* |
+| register₁ = register₁ + 1 *(= 6)*     | register₂ = register₂ - 1 *(= 4)*     |
+| counter = register₁ *(counter = 6)*   | counter = register₂ *(counter = 4)*   |
+
+> **counter can be 4 or 6 !**
+
+
