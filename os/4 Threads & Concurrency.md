@@ -673,4 +673,50 @@ void *func(void *arg) {     int num = *((int*)arg);     tls = num;     global = 
 - 작업 수행 로직과 스레드 생성 로직을 분리함으로써 **다양한 실행 전략 적용 가능**
   - 예: 특정 시간 이후 실행, 주기적 실행 등
 
-## 구조 예시
+
+# Java Thread Pools
+
+## 개요
+- Java의 `java.util.concurrent` 패키지에 포함된 **Executor 프레임워크**를 통해 지원됨
+- `Executors` 클래스에서 제공하는 **팩토리 메서드**들을 사용하여 스레드 풀 생성 가능
+
+## 주요 팩토리 메서드
+
+1. `static ExecutorService newSingleThreadExecutor()`
+   - 크기 1의 스레드 풀 생성
+   - 단일 스레드를 반복적으로 재사용
+
+2. `static ExecutorService newFixedThreadPool(int size)`
+   - 고정 크기의 스레드 풀 생성
+   - 지정된 수만큼의 스레드를 유지함
+
+3. `static ExecutorService newCachedThreadPool()`
+   - **제한 없는(unbounded)** 스레드 풀 생성
+   - 작업이 많아지면 새 스레드를 만들고, 유휴 스레드는 재사용
+
+
+
+# OpenMP
+
+## 개요
+- **공유 메모리 환경**에서 병렬 프로그래밍을 지원
+- C, C++, FORTRAN을 위한 컴파일러 지시문 및 API 제공
+
+## 주요 개념
+- **Compiler directives**로 병렬 영역 지정
+- **Parallel regions**: 병렬 실행 가능한 코드 블록을 식별
+
+## 스레드 생성
+- 사용 가능한 코어 수만큼 스레드 생성
+```c
+#pragma omp parallel
+    printf("Hello, World!\n");  // 각 스레드에서 실행됨
+```
+## 병렬 for 루프
+
+```c
+`#pragma omp parallel for 
+for (i = 0; i < N; i++) {     c[i] = a[i] + b[i];  // 루프가 코어 단위로 분할 실행됨 }`
+```
+
+
