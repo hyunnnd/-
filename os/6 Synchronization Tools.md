@@ -106,6 +106,12 @@ counter = register₂
 
 > 공용 데이터 접근 시 반드시 임계 구역 보호 필요
 
+## 각 구역 설명
+
+- **Entry section**: 임계 구역 진입을 요청하는 코드 영역
+- **Critical section**: 공유 자원(공용 변수, 파일 등)을 변경할 수 있는 코드 영역
+- **Exit section**: 임계 구역에서 나왔음을 알리는 코드 영역
+- **Remainder section**: 공유 자원을 변경하지 않는 나머지 코드 영역
 
 
 
