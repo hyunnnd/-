@@ -51,9 +51,3 @@ while (true) {
     - Producer는 `counter++` 수행
     - Consumer는 `counter--` 수행
 - 이상적으로는 결과가 5로 유지되어야 하지만, **경쟁 조건(race condition)** 발생 시 정확한 결과 보장 불가
-
-## 관련 개념
-
-- **Race Condition**: 두 스레드 이상이 동시에 공유 자원에 접근하여 결과가 예측 불가능해지는 현상
-- 해결 방안:
-    - **동기화(synchronization)**: `mutex`, `semaphore`, `monitor` 등을 이용한 접근 제어
