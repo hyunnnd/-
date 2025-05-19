@@ -715,7 +715,7 @@ void *func(void *arg) {     int num = *((int*)arg);     tls = num;     global = 
 ## 병렬 for 루프
 
 ```c
-`#pragma omp parallel for 
+#pragma omp parallel for 
 for (i = 0; i < N; i++) {     c[i] = a[i] + b[i];  // 루프가 코어 단위로 분할 실행됨 }`
 ```
 
