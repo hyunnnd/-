@@ -77,3 +77,13 @@ counter = register₂
 > **counter can be 4 or 6 !**
 
 
+# 동기화 문제 (Synchronization Problem)
+
+## Race condition (경쟁 조건)
+- 여러 프로세스가 동시에 동일한 데이터를 접근 및 조작하는 상황
+- 실행 결과가 접근이 일어나는 **순서**에 따라 달라짐
+
+## Synchronization (동기화)
+- 사건들의 발생을 시간에 맞춰 **일관되게 동작하도록 조정**하는 것
+- 한 번에 **오직 하나의 프로세스만 공유 데이터에 접근**하도록 보장
+
