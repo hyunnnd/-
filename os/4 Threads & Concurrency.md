@@ -642,3 +642,23 @@ void *func(void *arg) {     int num = *((int*)arg);     tls = num;     global = 
 ### 🔹 내부 구조
 
 - 각 태스크는 `struct task_struct`를 통해 공유 또는 독립적인 **프로세스 관련 데이터 구조**를 참조
+
+
+
+# Implicit Threading
+
+## 정의
+- **Implicit Threading**이란:  
+  스레드의 생성과 관리를 **프로그래머가 아닌** 컴파일러와 런타임 라이브러리가 수행하는 방식입니다.
+
+## 주요 기법
+1. **Thread Pools**  
+2. **Fork-Join Model**  
+3. **OpenMP**
+
+## 그 외 방법
+- **Grand Central Dispatch (GCD)** – Apple 시스템에서 사용  
+- **Microsoft Threading Building Blocks (TBB)** – Intel에서 제공  
+- 기타 다양한 라이브러리 존재
+
+
