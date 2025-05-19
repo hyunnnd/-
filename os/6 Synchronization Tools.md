@@ -143,3 +143,31 @@ counter = register₂
 - 더 빠르게 반응함:
   - 커널 모드 프로세스가 너무 오래 CPU를 점유할 위험이 줄어듦
 - **실시간 프로세스(real-time process)**에 더 적합함
+
+
+# 락(Locks): 기본 개념
+
+## 목적
+- **임계 구역(Critical Section)**이 마치 **단일 원자적 명령(atomic instruction)**처럼 실행되도록 보장함
+
+## 예시: 공유 변수 업데이트
+```c
+balance = balance + 1;
+```
+
+## 임계 구역을 보호하는 코드 추가
+```c
+lock_t mutex;  // 전역으로 할당된 락 변수 ‘mutex’
+
+lock(&mutex);
+balance = balance + 1;
+unlock(&mutex);
+```
+## 락 변수 (예: `mutex`)의 상태
+
+- **Available (unlocked / free)**:  
+    어떤 스레드도 락을 점유하지 않은 상태
+- **Acquired (locked / held)**:  
+    정확히 하나의 스레드가 락을 점유하고 있으며, 해당 스레드는 임계 구역에 있음
+
+
