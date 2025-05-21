@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "os/4 Threads & Concurrency.md",
+                "file": "os/10 VirtualMemory.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "4 Threads & Concurrency"
+              "title": "10 VirtualMemory"
             }
           }
         ]
@@ -192,8 +192,8 @@
   },
   "active": "0d85e1e8de7d0804",
   "lastOpenFiles": [
-    "os/10 VirtualMemory.md",
     "os/4 Threads & Concurrency.md",
+    "os/10 VirtualMemory.md",
     "os/6 Synchronization Tools.md",
     "Pasted image 20250519122246.png",
     "사진/Pasted image 20250513141257.png",
