@@ -90,6 +90,7 @@ counter = register₂
 
 # 임계 구역 (Critical Section)
 
+Critical section problem은 프로세스가 데이터를 협력적으로 공유할 수 있도록 활동을 동기화하는 데 사용할 수 있는 프로토콜을 설계하는 것입니다
 ## 개요
 - n개의 프로세스 집합 {p₀, p₁, ..., pₙ₋₁}를 고려
 - 각 프로세스는 **임계 구역(Critical Section)**이라는 코드 영역을 가짐
