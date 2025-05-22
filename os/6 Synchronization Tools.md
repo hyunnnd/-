@@ -276,3 +276,40 @@ unlock(&mutex);
 
 
 
+## 🔍 Evaluating Spin Locks
+
+### ✅ **Correctness**: yes
+
+- Spin lock은 한 번에 **하나의 스레드만 임계 구역에 진입**하도록 허용함
+
+### ⚠ **Fairness**: no
+
+- Spin lock은 **공정성(fairness)을 보장하지 않음**
+- 어떤 스레드는 **무한히 대기(spin)**할 수도 있음
+
+### ⚙ **Performance**
+
+- 단일 CPU 환경에서는 **성능 오버헤드가 큼**
+- **스레드 수가 CPU 수와 비슷한 경우**, Spin lock은 **상당히 잘 작동**함 (_reasonably well_)
+
+
+
+## 🔁 Compare-And-Swap
+
+### ✅ 동작 설명
+
+- 주소 `ptr`이 가리키는 값이 `expected`와 같으면 → `ptr`에 `new` 값을 저장
+- 그 외의 경우 → 변경 없이 **기존 값을 반환**
+
+
+`int CompareAndSwap(int *ptr, int expected, int new) {     int actual = *ptr;     if (actual == expected)         *ptr = new;     return actual; }`
+
+### 🔒 Spin Lock 예시 (CAS 기반)
+
+`void lock(lock_t *lock) {     while (CompareAndSwap(&lock->flag, 0, 1) == 1)         ;  // spin }`
+
+### 🧠 참고
+
+- `cmpxchg` (compare-and-exchange): x86/x64에서 CAS 명령을 구현하는 어셈블리 명령어
+
+
