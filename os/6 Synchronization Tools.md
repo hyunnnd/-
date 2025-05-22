@@ -190,6 +190,9 @@ unlock(&mutex);
 ## unlock()
 - 락의 소유자가 이 함수를 호출하면, 해당 락은 **다시 사용 가능(free)** 상태가 됨
 
+![[Pasted image 20250522121136.png]]
+
+![[Pasted image 20250522121146.png]]
 
 # 락(Lock)의 요구 조건
 
