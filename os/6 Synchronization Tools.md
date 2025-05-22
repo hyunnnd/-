@@ -238,3 +238,33 @@ unlock(&mutex);
     
     - 인터럽트를 마스킹하거나 해제하는 코드가 **현대 CPU에서 느리게 실행**됨
 
+![[Pasted image 20250522121847.png]]
+
+
+## 📌 Using a Flag
+
+### ❗ 문제 1: **상호 배제 없음 (No Mutual Exclusion)**
+
+> 초기 상태: `flag = 0`이라고 가정
+
+#### Thread 1
+`call lock() while (flag == 1)     // spin // context switch 발생`
+
+#### Thread 2
+`call lock() while (flag == 1) flag = 1;  // 동시에 설정됨! // context switch 발생`
+
+결과:
+`flag = 1;  // => 둘 다 진입 가능하게 되어 상호 배제가 깨짐`
+
+---
+
+### ❗ 문제 2: **Spin-waiting**
+
+- 다른 스레드를 **기다리는 동안 CPU 시간 낭비**
+    
+
+---
+
+### ✅ 해결책: **하드웨어에서 지원하는 원자적 명령이 필요함**
+
+- `Test-and-Set` 명령 (atomic exchange라고도 함)
