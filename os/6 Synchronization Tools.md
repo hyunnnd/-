@@ -216,3 +216,25 @@ unlock(&mutex);
 ## 3. 성능 (Performance)
 - 락 사용으로 인해 추가되는 **시간 오버헤드**는 얼마나 되는가?
 
+
+## 📌 Controlling Interrupts
+
+### 🔒 Disable interrupts for critical sections
+
+- 상호 배제를 제공하기 위한 가장 초기의 해결책 중 하나
+    
+- **단일 프로세서(single-processor)** 시스템을 위해 고안됨
+    
+
+`void lock() {     DisableInterrupts(); } void unlock() {     EnableInterrupts(); }`
+
+### ⚠️ 문제점
+
+- 애플리케이션에 대한 **신뢰**가 너무 많이 요구됨
+    
+    - 탐욕적(greedy) 또는 악의적인(malicious) 프로그램이 프로세서를 독점할 수 있음
+        
+- **다중 프로세서(multiprocessor)**에서는 작동하지 않음
+    
+    - 인터럽트를 마스킹하거나 해제하는 코드가 **현대 CPU에서 느리게 실행**됨
+
