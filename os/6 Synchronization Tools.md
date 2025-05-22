@@ -313,3 +313,57 @@ unlock(&mutex);
 - `cmpxchg` (compare-and-exchange): x86/x64에서 CAS 명령을 구현하는 어셈블리 명령어
 
 
+## 🔄 Load-Linked and Store-Conditional (LL/SC)
+
+### ✅ MIPS에서의 명령어 형식
+
+- **Load-Linked (LL)**:  
+    `ll rt, offset(rs)`
+- **Store-Conditional (SC)**:  
+    `sc rt, offset(rs)`
+### 💻 구현 예시 (C 유사)
+
+`int LoadLinked(int *ptr) {     return *ptr; }  int StoreConditional(int *ptr, int value) {     if (no one has updated *ptr since the LoadLinked to this address) {         *ptr = value;         return 1;  // success!     } else {         return 0;  // failed to update     } }`
+
+### ⚙ 동작 원리
+
+- `StoreConditional()`은 **LL 이후 그 주소에 쓰기가 없었을 경우에만 성공**
+    
+    - 성공: `1` 반환 및 `*ptr = value`
+    - 실패: `0` 반환 (값 변경 없음)
+
+
+![[Pasted image 20250522124738.png]]
+
+
+
+## ➕ Fetch-And-Add
+
+### ✅ 개념
+
+- **특정 주소의 값을 원자적으로 증가**시키고, 이전 값을 반환함
+    
+
+c
+
+복사편집
+
+`int FetchAndAdd(int *ptr) {     int old = *ptr;     *ptr = old + 1;     return old; }`
+
+---
+
+### 🎟 Ticket Lock 구현 (with Fetch-And-Add)
+
+c
+
+복사편집
+
+`typedef struct __lock_t {     int ticket;     int turn; } lock_t;  void lock_init(lock_t *lock) {     lock->ticket = 0;     lock->turn = 0; }  void lock(lock_t *lock) {     int myturn = FetchAndAdd(&lock->ticket);     while (lock->turn != myturn)         ;  // spin }  void unlock(lock_t *lock) {     FetchAndAdd(&lock->turn); }`
+
+---
+
+### ⚖ 장점
+
+- 모든 스레드가 **순차적으로 진행 보장**  
+    → **공정성(fairness)** 확보
+    
