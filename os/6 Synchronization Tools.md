@@ -222,20 +222,16 @@ unlock(&mutex);
 ### 🔒 Disable interrupts for critical sections
 
 - 상호 배제를 제공하기 위한 가장 초기의 해결책 중 하나
-    
 - **단일 프로세서(single-processor)** 시스템을 위해 고안됨
-    
 
 `void lock() {     DisableInterrupts(); } void unlock() {     EnableInterrupts(); }`
 
 ### ⚠️ 문제점
 
 - 애플리케이션에 대한 **신뢰**가 너무 많이 요구됨
-    
     - 탐욕적(greedy) 또는 악의적인(malicious) 프로그램이 프로세서를 독점할 수 있음
-        
+
 - **다중 프로세서(multiprocessor)**에서는 작동하지 않음
-    
     - 인터럽트를 마스킹하거나 해제하는 코드가 **현대 CPU에서 느리게 실행**됨
 
 ![[Pasted image 20250522121847.png]]
@@ -246,24 +242,17 @@ unlock(&mutex);
 ### ❗ 문제 1: **상호 배제 없음 (No Mutual Exclusion)**
 
 > 초기 상태: `flag = 0`이라고 가정
-
 #### Thread 1
 `call lock() while (flag == 1)     // spin // context switch 발생`
-
 #### Thread 2
 `call lock() while (flag == 1) flag = 1;  // 동시에 설정됨! // context switch 발생`
 
 결과:
 `flag = 1;  // => 둘 다 진입 가능하게 되어 상호 배제가 깨짐`
 
----
-
 ### ❗ 문제 2: **Spin-waiting**
 
 - 다른 스레드를 **기다리는 동안 CPU 시간 낭비**
-    
-
----
 
 ### ✅ 해결책: **하드웨어에서 지원하는 원자적 명령이 필요함**
 
