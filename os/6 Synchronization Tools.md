@@ -213,7 +213,6 @@ unlock(&mutex);
 ## 3. 성능 (Performance)
 - 락 사용으로 인해 추가되는 **시간 오버헤드**는 얼마나 되는가?
 
-
 ## 📌 Controlling Interrupts
 
 ### 🔒 Disable interrupts for critical sections
