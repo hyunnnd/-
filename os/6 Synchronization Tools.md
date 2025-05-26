@@ -435,3 +435,41 @@ int TestAndSet(int *ptr, int new) {
 }
 ```
 
+
+## 📌 제목: Using Queues and Sleeping
+
+### ✅ 개요
+
+- **Queue**를 사용하여 락을 기다리는 스레드들을 관리함
+- **park()**: 호출한 스레드를 **수면 상태**로 전환
+- **unpark(threadID)**: 특정 스레드를 **깨움**
+
+✅ 자료구조 정의
+```c
+typedef struct __lock_t {
+    int flag;        // lock is acquired or not
+    int guard;       // to protect the queue
+    queue_t *q;
+} lock_t;
+```
+
+- `flag`: 락 보유 여부
+- `guard`: 큐 보호용
+- `q`: 대기 큐
+
+✅ 초기화 함수
+```c
+void lock_init(lock_t *m) {
+    m->flag = 0;
+    m->guard = 0;
+    queue_init(m->q);
+}
+```
+![[Pasted image 20250526115956.png]]
+### 🔑 요점 정리
+
+- 락을 얻지 못한 스레드는 **큐에 저장되고 park() 호출로 대기 상태**가 됨
+- 락 해제 시, **큐에서 다음 스레드를 꺼내 unpark()로 깨움**
+- `guard`는 큐 접근 동기화를 위한 **스핀락**으로 사용됨
+
+
