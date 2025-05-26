@@ -601,16 +601,11 @@ park();             // if unpark() already called, returns immediately
 # 조건을 기다리는 방법 (How to Wait for a Condition)
 
 ## 조건 변수 (Condition variable)
-- **스레드들의 큐**를 관리함
-
+### **스레드들의 큐**를 관리함
 ### 조건에 대해 대기 (Waiting on the condition)
-- 실행 상태가 원하는 상태가 아닐 경우,
-- 스레드가 **명시적으로 큐에 자신을 등록**함
-
+- 실행 상태가 원하는 상태가 아닐 경우, 스레드가 **명시적으로 큐에 자신을 등록**함
 ### 조건에 대해 신호 보내기 (Signaling on the condition)
-- 다른 스레드가 **상태를 변경하면**,
-- 대기 중인 스레드 중 **하나를 깨워서** 계속 실행하도록 함
-
+- 다른 스레드가 **상태를 변경하면**, 대기 중인 스레드 중 **하나를 깨워서** 계속 실행하도록 함
 ## 하나의 패키지에 포함되는 세 가지 요소 (Three in a package)
 - 조건 변수 `c`
 - 상태 변수 `m`
@@ -654,4 +649,6 @@ a = b;
 pthread_cond_signal(&c);
 pthread_mutex_unlock(&m);
 ```
+
+![[Pasted image 20250526122321.png]]
 
