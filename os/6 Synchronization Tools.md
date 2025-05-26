@@ -747,4 +747,48 @@ void thr_join() {
 ![[Pasted image 20250526123721.png]]
 
 
+# 생산자/소비자 문제: 단일 조건 변수와 if 문 사용
 
+## 설정
+- 하나의 조건 변수 `cond`와 뮤텍스 `mutex`를 사용함
+
+## 생산자 (Producer)
+
+```c
+void *producer(void *arg) {
+    int i;
+    for (i = 0; i < loops; i++) {
+        pthread_mutex_lock(&mutex);       // p1
+        if (count == 1)                   // p2
+            pthread_cond_wait(&cond, &mutex); // p3
+        put(i);                           // p4
+        pthread_cond_signal(&cond);       // p5
+        pthread_mutex_unlock(&mutex);     // p6
+    }
+}
+```
+
+## 소비자 (Consumer)
+```c
+void *consumer(void *arg) {
+    int i;
+    for (i = 0; i < loops; i++) {
+        pthread_mutex_lock(&mutex);       // c1
+        if (count == 0)                   // c2
+            pthread_cond_wait(&cond, &mutex); // c3
+        int tmp = get();                  // c4
+        pthread_cond_signal(&cond);       // c5
+        pthread_mutex_unlock(&mutex);     // c6
+        printf("%d\n", tmp);
+    }
+}
+```
+## 설명
+
+- **p1–p3**: 생산자는 버퍼가 **비어 있을 때까지 기다림**
+- **c1–c3**: 소비자는 버퍼가 **가득 찰 때까지 기다림**
+## 조건
+
+- 단일 생산자와 단일 소비자일 경우 위 코드로 충분함
+
+> ⚠ 다중 생산자/소비자 환경에서는 이 구현은 문제가 발생할 수 있음
