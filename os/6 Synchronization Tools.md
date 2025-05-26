@@ -380,14 +380,10 @@ void unlock(lock_t *lock) {
 FetchAndAdd(&lock->turn); 
 }
 ```
-
-
 ### ⚖ 장점
 
 - 모든 스레드가 **순차적으로 진행 보장**  
     → **공정성(fairness)** 확보
-
-
 
 # So Much Spinning
 
@@ -568,3 +564,25 @@ park();             // if unpark() already called, returns immediately
 - 조건이 충족되지 않으면 `futex_wait()` 호출로 **슬립 진입**
 - 락을 해제하며 0x80000000을 더함 → Bit 31 해제
 - 다른 스레드가 대기 중이라면 **futex_wake()로 하나 깨움**
+
+
+## 📌 Two-Phase Locks
+
+### ✅ 개념
+
+- **락이 곧 해제될 가능성이 있을 때**, **스핀**을 잠깐 시도해 보는 것이 효과적일 수 있음
+- 이를 반영한 **락 획득 전략**이 **Two-Phase Lock (2단계 락)**
+
+## 🔄 단계 설명
+
+### 1. **First Phase: Spinning**
+
+- 일정 시간 동안 **락을 얻기 위해 계속 시도(스핀)**
+- 락을 곧 얻을 수 있다고 기대할 때 효과적
+- 단, 이 시도 중에 락을 얻지 못하면 **두 번째 단계로 진입**
+### 2. **Second Phase: Sleeping**
+
+- 일정 시간 동안 락을 얻지 못하면 **스레드를 슬립 상태로 전환**
+- 이후 락이 해제되었을 때 **다른 스레드가 깨움**
+
+
