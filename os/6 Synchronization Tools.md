@@ -586,3 +586,72 @@ park();             // if unpark() already called, returns immediately
 - 이후 락이 해제되었을 때 **다른 스레드가 깨움**
 
 
+# 조건 변수 (Condition Variables)
+
+- 스레드가 실행을 계속하기 전에 조건이 참인지 확인하고자 하는 경우가 자주 있음
+
+- 예시:  
+  - 부모 스레드는 자식 스레드가 완료되었는지 확인하고자 할 수 있음  
+  - 이는 흔히 `join()`이라고 불림
+
+
+![[Pasted image 20250526121642.png]]
+
+
+# 조건을 기다리는 방법 (How to Wait for a Condition)
+
+## 조건 변수 (Condition variable)
+- **스레드들의 큐**를 관리함
+
+### 조건에 대해 대기 (Waiting on the condition)
+- 실행 상태가 원하는 상태가 아닐 경우,
+- 스레드가 **명시적으로 큐에 자신을 등록**함
+
+### 조건에 대해 신호 보내기 (Signaling on the condition)
+- 다른 스레드가 **상태를 변경하면**,
+- 대기 중인 스레드 중 **하나를 깨워서** 계속 실행하도록 함
+
+## 하나의 패키지에 포함되는 세 가지 요소 (Three in a package)
+- 조건 변수 `c`
+- 상태 변수 `m`
+- 상태 변수를 보호하기 위한 `lock L`
+
+
+# POSIX 조건 변수 (POSIX Condition Variables)
+
+- POSIX 조건 변수는 상호 배제를 제공하기 위해 POSIX 뮤텍스 락과 함께 사용됨
+
+## 생성 및 초기화
+
+```c
+pthread_mutex_t m;
+pthread_cond_t c;
+
+pthread_mutex_init(&m, NULL);
+pthread_cond_init(&c, NULL);
+```
+
+
+# POSIX 조건 변수 - 동작 방식
+
+## 조건 a == b 가 될 때까지 대기하는 스레드
+
+```c
+pthread_mutex_lock(&m);
+while (a != b)
+    pthread_cond_wait(&c, &m);
+pthread_mutex_unlock(&m);
+```
+`wait()` 호출은 뮤텍스를 인자로 받음
+
+- `wait()`는 락을 **해제하고**, 호출한 스레드를 **수면 상태**로 만듦
+- 스레드가 다시 깨어나면, **락을 다시 획득해야 함**
+
+## 조건 변수를 통해 다른 스레드에게 신호를 보내는 스레드
+```c
+pthread_mutex_lock(&m);
+a = b;
+pthread_cond_signal(&c);
+pthread_mutex_unlock(&m);
+```
+
