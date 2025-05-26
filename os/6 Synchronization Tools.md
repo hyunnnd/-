@@ -350,28 +350,88 @@ int StoreConditional(int *ptr, int value) {
 ### ✅ 개념
 
 - **특정 주소의 값을 원자적으로 증가**시키고, 이전 값을 반환함
-    
 
-c
-
-복사편집
-
-`int FetchAndAdd(int *ptr) {     int old = *ptr;     *ptr = old + 1;     return old; }`
-
----
+```c
+int FetchAndAdd(int *ptr) {     
+int old = *ptr;     
+*ptr = old + 1;     
+return old; 
+}
+```
 
 ### 🎟 Ticket Lock 구현 (with Fetch-And-Add)
 
-c
 
-복사편집
+```c 
+typedef struct __lock_t {     
+int ticket;     
+int turn; 
+} lock_t;  
+void lock_init(lock_t *lock) {     
+lock->ticket = 0;     
+lock->turn = 0; 
+}  
+void lock(lock_t *lock) {     
+int myturn = FetchAndAdd(&lock->ticket);     
+while (lock->turn != myturn)         
+		;  // spin 
+}  
+void unlock(lock_t *lock) {     
+FetchAndAdd(&lock->turn); 
+}
+```
 
-`typedef struct __lock_t {     int ticket;     int turn; } lock_t;  void lock_init(lock_t *lock) {     lock->ticket = 0;     lock->turn = 0; }  void lock(lock_t *lock) {     int myturn = FetchAndAdd(&lock->ticket);     while (lock->turn != myturn)         ;  // spin }  void unlock(lock_t *lock) {     FetchAndAdd(&lock->turn); }`
-
----
 
 ### ⚖ 장점
 
 - 모든 스레드가 **순차적으로 진행 보장**  
     → **공정성(fairness)** 확보
-    
+
+
+
+# So Much Spinning
+
+## 스핀락(Spin Lock)이란?
+- **하드웨어 기반의 동기화 기법**으로, 락이 해제될 때까지 계속해서 루프를 돌며(lock 변수 검사) 대기하는 방식
+- 구조는 **간단(simple)**하고 동작은 잘됨
+
+## 문제점: 비효율성 (Inefficiency)
+- **스핀 상태(Spinning)**에 빠진 스레드는 **계속해서 변수만 검사함**
+- 그동안 **CPU 시간을 낭비**하며, 실질적인 작업은 수행하지 않음
+- → **Time Slice(스케줄링 시간 조각)**가 낭비됨
+
+> 예시:  
+> 어떤 스레드가 락을 얻지 못해 계속 루프를 도는 동안, CPU는 아무 작업도 하지 않고 그 스레드의 루프만 수행하게 됨
+## 결론
+- 스핀락은 단순하고 빠를 수 있지만, **리소스가 한정된 환경** 또는 **다중 스레드 환경**에서는 **비효율적일 수 있음**
+
+
+# A Simple Approach: Just Yield
+
+- 스핀하려 할 때, **CPU를 다른 스레드에게 양보**함
+  - OS 시스템 콜은 호출자를 **Running 상태에서 Ready 상태**로 이동시킴
+- **Context switch** 비용이 상당할 수 있으며, **starvation** 문제도 여전히 존재함
+
+## 코드 예시
+
+```c
+void init() {
+    flag = 0;
+}
+
+void lock() {
+    while (TestAndSet(&flag, 1) == 1)
+        yield();  // give up the CPU
+}
+
+void unlock() {
+    flag = 0;
+}
+
+int TestAndSet(int *ptr, int new) {
+    int old = *ptr;
+    *ptr = new;
+    return old;
+}
+```
+
