@@ -319,7 +319,19 @@ unlock(&mutex);
     `sc rt, offset(rs)`
 ### 💻 구현 예시 (C 유사)
 
-`int LoadLinked(int *ptr) {     return *ptr; }  int StoreConditional(int *ptr, int value) {     if (no one has updated *ptr since the LoadLinked to this address) {         *ptr = value;         return 1;  // success!     } else {         return 0;  // failed to update     } }`
+```c 
+int LoadLinked(int *ptr) {     
+	return *ptr; 
+}  
+int StoreConditional(int *ptr, int value) {     
+	if (no one has updated *ptr since the LoadLinked to this address) {           
+		*ptr = value;
+	    return 1;  // success!     
+	     } else {         
+		return 0;  // failed to update    
+	}
+}
+```
 
 ### ⚙ 동작 원리
 
