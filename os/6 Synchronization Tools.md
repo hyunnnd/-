@@ -89,6 +89,39 @@ counter = register₂
 
 
 # 임계 구역 (Critical Section)
+- **n개의 프로세스**로 구성된 시스템을 고려함: { p₀, p₁, ..., pₙ₋₁ }
+- 각 프로세스는 **Critical Section (임계 구역)**이라는 코드 세그먼트를 가짐
+
+## 임계 구역의 특징
+- 공용 변수 변경, 테이블 업데이트, 파일 기록 등의 작업 수행
+- **한 프로세스가 임계 구역에 있는 동안, 다른 프로세스는 그 임계 구역에 진입할 수 없음**
+
+## 프로세스 구조
+
+각 프로세스는 다음과 같은 세 구간을 반복함:
+1. **Entry Section**  
+   - 임계 구역 진입을 위한 준비 단계
+2. **Critical Section**  
+   - 공유 데이터를 사용하는 핵심 작업 수행
+3. **Exit Section**  
+   - 임계 구역에서 나오는 과정
+4. **Remainder Section**  
+   - 임계 구역 외의 나머지 코드 실행
+
+## 시각적 구성
+
+Remainder Section
+↓
+Entry Section
+↓
+Critical Section → 공유 데이터 접근
+↓
+Exit Section
+↓
+Remainder Section
+
+- 여러 프로세스가 위와 같은 순환 구조를 따르며, 임계 구역에서 **공유 데이터**를 사용함
+- 동시에 두 개 이상의 프로세스가 임계 구역에 들어가는 것은 **허용되지 않음**
 
 Critical section problem은 프로세스가 데이터를 협력적으로 공유할 수 있도록 활동을 동기화하는 데 사용할 수 있는 프로토콜을 설계하는 것입니다
 ## 개요
