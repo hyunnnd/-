@@ -812,3 +812,10 @@ void *consumer(void *arg) {
 - 더 강력한 의미적 보증을 제공하지만, 실제 구현은 거의 없음.
 
 
+![[Pasted image 20250531214007.png]]
+
+
+
+![[Pasted image 20250531214014.png]]
+
+
