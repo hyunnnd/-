@@ -819,3 +819,19 @@ void *consumer(void *arg) {
 ![[Pasted image 20250531214014.png]]
 
 
+## Producer / Consumer: Two Condition Variables and While
+
+### ● 핵심 아이디어
+- **두 개의 조건 변수**(`empty`, `fill`)와 **while 루프**를 사용하여 동기화 수행
+
+### ● 동작 방식
+- **Producer** 스레드:
+  - 조건 변수 `empty`를 기준으로 **대기(wait)**  
+  - 생산 후 **`fill` 조건 변수에 signal**을 보냄
+
+- **Consumer** 스레드:
+  - 조건 변수 `fill`을 기준으로 **대기(wait)**  
+  - 소비 후 **`empty` 조건 변수에 signal**을 보냄
+
+
+![[Pasted image 20250531214224.png]]
