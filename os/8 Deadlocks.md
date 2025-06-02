@@ -44,29 +44,28 @@ void *do_work_two(void *param) {
     - **순환 대기(Circular wait)**: 스레드들이 원형으로 자원을 기다리는 상태
 ### Resource-Allocation Graph
 
-- 교착 상태를 설명하는 방향 그래프
-- 정점: T (스레드), R (자원)
-- 간선: T → R (요청), R → T (할당)
-- 요청 간선이 만족되면 할당 간선으로 변경됨
+- 교착 상태는 **자원-할당 그래프(resource-allocation graph)**라는 **방향 그래프**를 통해 더 명확하게 설명할 수 있습니다.
+- 그래프는 정점 집합 V와 간선 집합 E로 구성됩니다.
+- **정점 집합 V**는 두 가지 유형의 정점으로 구성됩니다:
+    - T={T1,T2,...,Tn}T = \{T_1, T_2, ..., T_n\}T={T1​,T2​,...,Tn​}: 스레드 집합
+    - R={R1,R2,...,Rm}R = \{R_1, R_2, ..., R_m\}R={R1​,R2​,...,Rm​}: 자원 종류 집합
+- **간선 집합 E**도 두 가지 방향 간선으로 나뉩니다:
+    - Ti→RjT_i \rightarrow R_jTi​→Rj​: **요청(request) 간선**
+    - Rj→TiR_j \rightarrow T_iRj​→Ti​: **할당(assignment) 간선**
+- 요청 간선이 만족되면 해당 간선은 할당 간선으로 변경됩니다.
+![[Pasted image 20250602122345.png]]
 ### Resource-Allocation Graph Example
 
 - R1: 1개, R2: 2개, R3: 1개, R4: 3개
-    
 - T1은 R2를 보유, R1 요청 중
-    
 - T2는 R1, R2 보유, R3 요청 중
-    
 - T3은 R3 보유 중
-    
 
 ### Graph 분석
 
 - 사이클 없으면 교착 상태 없음
-    
 - 사이클 있고 자원 인스턴스가 하나씩이면 교착 상태
-    
 - 자원 인스턴스가 여러 개면 교착 상태 가능성 있음
-    
 
 ### Deadlock 처리 방법
 
