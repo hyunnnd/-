@@ -39,25 +39,15 @@ void *do_work_two(void *param) {
 - 네 가지 조건이 동시에 성립될 때 교착 상태 발생 가능
     
     - **상호 배제(Mutual exclusion)**: 하나의 스레드만 자원 사용 가능
-        
     - **보유와 대기(Hold and wait)**: 최소 하나의 자원을 보유한 상태로 다른 자원을 요청
-        
     - **비선점(No preemption)**: 자원은 자발적으로 반환될 때만 회수 가능
-        
     - **순환 대기(Circular wait)**: 스레드들이 원형으로 자원을 기다리는 상태
-        
-
 ### Resource-Allocation Graph
 
 - 교착 상태를 설명하는 방향 그래프
-    
 - 정점: T (스레드), R (자원)
-    
 - 간선: T → R (요청), R → T (할당)
-    
 - 요청 간선이 만족되면 할당 간선으로 변경됨
-    
-
 ### Resource-Allocation Graph Example
 
 - R1: 1개, R2: 2개, R3: 1개, R4: 3개
