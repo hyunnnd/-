@@ -90,7 +90,6 @@ counter = register₂
 
 # 임계 구역 (Critical Section)
 
-Critical section problem은 프로세스가 데이터를 협력적으로 공유할 수 있도록 활동을 동기화하는 데 사용할 수 있는 프로토콜을 설계하는 것입니다
 ## 개요
 - n개의 프로세스 집합 {p₀, p₁, ..., pₙ₋₁}를 고려
 - 각 프로세스는 **임계 구역(Critical Section)**이라는 코드 영역을 가짐
@@ -102,6 +101,7 @@ Critical section problem은 프로세스가 데이터를 협력적으로 공유�
   - 파일 쓰기 등
 - 한 프로세스가 임계 구역에 들어가면, **다른 어떤 프로세스도 동시에 해당 임계 구역에 들어가서는 안 됨**
 
+Critical section problem은 프로세스가 데이터를 협력적으로 공유할 수 있도록 활동을 동기화하는 데 사용할 수 있는 프로토콜을 설계하는 것입니다
 ## 프로세스 흐름
 - **Entry Section** → **Critical Section** → **Exit Section** → **Remainder Section**
 
@@ -792,3 +792,46 @@ void *consumer(void *arg) {
 - 단일 생산자와 단일 소비자일 경우 위 코드로 충분함
 
 > ⚠ 다중 생산자/소비자 환경에서는 이 구현은 문제가 발생할 수 있음
+
+![[Pasted image 20250531213810.png]]
+
+
+## Thread Trace: Broken Solution (Version 1)
+
+### ● 문제 발생 원인
+- 프로듀서가 소비자 스레드 `Tc1`을 깨운 이후, `Tc1`이 실제로 실행되기 전에 **다른 소비자 스레드 `Tc2`가 버퍼 상태를 변경**함.
+- 따라서, 깨어난 `Tc1`이 실행될 때 **버퍼 상태가 여전히 유효하다는 보장이 없음**.
+- 이는 **Mesa Semantics**에 해당함.
+
+### ● Mesa Semantics
+- 깨어난 스레드가 즉시 실행된다는 보장이 없음.
+- 대부분의 실제 운영체제는 Mesa Semantics를 사용함.
+
+### ● Hoare Semantics
+- 깨어난 스레드가 **즉시 실행됨**을 보장함.
+- 더 강력한 의미적 보증을 제공하지만, 실제 구현은 거의 없음.
+
+
+![[Pasted image 20250531214007.png]]
+
+
+
+![[Pasted image 20250531214014.png]]
+
+
+## Producer / Consumer: Two Condition Variables and While
+
+### ● 핵심 아이디어
+- **두 개의 조건 변수**(`empty`, `fill`)와 **while 루프**를 사용하여 동기화 수행
+
+### ● 동작 방식
+- **Producer** 스레드:
+  - 조건 변수 `empty`를 기준으로 **대기(wait)**  
+  - 생산 후 **`fill` 조건 변수에 signal**을 보냄
+
+- **Consumer** 스레드:
+  - 조건 변수 `fill`을 기준으로 **대기(wait)**  
+  - 소비 후 **`empty` 조건 변수에 signal**을 보냄
+
+
+![[Pasted image 20250531214224.png]]
