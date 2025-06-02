@@ -1,0 +1,212 @@
+
+### 세마포어
+
+- 세마포어: 프로세스가 활동을 동기화할 수 있도록 돕는 도구 (뮤텍스보다 더 정교한 방식 제공)
+- 세마포어 S는 정수형 변수이며 두 가지 원자적 연산만 가능함
+    - `wait()` 연산
+    - `signal()` 연산
+
+```c
+wait(S) {
+    while (S <= 0);
+    S--;
+}
+
+signal(S) {
+    S++;
+}
+```
+
+### 세마포어의 용도
+
+- 카운팅 세마포어: 값이 제한 없이 가능하며, 자원의 수로 초기화됨
+- 이진 세마포어: 값이 0 또는 1 사이이며, 뮤텍스 락과 동일
+- 다양한 동기화 문제 해결에 사용 가능함
+
+### POSIX 세마포어
+
+- 이름 있는 세마포어: 여러 비관련 프로세스가 쉽게 공유 가능
+- 생성 및 초기화, 획득 및 해제 예시:
+
+```c
+#include <semaphore.h>
+sem_t *sem;
+sem = sem_open("SEM", O_CREAT, 0666, 1);
+
+sem_wait(sem);
+/* critical section */
+sem_post(sem);
+```
+
+- `sem_wait()`: 값이 1 이상이면 즉시 반환, 0 이하면 대기
+- `sem_post()`: 값을 증가시키며, 대기 중인 쓰레드가 있으면 하나를 깨움
+
+### 이름 없는 세마포어
+
+```c
+#include <semaphore.h>
+sem_t sem;
+sem_init(&sem, 0, 1);
+
+sem_wait(&sem);
+/* critical section */
+sem_post(&sem);
+```
+
+- `pshared = 0`이면 프로세스 내 쓰레드 공유, 아니면 프로세스 간 공유
+
+### 이진 세마포어
+
+- Using a semaphore as a lock
+- The initial value should be 1
+```c
+sem_t m;
+sem_init(&m, 0, 1);
+
+sem_wait(&m);
+// critical section
+sem_post(&m);
+```
+
+### 순서를 위한 세마포어
+
+```c
+sem_t s;
+void *child(void *arg) {
+    printf("child\n");
+    sem_post(&s);
+    return NULL;
+}
+int main(...) {
+    sem_init(&s, 0, 0);
+    printf("parent: begin\n");
+    pthread_create(..., child, NULL);
+    sem_wait(&s);
+    printf("parent: end\n");
+}
+```
+
+### 제한 버퍼 문제
+
+- 버퍼가 가득 차면 생산자는 소비자가 아이템을 제거할 때까지 대기해야 함
+- 버퍼가 비면 소비자는 생산자가 아이템을 추가할 때까지 대기해야 함
+- empty, full 세마포어 사용
+
+### 세마포어를 사용한 제한 버퍼 구현
+
+```c
+sem_t empty, full;
+void *producer(...) {
+    for (...) {
+        sem_wait(&empty);
+        put(i);
+        sem_post(&full);
+    }
+}
+void *consumer(...) {
+    for (...) {
+        sem_wait(&full);
+        tmp = get();
+        sem_post(&empty);
+    }
+}
+```
+
+### 뮤텍스 추가 해결 방안
+
+- 뮤텍스를 잘못 사용하는 경우 교착 상태 발생
+    
+- 작동하는 해결책: 뮤텍스는 `put()`과 `get()` 전에, `post()` 후에 사용
+    
+
+### 리더-라이터 문제
+
+- 여러 리더와 라이터가 공유 데이터 접근
+    
+- 리더는 동시에 접근 가능하지만, 라이터는 단독 접근 필요
+    
+
+### 리더-라이터 락
+
+```c
+typedef struct _rwlock_t {
+    sem_t lock;
+    sem_t writelock;
+    int readers;
+} rwlock_t;
+```
+
+### 리더 락/해제, 라이터 락/해제 함수
+
+```c
+void rwlock_acquire_readlock(...) {
+    sem_wait(&rw->lock);
+    rw->readers++;
+    if (rw->readers == 1)
+        sem_wait(&rw->writelock);
+    sem_post(&rw->lock);
+}
+
+void rwlock_release_readlock(...) {
+    sem_wait(&rw->lock);
+    rw->readers--;
+    if (rw->readers == 0)
+        sem_post(&rw->writelock);
+    sem_post(&rw->lock);
+}
+
+void rwlock_acquire_writelock(...) {
+    sem_wait(&rw->writelock);
+}
+
+void rwlock_release_writelock(...) {
+    sem_post(&rw->writelock);
+}
+```
+
+- 공정성 문제 존재: 리더가 라이터를 굶기게 될 수 있음
+    
+
+### 식사하는 철학자 문제
+
+- 원형 테이블에 철학자 5명이 앉아 있으며, 생각하거나 식사함
+    
+- 각각의 철학자는 양옆의 젓가락 2개를 집어야 식사 가능
+    
+- 한 번에 하나의 젓가락만 집을 수 있음
+    
+- 데드락, 굶주림 없는 해결책이 필요함
+    
+
+### 기본 해결책 (데드락 발생 가능)
+
+```c
+sem_wait(chopstick[i]);
+sem_wait(chopstick[(i+1) % 5]);
+/* eat */
+sem_post(chopstick[i]);
+sem_post(chopstick[(i+1) % 5]);
+```
+
+### 해결책: 의존성 끊기
+
+```c
+if (p == 4) {
+    sem_wait(chopstick[(i+1) % 5]);
+    sem_wait(chopstick[i]);
+} else {
+    sem_wait(chopstick[i]);
+    sem_wait(chopstick[(i+1) % 5]);
+}
+```
+
+- 혹은 최대 4명의 철학자만 앉도록 제한하거나, 두 젓가락 모두 가능할 때만 집게 함
+    
+- 홀수/짝수 철학자 접근 순서 변경
+    
+
+### 참고자료
+
+- Operating Systems: Three Easy Pieces Ch31
+    
+- [https://oslab.kaist.ac.kr/ostepslides/](https://oslab.kaist.ac.kr/ostepslides/)
