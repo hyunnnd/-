@@ -107,3 +107,14 @@ void *do_work_two(void *param) {
             `pthread_mutex_lock(&first_mutex);`
 
 
+### Deadlock Avoidance
+
+- 자원이 어떻게 요청될지를 추가적으로 알아야 함  
+    예: 각 스레드는 각 자원 유형에 대해 최대 몇 개까지 요청할 수 있는지를 사전에 선언함
+- 교착 상태 회피 알고리즘은 `자원 할당 상태(resource-allocation state)`를 동적으로 검사하여 순환 대기 조건이 절대 발생하지 않도록 함
+- `Resource-allocation state`는 다음 정보로 정의됨
+    - 사용 가능한 자원의 수
+    - 현재 할당된 자원의 수
+    - 각 스레드의 최대 요구량
+
+
