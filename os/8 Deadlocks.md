@@ -176,3 +176,17 @@ void *do_work_two(void *param) {
     - **모든 자원을 반환해야 함**
 
 
+### Data Structures for the Banker’s Algorithm
+
+- $n$: 스레드(thread)의 수
+- $m$: 자원(resource) 유형의 수
+- `Available`: 길이 $m$의 벡터
+    - `Available[j] = k`이면, 자원 유형 $R_j$가 시스템에 $k$개 사용 가능함
+- `Max`: $n \times m$ 행렬
+    - `Max[i][j] = k`이면, 스레드 $T_i$는 자원 유형 $R_j$를 최대 $k$개까지 요청할 수 있음
+- `Allocation`: $n \times m$ 행렬
+    - `Allocation[i][j] = k`이면, 현재 스레드 $T_i$는 자원 $R_j$를 $k$개 할당받은 상태임
+- `Need`: $n \times m$ 행렬
+    - `Need[i][j] = k`이면, 스레드 $T_i$가 작업을 완료하기 위해 자원 $R_j$를 $k$개 더 필요로 함
+    - 계산식:
+        `Need[i][j] = Max[i][j] - Allocation[i][j]`
