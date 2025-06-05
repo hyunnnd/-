@@ -210,8 +210,30 @@ void *do_work_two(void *param) {
 4. - 모든 $i$에 대해 `Finish[i] == true`이면 → 시스템은 **안전 상태**임
     - 그렇지 않으면 → **비안전 상태**
 
+### Resource-Request Algorithm
 
-	
+- `Requestᵢ`는 스레드 $Tᵢ$가 요청하는 자원 벡터임  
+    → `Requestᵢ[j] = k`는 스레드 $Tᵢ$가 자원 $R_j$를 $k$개 요청함을 의미
+
+#### 동작 절차:
+
+1. **최대 요청량 초과 여부 확인**
+    - `Requestᵢ ≤ Needᵢ`이면 다음 단계로
+    - 아니라면 오류 발생 (스레드가 최대 요구량을 초과하여 요청한 경우)
+
+2. **자원 가용성 확인**
+    - `Requestᵢ ≤ Available`이면 다음 단계로
+    - 아니라면 $Tᵢ$는 대기 (자원이 부족함)
+
+3. **가상 할당 수행 (임시 시뮬레이션)**
+Available = Available − Requestᵢ  
+Allocationᵢ = Allocationᵢ + Requestᵢ  
+Needᵢ = Needᵢ − Requestᵢ
+- - 이 상태에서 Safety Algorithm을 실행하여 **안전 상태인지 검사**
+        
+3. **결과에 따른 처리**
+    - 안전 상태이면 → 요청된 자원을 실제로 할당함
+    - 비안전 상태이면 → $Tᵢ$는 대기, 상태는 이전으로 복구됨
 
 
 ![[Pasted image 20250605121257.png]]
