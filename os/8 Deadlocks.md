@@ -190,3 +190,24 @@ void *do_work_two(void *param) {
     - `Need[i][j] = k`이면, 스레드 $T_i$가 작업을 완료하기 위해 자원 $R_j$를 $k$개 더 필요로 함
     - 계산식:
         `Need[i][j] = Max[i][j] - Allocation[i][j]`
+
+
+### Safety Algorithm
+
+1. `Work`와 `Finish`를 각각 길이 $m$과 $n$의 벡터로 초기화함
+    - `Work = Available`
+    - 모든 $i$에 대해 `Finish[i] = false`
+
+2. 아래 조건을 모두 만족하는 인덱스 $i$를 찾음:
+    - (a) `Finish[i] == false`
+    - (b) `Needᵢ ≤ Work` (스레드 $Tᵢ$가 필요한 자원을 현재 사용 가능한 자원으로 만족시킬 수 있는 경우)  
+        → 그런 $i$가 없다면 Step 4로 이동
+
+3. - `Work = Work + Allocationᵢ` (자원 회수)
+    - `Finish[i] = true`
+    - Step 2로 되돌아감
+
+4. - 모든 $i$에 대해 `Finish[i] == true`이면 → 시스템은 **안전 상태**임
+    - 그렇지 않으면 → **비안전 상태**
+
+
