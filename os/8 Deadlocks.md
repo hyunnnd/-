@@ -90,4 +90,20 @@ void *do_work_two(void *param) {
     - 반납된 자원은 스레드가 기다리는 자원 목록에 추가됨
     - 스레드는 이전에 보유했던 자원들과 새로 요청한 자원들을 모두 다시 획득할 수 있을 때에만 다시 실행됨
 
+- `Circular Wait`: 모든 자원 유형에 대해 전체 순서를 부여하고, 각 스레드가 자원을 증가하는 순서대로 요청하도록 요구함
+    - 순환 대기 조건을 무효화하는 것이 가장 일반적인 방식
+    - 각 자원(예: 뮤텍스 락)에 고유한 번호를 부여함
+    - 자원은 오름차순 순서대로만 요청해야 함  
+        예시: `F(first_mutex) = 1`, `F(second_mutex) = 5`  
+        → 스레드는 `F(R_j) > F(R_i)`를 만족할 때에만 `R_j`를 요청할 수 있음
+        
+    - 예시 코드:
+        - `thread_one`: 올바른 자원 획득 순서  
+            `pthread_mutex_lock(&first_mutex);`  
+            `pthread_mutex_lock(&second_mutex);`
+            
+        - `thread_two`: 잘못된 자원 획득 순서 (허용되지 않음)  
+            `pthread_mutex_lock(&second_mutex);`  
+            `pthread_mutex_lock(&first_mutex);`
+
 
