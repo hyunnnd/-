@@ -135,3 +135,32 @@ void *do_work_two(void *param) {
 - **교착 상태 회피(deadlock avoidance)** 전략은 시스템이 **절대 비안전 상태에 들어가지 않도록 보장**하는 방식임
 
 
+### Avoidance Algorithm
+
+- **자원 유형이 단일 인스턴스일 경우**  
+    → **Resource-Allocation Graph(자원 할당 그래프)**를 사용하여 교착 상태 회피
+    
+- **자원 유형이 다중 인스턴스일 경우**  
+    → **Banker’s Algorithm(은행원 알고리즘)**을 사용하여 교착 상태 회피
+
+
+### Resource-Allocation Graph Algorithm
+
+- `Claim edge` (Tᵢ → Rⱼ):
+    - 스레드 Tᵢ가 미래에 자원 Rⱼ를 요청할 수 있음을 나타냄
+    - 점선으로 표현됨
+
+- 동작 방식:
+    - 스레드가 자원을 실제로 요청할 경우, claim edge는 `request edge`로 전환됨
+    - 자원이 반환되면 `assignment edge`는 다시 `claim edge`로 전환됨
+    - 모든 claim edge는 시스템 초기 단계에서 미리 선언되어야 함
+
+- **자원 요청은 다음 조건을 만족할 때에만 허용됨**:    
+    - 요청 edge를 assignment edge로 변환했을 때 **그래프에 cycle(순환)** 이 발생하지 않아야 함
+
+- (오른쪽 그림)    
+    - 위: 안전 상태 (점선은 claim edge)
+    - 아래: 요청을 수락했을 때 cycle이 형성되며 `Unsafe State` 발생
+
+![[Pasted image 20250605120104.png]]
+
