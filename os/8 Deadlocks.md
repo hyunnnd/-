@@ -226,10 +226,10 @@ void *do_work_two(void *param) {
     - 아니라면 $Tᵢ$는 대기 (자원이 부족함)
 
 3. **가상 할당 수행 (임시 시뮬레이션)**
-Available = Available − Requestᵢ  
-Allocationᵢ = Allocationᵢ + Requestᵢ  
-Needᵢ = Needᵢ − Requestᵢ
-- - 이 상태에서 Safety Algorithm을 실행하여 **안전 상태인지 검사**
+	Available = Available − Requestᵢ  
+	Allocationᵢ = Allocationᵢ + Requestᵢ  
+	Needᵢ = Needᵢ − Requestᵢ
+	- 이 상태에서 Safety Algorithm을 실행하여 **안전 상태인지 검사**
 
 3. **결과에 따른 처리**
     - 안전 상태이면 → 요청된 자원을 실제로 할당함
