@@ -33,11 +33,10 @@ void *do_work_two(void *param) {
     pthread_exit(0);
 }
 ```
-
+![[Pasted image 20250605113254.png]]
 ### Deadlock Characterization (교착 상태 조건)
 
 - 네 가지 조건이 동시에 성립될 때 교착 상태 발생 가능
-    
     - **상호 배제(Mutual exclusion)**: 하나의 스레드만 자원 사용 가능
     - **보유와 대기(Hold and wait)**: 최소 하나의 자원을 보유한 상태로 다른 자원을 요청
     - **비선점(No preemption)**: 자원은 자발적으로 반환될 때만 회수 가능
