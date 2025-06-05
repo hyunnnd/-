@@ -76,106 +76,67 @@ void *do_work_two(void *param) {
 ### Deadlock Prevention (조건 무효화)
 
 - **교착 상태 예방(Deadlock prevention)**
-    
     - 교착 상태 발생의 **필요 조건 중 최소 하나가 성립되지 않도록** 보장하는 방법들의 집합
-        
     - 자원 요청 방식에 제한을 두어 조건을 깨뜨림
         
 - **교착 상태 회피(Deadlock avoidance)**
-    
     - 시스템이 **교착 상태가 발생하지 않는 안전 상태(safe state)**를 **항상 유지**하도록 관리
-        
     - 이를 위해 다음과 같은 **추가 정보**가 필요함:
-        
         - 현재 각 스레드에 **할당되었거나 사용 가능한 자원**
-            
         - 각 스레드가 **미래에 요청하거나 반환할 자원**에 대한 정보
 
 ### Avoidance Algorithm
 
 - 자원 1개씩: 자원-할당 그래프 사용
-    
 - 자원 여러 개: Banker’s Algorithm 사용
-    
 
 ### Banker’s Algorithm 데이터 구조
 
 - n = 스레드 수, m = 자원 종류 수
-    
 - Available[m], Max[n][m], Allocation[n][m], Need[n][m]
-    
     - Need[i][j] = Max[i][j] - Allocation[i][j]
-        
 
 ### Safety Algorithm
 
 1. Work = Available, Finish[i] = false
-    
 2. Finish[i]==false 이고 Need[i] ≤ Work 인 i 찾기
-    
 3. Work += Allocation[i], Finish[i] = true
-    
 4. 모든 i에 대해 Finish[i]==true이면 안전 상태
-    
 
 ### Resource-Request Algorithm
 
 - 요청이 Need와 Available을 초과하면 오류 또는 대기
-    
 - 시스템이 안전하면 할당, 아니면 원상 복구 후 대기
-    
 
 ### Banker’s Algorithm 예시
 
 - 자원: A=10, B=5, C=7 / 스레드: T0~T4
-    
 - 안전 시퀀스 존재 시 안전 상태 (<T1, T3, T4, T2, T0> 등)
-    
 
 ### Deadlock Detection (탐지)
 
 - 시스템이 교착 상태에 들어가는 것을 허용하고 이후 탐지
-    
 - **자원 1개일 경우**: Wait-for 그래프 사용 (사이클 존재 여부로 판단)
-    
-- 탐지 알고리즘은 요청이 거절될 때 수행 가능
-    
+- 탐지 알고리즘은 요청이 거절될 때 수행 가능    
 
 ### Recovery from Deadlock (복구)
 
 - 프로세스 종료
-    
     - 전부 종료: 비용 큼
-        
     - 하나씩 종료: 우선순위 기반 결정
-        
 - 자원 선점
-    
     - 희생자 선정 (비용 최소화)
-        
     - 롤백 수행
-        
     - 기아 방지 고려 필요
-        
 
 ### 추가: 자원 여러 개일 때 탐지 알고리즘
 
 1. Work, Finish 벡터 초기화
-    
 2. Request[i] ≤ Work 인 i 찾기
-    
 3. Work += Allocation[i], Finish[i]=true
-    
 4. 남은 Finish[i]==false 존재 시 교착 상태, 해당 Ti는 교착
-    
 
 ### 탐지 알고리즘 예시
 
 - 자원: A=7, B=2, C=6 / 스레드: T0~T4
-    
 - 교착 상태 확인: T1, T2, T3, T4 가 Finish[i]==false
-    
-
----
-
-※ 자료 출처: Operating Systems: Three Easy Pieces 및 KAIST OSTEP 슬라이드
