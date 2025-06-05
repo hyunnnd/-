@@ -211,3 +211,7 @@ void *do_work_two(void *param) {
     - 그렇지 않으면 → **비안전 상태**
 
 
+	
+
+
+![[Pasted image 20250605121257.png]]
