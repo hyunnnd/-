@@ -230,10 +230,15 @@ Available = Available − Requestᵢ
 Allocationᵢ = Allocationᵢ + Requestᵢ  
 Needᵢ = Needᵢ − Requestᵢ
 - - 이 상태에서 Safety Algorithm을 실행하여 **안전 상태인지 검사**
-        
+
 3. **결과에 따른 처리**
     - 안전 상태이면 → 요청된 자원을 실제로 할당함
     - 비안전 상태이면 → $Tᵢ$는 대기, 상태는 이전으로 복구됨
 
 
 ![[Pasted image 20250605121257.png]]
+
+
+![[Pasted image 20250605122152.png]]
+
+
