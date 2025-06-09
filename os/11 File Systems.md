@@ -52,3 +52,5 @@ int main(int argc, char *argv[]) {
 - 즉, **`lseek()` 호출은 offset을 공유하는 구조**로 작동하여 부모와 자식 모두 같은 위치(10)를 참조하게 됨
 
 
+
+
