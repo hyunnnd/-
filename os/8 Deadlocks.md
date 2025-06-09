@@ -290,3 +290,41 @@ void *do_work_two(void *param) {
         - 종료되어야 할 프로세스 수
         - 프로세스가 대화형(interactive)인지, 일괄 처리(batch)인지
 
+## Resource Preemption
+
+- **Selecting a victim**
+    - 비용 최소화 (프로세스가 보유한 자원의 수, 지금까지 소비한 시간 등)
+- **Rollback**
+    - 선택된 프로세스는 안전 상태로 되돌아가 다시 시작해야 함
+- **Starvation**
+    - 동일한 프로세스에서 계속 자원이 선점되지 않도록 보장할 수 있는가?
+
+
+## Several Instances of a Resource Type
+
+- **Available**: 길이 `m`인 벡터로, 각 자원 타입별 사용 가능한 인스턴스 수를 나타냄
+- **Allocation**: `n × m` 행렬로, 각 스레드에 현재 할당된 자원 인스턴스 수를 나타냄
+- **Request**: `n × m` 행렬로, 각 스레드가 현재 요청 중인 자원 수를 나타냄
+    - `Request[i][j] = k`이면, 스레드 `Tᵢ`는 자원 타입 `Rⱼ`의 인스턴스를 `k`개 더 요청 중임
+
+## Detection Algorithm
+
+1. `Work`와 `Finish`를 각각 길이 `m`, `n`인 벡터로 설정하고 초기화:
+    - (a) `Work = Available`
+    - (b) 각 `i = 1, 2, ..., n`에 대해 `Allocationᵢ ≠ 0`이면 `Finish[i] = false`, 아니면 `Finish[i] = true`
+
+2. 다음 조건을 모두 만족하는 인덱스 `i`를 찾음:
+    - (a) `Finish[i] == false`
+    - (b) `Requestᵢ ≤ Work`  
+
+해당하는 `i`가 없으면 step 4로 이동  
+
+3. `Work = Work + Allocationᵢ`, `Finish[i] = true`  
+2단계로 이동  
+4. 어떤 `i`에 대해 `Finish[i] == false`이면 시스템은 데드락 상태임.  
+특히, `Finish[i] == false`인 `Tᵢ`는 데드락에 빠진 상태임
+
+- 알고리즘의 시간 복잡도는 `O(m × n²)`이며, 시스템이 데드락 상태인지 판단하는 데 이 정도 연산이 필요함
+
+
+수업때안하긴함
