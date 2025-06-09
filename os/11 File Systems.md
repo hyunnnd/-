@@ -52,5 +52,142 @@ int main(int argc, char *argv[]) {
 - 즉, **`lseek()` 호출은 offset을 공유하는 구조**로 작동하여 부모와 자식 모두 같은 위치(10)를 참조하게 됨
 
 
+## fsync()
 
+- **지속성(Persistency)**
+  - `write()` 함수는 데이터를 커널의 버퍼에만 기록하고, 나중에 디스크에 저장함
+  - 하지만 일부 응용프로그램(DBMS 등)은 반드시 즉시 디스크에 저장되길 요구함
+
+- **fsync() 함수**  
+  - 디스크에 즉시 쓰기를 강제하는 함수  
+  - 파일의 메모리 상(in-core)의 상태를 저장 장치 상태와 동기화함
+
+```c
+#include <unistd.h>
+int fsync(int fd);
+```
+
+- **예제**
+`int fd = open("foo", O_CREAT | O_WRONLY | O_TRUNC);` 
+`int rc = write(fd, buffer, size); `
+`rc = fsync(fd);`
+
+
+## stat()
+
+- `stat()`: 파일의 상태 정보를 가져오는 함수
+
+```c
+#include <sys/stat.h>
+
+int stat(const char *restrict pathname, struct stat *restrict statbuf);
+int fstat(int fd, struct stat *statbuf);
+int lstat(const char *restrict pathname, struct stat *restrict statbuf);
+```
+stat(): 주어진 경로(pathname)가 가리키는 실제 파일에 대한 정보를 반환함
+fstat(): stat()과 동일하나, 경로 대신 파일 디스크립터(fd)를 통해 파일 정보를 얻음
+lstat(): stat()과 거의 동일하지만, pathname이 심볼릭 링크일 경우 링크 자체의 정보를 반환함 (링크가 가리키는 파일이 아님)
+statstructure: file status
+
+## stat() 사용 예제
+
+### 📌 목적
+파일의 상태 정보(크기, inode 번호, 권한, 소유자, 접근 시간 등)를 출력하는 프로그램
+
+### 🧾 주요 코드
+```c
+#include <stdio.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <time.h>
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
+        return 1;
+    }
+
+    const char *filename = argv[1];
+    struct stat file_stat;
+
+    if (stat(filename, &file_stat) == -1) {
+        perror("stat");
+        return 1;
+    }
+
+    // File status 출력
+    printf("File: %s\n", filename);
+    printf("Size: %ld bytes\n", file_stat.st_size);
+    printf("Inode: %ld\n", file_stat.st_ino);
+    printf("Permissions: %o\n", file_stat.st_mode & 0777);
+    printf("Links: %ld\n", file_stat.st_nlink);
+    printf("Owner UID: %d\n", file_stat.st_uid);
+    printf("Group GID: %d\n", file_stat.st_gid);
+    printf("Last accessed: %s", ctime(&file_stat.st_atime));
+    printf("Last modified: %s", ctime(&file_stat.st_mtime));
+    printf("Last status change: %s", ctime(&file_stat.st_ctime));
+
+    return 0;
+}
+```
+
+### 💡 실행 예시
+```
+$ ./filestat file 
+File: file 
+Size: 6 bytes 
+Inode: 811949 
+Permissions: 664 
+Links: 1 
+Owner UID: 1000 
+Group GID: 1000 
+Last accessed: Sat Jun  7 23:08:34 2025 
+Last modified: Sat Jun  7 23:08:34 2025 
+Last status change: Sat Jun  7 23:08:34 2025
+```
+
+### 🔎 참고
+
+- `stat()` 함수는 파일의 메타데이터를 구조체 `stat`에 저장함
+- `ctime()`을 통해 시간 정보는 사람이 읽을 수 있는 문자열로 변환됨
+
+
+## stat().st_mode
+
+- `st_mode` 필드는 파일의 **종류(type)**와 **권한(permission)** 정보를 모두 포함함
+- 파일 종류 확인을 위해 비트 마스크 값 사용
+
+### 📌 파일 종류 구분용 마스크 값
+
+| 매크로      | 값       | 설명             |
+|-------------|----------|------------------|
+| `S_IFMT`    | 0170000  | 파일 타입 마스크 (bit 필드 마스크) |
+| `S_IFSOCK`  | 0140000  | 소켓             |
+| `S_IFLNK`   | 0120000  | 심볼릭 링크       |
+| `S_IFREG`   | 0100000  | 일반 파일        |
+| `S_IFBLK`   | 0060000  | 블록 디바이스     |
+| `S_IFDIR`   | 0040000  | 디렉토리         |
+| `S_IFCHR`   | 0020000  | 문자 디바이스     |
+| `S_IFIFO`   | 0010000  | FIFO (파이프)     |
+
+### 🔍 파일 타입 판별 예시
+
+#### 방법 1: 비트 마스크 비교
+```c
+stat(pathname, &sb);
+if ((sb.st_mode & S_IFMT) == S_IFREG) {
+    // 일반 파일 처리
+}
+```
+#### 방법 2: 헬퍼 매크로 사용 (`<sys/stat.h>` 제공)
+```c
+stat(pathname, &sb); 
+if (S_ISREG(sb.st_mode)) {     // 일반 파일 처리 
+
+} 
+if (S_ISDIR(sb.st_mode)) {     // 디렉토리 처리 
+
+}
+```
+`S_ISREG`, `S_ISDIR` 등의 매크로는 가독성이 높고 안전하게 파일 타입을 검사하는 데 유용함
 
