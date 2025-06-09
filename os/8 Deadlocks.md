@@ -274,3 +274,19 @@ void *do_work_two(void *param) {
     - 이 경우, **교착 상태를 유발한 스레드를 찾아낼 수 있음**
 
 
+## Recovery from Deadlock
+#### - Process termination
+#### - Resource preemption
+
+## Process Termination
+
+- **Abort all deadlocked processes**
+    - 너무 많은 비용이 듬 (Too expensive)
+
+- **Abort one process at a time until the deadlock is eliminated**
+    - 우선순위 기준 (Order of priority)
+        - 시작 후 경과 시간 / 완료까지 남은 시간
+        - 해당 프로세스가 사용한 자원 / 완료에 필요한 자원
+        - 종료되어야 할 프로세스 수
+        - 프로세스가 대화형(interactive)인지, 일괄 처리(batch)인지
+
