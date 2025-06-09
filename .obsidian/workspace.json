@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "cb02aeae98fdaa54",
+        "id": "859f641f04a6c13a",
         "type": "tabs",
         "children": [
           {
-            "id": "0d85e1e8de7d0804",
+            "id": "33c67d3a58a68a97",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "os/7 Synchronization Examples.md",
-                "mode": "preview",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "7 Synchronization Examples"
+              "title": "새 탭"
             }
           }
         ]
@@ -190,7 +186,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0d85e1e8de7d0804",
+  "active": "33c67d3a58a68a97",
   "lastOpenFiles": [
     "os/6 Synchronization Tools.md",
     "os/7 Synchronization Examples.md",
