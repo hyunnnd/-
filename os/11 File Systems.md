@@ -236,3 +236,38 @@ if (S_ISDIR(sb.st_mode)) {     // 디렉토리 처리
 
 
 
+## opendir() & readdir()
+
+- `opendir()`: 디렉토리를 여는 함수  
+- `readdir()`: 디렉토리에서 엔트리를 하나씩 읽는 함수  
+
+- 디렉토리도 파일의 일종이지만, 특정한 구조를 가짐
+- 디렉토리를 읽을 때는 일반적인 `read()`가 아닌 전용 시스템 호출을 사용함
+
+### 주요 함수 원형
+- `DIR *opendir(const char *name);`  
+- `struct dirent *readdir(DIR *dirp);`  
+- `int closedir(DIR *dirp);`  
+- `DIR *`: 디렉토리 스트림을 가리키는 포인터
+
+### 예제 코드
+
+```C
+    int main(int argc, char *argv[]) {
+        DIR *dp = opendir("."); // 현재 디렉토리 열기
+        assert(dp != NULL);
+        struct dirent *d;
+        while ((d = readdir(dp)) != NULL) { // 디렉토리 엔트리 하나씩 읽기
+            printf("%d %s\n", (int) d->d_ino, d->d_name);
+        }
+        closedir(dp); // 디렉토리 닫기
+        return 0;
+    }
+    
+```
+
+### 참고 링크
+- https://man7.org/linux/man-pages/man3/opendir.3.html
+- https://man7.org/linux/man-pages/man3/readdir.3.html
+
+
