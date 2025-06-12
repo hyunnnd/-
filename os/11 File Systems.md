@@ -771,3 +771,11 @@ Block 번호:
 - 파일의 inode 번호만으로 해당 inode의 정확한 디스크 위치를 계산 가능
 - inode 구조는 파일 시스템 내 파일의 메타데이터와 데이터 위치를 관리하는 핵심 요소임
 
+![[Pasted image 20250612121635.png]]
+
+
+![[Pasted image 20250612121646.png]]
+
+
+![[Pasted image 20250612121657.png]]
+![[Pasted image 20250612121707.png]]
