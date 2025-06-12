@@ -270,4 +270,7 @@ if (S_ISDIR(sb.st_mode)) {     // 디렉토리 처리
 - https://man7.org/linux/man-pages/man3/opendir.3.html
 - https://man7.org/linux/man-pages/man3/readdir.3.html
 
+![[Pasted image 20250612114222.png]]
+
+
 
