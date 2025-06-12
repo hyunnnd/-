@@ -273,4 +273,37 @@ if (S_ISDIR(sb.st_mode)) {     // 디렉토리 처리
 ![[Pasted image 20250612114222.png]]
 
 
+## link()
+
+- `link()`: 파일의 새로운 이름을 생성함 (즉, 하드 링크를 생성)
+- 하드 링크를 사용하면 하나의 파일에 대해 여러 이름이 존재할 수 있음
+
+### 📌 예시: 하드 링크 생성
+
+```sh
+echo hello > file        # 파일 file 생성
+cat file                 # 내용 확인 → hello
+ln file file2            # file2라는 하드 링크 생성
+ls -l                    # file, file2 동일한 크기/시간/퍼미션
+cat file2                # file2 읽기 → hello
+ls -i file file2         # inode 번호 확인 → 동일한 inode (811752)
+ln file file2 명령어는 file2라는 이름으로 file과 같은 inode를 참조하는 새 링크 생성
+```
+즉, file과 file2는 다른 이름이지만 같은 파일을 가리킴
+
+이때 두 파일의 내용, 권한, 소유자 등 모든 것이 동일하며 구분 불가능
+
+⚠️ 파일 삭제와 unlink()
+하드 링크는 inode의 참조 수를 증가시킴
+
+따라서 unlink()를 호출하거나 rm으로 지워도 참조 수가 0이 되지 않으면 파일은 실제 삭제되지 않음
+
+inode의 참조 수가 0이 되어야 디스크 공간이 해제됨
+
+🔗 참고 링크
+https://man7.org/linux/man-pages/man2/link.2.html
+필요에 따라 셸 명령 부분은 `sh` 블록 또는 그냥 `bash`로 바꿔도 무방합니다.
+
+
+
 
