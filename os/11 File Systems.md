@@ -780,6 +780,40 @@ Block 번호:
 ![[Pasted image 20250612121657.png]]
 ![[Pasted image 20250612121707.png]]
 
+## 1. **File Structure: Indexed Allocation**
+
+- 파일은 여러 개의 블록으로 구성되며, inode는 해당 블록들을 가리키는 포인터들을 가짐
+- **Direct block**: 실제 데이터 블록을 직접 가리킴
+- **Single indirect**: 포인터 블록을 통해 한 번 간접적으로 데이터 블록을 가리킴
+- **Double indirect**: 포인터 블록 → 포인터 블록 → 데이터 블록
+- **Triple indirect**: 세 단계 간접 포인터 사용
+- **소형 파일**은 direct block만으로 충분하여 인덱스 블록이 불필요함
+## 2. **Directory Structure**
+
+- 디렉터리는 이름과 inode 번호를 매핑하는 레코드 집합
+- VSFS 예시: `(inum, reclen, strlen, name)` 형태
+- ext4 예시:
+    - `inode`, `rec_len`, `name_len`, `file_type`, `name` 등으로 구성된 directory entry가 반복됨
+- 목적: 파일 이름을 이용해 해당 inode를 찾는 용도
+
+## 3. **Access Path: Reading a File from Disk**
+
+- 파일 `bar`를 읽을 때의 단계별 디스크 접근을 나타냄
+- `open(bar)` 호출 시:
+    - root → foo → bar 디렉터리를 거쳐서 bar의 inode와 data 블록 접근
+- 이후 `read()` 호출 시:
+    - 이미 캐시에 있다면 직접 데이터만 읽음
+    - 없으면 디스크에서 read 및 write 캐시에 적재
+
+## 4. **Access Path: Writing a File to Disk**
+
+- `create(/foo/bar)` 시:    
+    - inode와 데이터 비트맵을 갱신하며 inode/데이터 블록 할당
+    - 디렉터리 엔트리를 생성하기 위해 읽기/쓰기 필요
+- 이후 `write()` 시:
+    - data block에 실제 데이터 쓰기
+    - inode 갱신을 위한 read/write도 발생
+
 ## Caching and Buffering
 
 ### 📌 IO 집중 작업
