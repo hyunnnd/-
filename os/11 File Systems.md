@@ -306,4 +306,85 @@ https://man7.org/linux/man-pages/man2/link.2.html
 
 
 
+## unlink()
+
+- `unlink()`: 파일 이름을 삭제하며, 필요 시 실제 파일도 제거
+### 함수 원형
+
+`#include <unistd.h> int unlink(const char *pathname);`
+
+### 동작 설명
+
+- `unlink()`는 파일 시스템에서 이름을 제거함 (`rm` 명령어 내부에서 호출됨)
+- 해당 이름이 **마지막 링크이며 열려 있는 프로세스가 없을 경우**, 파일은 삭제되고 디스크 공간이 회수됨
+- 해당 이름이 **마지막 링크이지만 여전히 열려 있는 프로세스가 있을 경우**, 그 파일은 해당 프로세스들이 닫을 때까지 유지됨
+- 심볼릭 링크인 경우에는 **링크만 제거되고 원본 파일은 남아 있음**
+
+
+## unlink()의 동작 원리
+
+- `unlink()`는 다음과 같은 작업을 수행함:
+  - 해당 inode의 **참조 카운트(reference count)** 확인
+  - **사람이 읽을 수 있는 이름**과 **inode 번호** 사이의 링크 제거
+  - 참조 카운트를 **1 감소**시킴  
+    → 참조 카운트가 0이 되었을 때 inode와 데이터 블록을 해제함
+
+### 요약
+- 파일 이름 삭제 = 링크 제거
+- 참조 카운트가 0이 되어야 실제 데이터가 삭제됨
+- 하나의 파일을 가리키는 하드 링크가 여러 개 존재할 수 있음
+
+### 예시 실습
+```sh
+echo hello > file         # 파일 생성
+stat file                 # inode: 811752, Links: 1
+
+ln file file2             # file2 하드 링크 생성
+stat file                 # Links: 2
+stat file2                # 동일 inode, Links: 2
+
+ln file2 file3            # file3 하드 링크 생성
+stat file                 # Links: 3
+
+rm file                   # file 삭제 → Links: 2
+stat file2                # Links: 2
+
+rm file2                  # file2 삭제 → Links: 1
+stat file3                # Links: 1
+
+rm file3                  # 마지막 링크 삭제 → 실제 파일 삭제
+```
+
+`file`, `file2`, `file3`는 모두 같은 inode를 가리키며 삭제될 때마다 Links 수가 감소하다가 마지막에 삭제됨
+
+
+## Symbolic Links
+
+- **Symbolic link (symlink)**: 실제 파일의 경로를 포함하는 특수 파일
+- 일반 파일이 아닌 참조용 경로를 저장
+- 하드 링크와 달리 다음 제한이 없음:
+  - **디렉토리**에도 링크 가능
+  - **다른 파티션**의 파일에도 링크 가능
+
+### 특징 요약
+- `ln -s [원본] [링크이름]` 형태로 생성 (`-s` 옵션은 symbolic 링크)
+- 심볼릭 링크는 새로운 inode를 가짐 (원본과 inode 다름)
+- 원본이 삭제되면 **dangling link**가 되어 접근 불가
+
+### 예제
+```sh
+echo hello > file           # 일반 파일 생성
+ln -s file file2            # file2는 file을 참조하는 심볼릭 링크
+ls -l                       # file2 -> file 표시됨
+ls -i file file2            # 서로 다른 inode 확인 가능
+cat file2                   # file을 통해 내용 읽기 가능 (hello)
+rm file                     # 원본 삭제
+cat file2                   # 오류 발생: No such file or directory
+```
+
+file2는 file의 경로만 참조하므로, file이 삭제되면 파일 내용 접근 불가
+
+
+![[Pasted image 20250612115421.png]]
+
 
