@@ -388,4 +388,36 @@ file2는 file의 경로만 참조하므로, file이 삭제되면 파일 내용 �
 ![[Pasted image 20250612115421.png]]
 
 
-	
+## Secondary Storages
+
+- 현대 컴퓨터의 보조 저장 장치(secondary storage)의 대부분은 다음과 같음:
+  - **HDDs (Hard Disk Drives)**  
+  - **NVM (Nonvolatile Memory)**, 대표적으로 SSD
+### 🧭 HDD 구조
+
+- 회전하는 자기 디스크(platter)에 데이터를 저장
+- 주요 구성:
+  - **Platter**: 원형 자기 디스크
+  - **Spindle**: 플래터 회전을 담당
+  - **Track (t)**: 플래터 원형 경로
+  - **Sector (s)**: 트랙을 나눈 가장 작은 물리적 단위
+  - **Cylinder (c)**: 여러 플래터의 같은 트랙 번호를 수직으로 연결
+  - **Read-write head**: 실제 데이터를 읽고 쓰는 장치
+  - **Arm**: 헤드를 트랙 위치에 맞게 이동
+  - **Arm assembly**: 다수의 arm과 헤드를 제어
+
+### 🔋 SSD 구조 (NVM 기반)
+
+- **기계적 움직임 없음**: 전자 회로 기반의 비휘발성 저장소
+- 슬라이드 예시: 3.5-inch SSD 회로 보드
+- 내부는 **NAND 플래시 메모리**로 구성
+
+#### NAND Block 상태
+- SSD는 블록 단위로 데이터를 관리하며 페이지 단위로 기록함
+- 하나의 NAND 블록 내에는 다음과 같은 페이지들이 존재:
+  - `valid page`: 유효한 데이터가 존재함
+  - `invalid page`: 덮어쓰기로 인해 폐기된 상태
+
+> SSD는 덮어쓰기가 불가능하므로, 새 데이터는 새 위치에 기록되고 기존 페이지는 invalid로 처리됨. 이로 인해 가비지 컬렉션이 필요함.
+
+
