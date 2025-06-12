@@ -388,3 +388,4 @@ file2는 file의 경로만 참조하므로, file이 삭제되면 파일 내용 �
 ![[Pasted image 20250612115421.png]]
 
 
+	
