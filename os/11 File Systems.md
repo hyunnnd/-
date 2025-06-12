@@ -731,3 +731,43 @@ Block 번호:
 - inode와 데이터 블록을 동적으로 관리할 수 있게 함
 
 
+## Super Block
+
+### 🧱 슈퍼블록(Super Block)의 역할
+- 특정 파일 시스템에 대한 **중요 메타데이터**를 저장
+- OS는 파일 시스템을 마운트할 때 **슈퍼블록을 가장 먼저 읽음**
+
+### 📌 Super Block의 정보 예시
+- 전체 inode 개수
+- inode 테이블의 시작 위치
+- 전체 블록 수 및 블록 크기
+- 데이터 영역 위치
+- 비트맵 위치 등
+
+### ✅ 요약
+- 슈퍼블록은 파일 시스템의 **초기화와 전체 구조 파악에 핵심적인 블록**
+- 파일 시스템이 손상되지 않도록 슈퍼블록은 종종 **백업 복사본**도 함께 저장됨
+
+
+## File Organization: The inode
+
+### 🔹 Inode Number
+- 모든 파일은 고유한 **inode 번호**(inode number)로 식별됨
+- 파일 시스템은 해당 번호를 바탕으로 inode가 **디스크의 어느 위치에 있는지 계산**함
+
+---
+
+### 📌 예시: inode number = 32
+
+#### ① 오프셋(offset) 계산
+- `32 × inode 크기(256 bytes) = 8192 bytes (= 8KB)`
+- 이는 inode table 내에서의 상대 위치
+#### ② inode table의 시작 주소와 합산
+- inode table의 시작 주소 = 12KB  
+  → (Super block: 0~4KB, inode bitmap: 4~8KB, data bitmap: 8~12KB)
+- 결과적으로 inode 32는 `12KB + 8KB = 20KB` 위치에 있음
+
+### ✅ 요약
+- 파일의 inode 번호만으로 해당 inode의 정확한 디스크 위치를 계산 가능
+- inode 구조는 파일 시스템 내 파일의 메타데이터와 데이터 위치를 관리하는 핵심 요소임
+
