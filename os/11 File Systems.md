@@ -421,3 +421,250 @@ file2는 file의 경로만 참조하므로, file이 삭제되면 파일 내용 �
 > SSD는 덮어쓰기가 불가능하므로, 새 데이터는 새 위치에 기록되고 기존 페이지는 invalid로 처리됨. 이로 인해 가비지 컬렉션이 필요함.
 
 
+## Disk Drives Address Mapping
+
+- 디스크 드라이브는 **논리 블록(logical block)**의 일차원 배열로 주소가 지정됨
+  - 논리 블록은 전송 단위의 최소 단위
+  - 로우 레벨 포맷(Low-level formatting)은 물리적 매체 위에 논리 블록을 생성함
+
+### 🧭 논리 블록 → 물리 위치 매핑
+
+- 논리 블록 배열은 디바이스의 **섹터(sector)** 또는 **페이지(page)**에 매핑됨
+
+#### 🔹 HDD (하드 디스크)의 경우
+- **Sector 0**: 가장 바깥쪽 실린더의 첫 번째 트랙의 첫 번째 섹터
+- 매핑 순서:
+  - 해당 트랙의 모든 섹터 → 트랙 내 이동
+  - 같은 실린더 내 나머지 트랙들
+  - 외부 → 내부 방향으로 다음 실린더들 반복
+
+#### 🔹 NVM (예: SSD)의 경우
+- 매핑은 `(chip, block, page)` 튜플을 논리 블록 배열로 변환하는 방식
+- 내부 구조는 다르지만 논리 블록으로 일관된 주소를 제공
+
+### ✅ LBA (Logical Block Addressing)
+- LBA는 다음 이유로 널리 사용됨:
+  - **알고리즘이 처리하기 쉬움**
+  - `(sector, cylinder, head)` 또는 `(chip, block, page)` 방식보다 단순
+
+> 즉, 디스크의 내부 복잡도와 무관하게 논리 주소만으로 접근 가능하게 하는 것이 LBA임
+
+
+## Disk Structure
+
+- 디스크는 **partition(파티션)** 으로 나눌 수 있음
+- 디스크나 파티션은 다음과 같이 사용 가능:
+  - **raw 상태**: 파일 시스템 없이 사용
+  - **formatted 상태**: 파일 시스템으로 포맷하여 사용
+- 파티션은 **minidisk**, **slice** 등의 이름으로도 불림
+- 파일 시스템이 포함된 개체는 **volume(볼륨)** 이라고 부름
+- 각 볼륨은 해당 파일 시스템의 정보를 다음에 저장함:
+  - **device directory**
+  - **volume table of contents**
+- 운영 체제나 컴퓨터 안에는 다음과 같은 다양한 파일 시스템이 공존할 수 있음:
+  - **general-purpose file systems** (범용 파일 시스템)
+  - **special-purpose file systems** (특수 목적 파일 시스템)
+
+
+## Storage Device Organization
+
+- 범용 컴퓨터는 **여러 개의 저장 장치**(storage devices)를 가질 수 있음
+
+### 🔹 저장 장치 구성 방식
+- 하나의 장치는 **여러 파티션(partition)**으로 나눌 수 있음
+- 각 파티션은 **볼륨(volume)**을 포함하며, 하나의 볼륨이 **여러 파티션에 걸쳐 있을 수도 있음**
+- 볼륨은 보통 **파일 시스템**으로 포맷되어 있음
+- 운영체제는 다양한 유형의 **파일 시스템**을 지원 (수십 종의 파일 시스템이 존재 가능)
+
+---
+
+### 📂 구성 예시
+
+#### 저장 장치 1 (storage device 1)
+- partition A → volume 1 → 파일 시스템 및 디렉토리
+- partition B → volume 2 → 파일 시스템 및 디렉토리
+
+#### 저장 장치 2, 3 (storage device 2 & 3)
+- partition C, D가 함께 volume 3을 구성 → 하나의 파일 시스템으로 운영
+
+> 하나의 volume은 반드시 하나의 partition에만 있는 것은 아니며, 여러 장치를 걸쳐 있을 수 있음 (특히 RAID나 LVM에서 중요함)
+
+
+
+### 🔍 요약
+
+- `mount` 명령어를 사용하여 파일 시스템을 트리 구조의 특정 디렉토리에 연결
+- 마운트 포인트 아래의 기존 내용은 **새로운 파일 시스템이 마운트되면 보이지 않게 됨**
+- 루트(`/`) 디렉토리부터 시작하여 계층적으로 마운트됨
+
+> 마운트는 파일 시스템 간 통합된 트리 구조를 구성하는 데 필수적인 절차임
+
+
+
+
+## File System Layers
+
+### 📚 계층 구조의 목적
+- 파일 시스템의 계층화는 **복잡도 감소** 및 **중복 제거**에 유용
+- 하지만 **오버헤드를 증가시켜 성능 저하**를 유발할 수 있음
+- 계층 구조는 파일 이름을 다음과 같이 변환함:
+  - 파일 번호 (file number)
+  - 파일 핸들 (file handle)
+  - 물리적 위치
+- 이 정보를 유지하기 위해 파일 제어 블록(file control block)을 사용  
+  → UNIX에서는 이를 **inode**로 관리
+
+> 각 논리 계층은 운영체제 설계자에 따라 임의의 코딩 방식으로 구현 가능
+
+## File System Structure
+
+### 📁 File Structure
+- **논리적 저장 단위 (Logical storage unit)**
+- 관련된 정보의 집합
+
+### 💾 File System
+- 보조 저장 장치(secondary storage, 예: 디스크)에 위치함
+- 사용자에게 저장소 인터페이스를 제공
+  - 논리 주소 → 물리 주소 매핑
+- 효율적이고 편리한 데이터 저장, 검색, 접근 제공
+
+### 🔁 디스크 특성
+- **제자리 수정(in-place rewrite)** 및 **랜덤 접근(random access)** 가능
+- I/O는 보통 **섹터(sector) 단위 블록**으로 처리됨
+  - 일반적으로 512바이트 또는 4096바이트
+
+### 📦 File Control Block (FCB)
+- 특정 파일에 대한 **정보를 저장하는 구조체**
+- 예: 파일 크기, 위치, 소유자, 접근 권한 등
+### 🧩 Device Driver
+- 물리 장치를 제어하는 역할을 담당
+
+### 🧱 계층화
+- 파일 시스템은 **여러 계층**으로 구성되어 있음
+  - 각 계층은 기능을 분리하고 구현 독립성을 제공
+
+
+### 🔄 계층 구성도
+
+application programs
+↓
+logical file system
+↓
+file-organization module
+↓
+basic file system
+↓
+I/O control
+↓
+devices
+
+### 🗂️ 주요 파일 시스템 예시
+
+- **UNIX**: UFS (Unix File System), FFS
+- **Linux**: ext3, ext4 (extended file system)
+- **기타**: ZFS, GoogleFS, FUSE 등
+
+> 하나의 운영체제 내에 여러 파일 시스템이 동시에 존재할 수 있음
+
+
+## File System Operations
+
+### 🔹 Boot Control Block
+- 운영체제를 해당 볼륨에서 부팅하기 위해 필요한 정보를 포함
+- 해당 볼륨에 OS가 존재할 경우에 필요
+- 일반적으로 **볼륨의 첫 번째 블록**에 위치
+
+### 🔹 Volume Control Block
+- **superblock** 또는 **master file table**로도 불림
+- 볼륨 자체에 대한 정보를 저장
+  - 전체 블록 수
+  - 사용 가능한 블록 수
+  - 블록 크기
+  - 자유 블록을 가리키는 포인터 또는 배열
+
+### 🔹 Directory Structure
+- 파일 시스템당 하나씩 존재하며, **파일을 구성하고 관리**
+- 파일 이름과 해당 **inode 번호** (또는 MFT 항목)를 연결함
+
+
+## In-Memory File System Structures
+
+### 🗂️ Mount Table
+- 시스템에 마운트된 모든 파일 시스템에 대한 정보를 저장
+- 포함 내용:
+  - 마운트된 파일 시스템 목록
+  - 마운트 지점
+  - 파일 시스템 유형 등
+
+---
+
+### 📋 System-wide Open-File Table
+- 전체 시스템 차원의 열려 있는 파일 목록
+- 각 파일에 대한 **파일 제어 블록(FCB)**의 복사본을 저장
+- 파일에 대한 메타데이터 및 기타 정보 포함
+
+### 👤 Per-Process Open-File Table
+- 각 프로세스가 열고 있는 파일에 대한 정보를 저장
+- 해당 프로세스만 접근 가능
+- 각 항목은 **system-wide open-file table**의 항목을 가리킴
+- 프로세스 고유의 접근 모드, 파일 오프셋 등도 저장
+
+### 📌 파일 열기 (opening a file)
+1. 사용자 공간에서 파일 이름 요청
+2. 커널 메모리의 디렉토리 구조에서 해당 이름 탐색
+3. 해당 파일의 FCB를 읽어 system-wide open-file table에 복사
+4. per-process open-file table에 포인터 등록
+
+### 📌 파일 읽기 (reading a file)
+1. 사용자 공간에서 파일 디스크립터(index)로 요청
+2. per-process open-file table → system-wide open-file table → FCB 참조
+3. 해당 데이터 블록 읽기 수행
+
+
+## File System Implementation
+
+### 🔹 사용되는 자료구조
+- 파일 시스템은 다양한 **자료구조(data structures)**를 사용하여 파일과 디렉토리를 관리함
+  - 예: inode, block bitmap, file control block (FCB), directory table 등
+
+### 🔹 데이터 및 메타데이터 조직 방식
+- **데이터(data)**: 사용자가 저장한 실제 내용
+- **메타데이터(metadata)**: 파일 이름, 크기, 접근 권한, 생성 시간 등
+- 파일 시스템은 이를 분리하여 효율적으로 관리하고, 디스크에 저장된 구조를 통해 매핑
+
+### 🔹 접근 방식
+- 파일 시스템은 다양한 **접근 메서드**를 제공함:
+  - `open()` : 파일 열기
+  - `read()` : 파일 읽기
+  - `write()` : 파일 쓰기
+  - 기타 `close()`, `seek()` 등
+
+> 이러한 시스템 호출은 커널이 내부 자료구조를 사용하여 물리적 저장 장치에 접근할 수 있도록 연결해 줌
+
+
+
+## Overall Organization
+
+- 파일 시스템 데이터 구조의 전체 조직을 구성하기 위한 기본 단계
+
+---
+
+### 💽 디스크를 블록 단위로 나누기
+
+- **Block size**: 4KB
+- 각 블록은 **0부터 N-1까지의 번호**를 가짐
+
+예시:
+Block 번호:
+0 1 2 ... 7
+8 9 ... 15
+16 ... 23
+24 ... 31
+32 ... 39
+40 ... 47
+48 ... 55
+56 ... 63
+
+> 파일 시스템은 이 블록 단위 주소를 기준으로 파일, 디렉토리, 메타데이터를 배치하게 됨
+
+
