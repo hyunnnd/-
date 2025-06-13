@@ -39,12 +39,14 @@
             "id": "b47b3b9e67b6fe54",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "Pasted image 20250612121657.png"
+                "file": "os/9 main memory.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "Pasted image 20250612121657"
+              "icon": "lucide-file",
+              "title": "9 main memory"
             }
           }
         ],
@@ -219,19 +221,19 @@
   },
   "active": "b47b3b9e67b6fe54",
   "lastOpenFiles": [
-    "Pasted image 20250612114222.png",
+    "os/8 Deadlocks.md",
     "os/9 main memory.md",
+    "사진/Pasted image 20250612121707.png",
+    "사진/Pasted image 20250612121657.png",
+    "사진/Pasted image 20250612114222.png",
     "conflict-files-obsidian-git.md",
     "os/11 File Systems.md",
     "os/4 Threads & Concurrency.md",
-    "Pasted image 20250612121707.png",
-    "Pasted image 20250612121657.png",
-    "Pasted image 20250612121646.png",
-    "Pasted image 20250612121635.png",
-    "Pasted image 20250612115421.png",
+    "사진/Pasted image 20250612121646.png",
+    "사진/Pasted image 20250612121635.png",
+    "사진/Pasted image 20250612115421.png",
     "os/6 Synchronization Tools.md",
     "os/7 Synchronization Examples.md",
-    "os/8 Deadlocks.md",
     "os/10 VirtualMemory.md",
     "사진/Pasted image 20250605122152.png",
     "사진/Pasted image 20250605122146.png",
