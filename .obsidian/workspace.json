@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "os/9 main memory.md",
+                "file": "os/4 Threads & Concurrency.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "9 main memory"
+              "title": "4 Threads & Concurrency"
             }
           }
         ],
@@ -221,10 +221,11 @@
   },
   "active": "b47b3b9e67b6fe54",
   "lastOpenFiles": [
+    "os/10 VirtualMemory.md",
+    "os/9 main memory.md",
     "Pasted image 20250613153239.png",
     "Pasted image 20250613153210.png",
     "os/8 Deadlocks.md",
-    "os/9 main memory.md",
     "사진/Pasted image 20250612121707.png",
     "사진/Pasted image 20250612121657.png",
     "사진/Pasted image 20250612114222.png",
@@ -236,10 +237,8 @@
     "사진/Pasted image 20250612115421.png",
     "os/6 Synchronization Tools.md",
     "os/7 Synchronization Examples.md",
-    "os/10 VirtualMemory.md",
     "사진/Pasted image 20250605122152.png",
     "사진/Pasted image 20250605122146.png",
-    "사진/Pasted image 20250605121257.png",
     "사진",
     "os/10 VirtualMemory/무제.md",
     "os/10 VirtualMemory",
