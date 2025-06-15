@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "os/11 File Systems.md",
+                "file": "os/9 main memory.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "11 File Systems"
+              "title": "9 main memory"
             }
           }
         ],
@@ -221,15 +221,15 @@
   },
   "active": "b47b3b9e67b6fe54",
   "lastOpenFiles": [
-    "os/8 Deadlocks.md",
+    "사진/Pasted image 20250613153239.png",
+    "os/9 main memory.md",
     "os/11 File Systems.md",
+    "os/8 Deadlocks.md",
     "os/7 Synchronization Examples.md",
     "os/6 Synchronization Tools.md",
     "os/4 Threads & Concurrency.md",
     "os/10 VirtualMemory.md",
-    "os/9 main memory.md",
-    "Pasted image 20250613153239.png",
-    "Pasted image 20250613153210.png",
+    "사진/Pasted image 20250613153210.png",
     "사진/Pasted image 20250612121707.png",
     "사진/Pasted image 20250612121657.png",
     "사진/Pasted image 20250612114222.png",
