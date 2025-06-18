@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "os/9 main memory.md",
+                "file": "os/7 Synchronization Examples.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "9 main memory"
+              "title": "7 Synchronization Examples"
             }
           }
         ]
@@ -192,13 +192,13 @@
   },
   "active": "b47b3b9e67b6fe54",
   "lastOpenFiles": [
-    "os/6 Synchronization Tools.md",
-    "os/11 File Systems.md",
     "os/8 Deadlocks.md",
-    "os/7 Synchronization Examples.md",
-    "os/10 VirtualMemory.md",
-    "os/4 Threads & Concurrency.md",
     "os/9 main memory.md",
+    "os/11 File Systems.md",
+    "os/7 Synchronization Examples.md",
+    "os/6 Synchronization Tools.md",
+    "os/4 Threads & Concurrency.md",
+    "os/10 VirtualMemory.md",
     "사진/Pasted image 20250613153239.png",
     "사진/Pasted image 20250613153210.png",
     "사진/Pasted image 20250612121707.png",
