@@ -11,12 +11,14 @@
             "id": "2d99235d2f5dd987",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "사진/Pasted image 20250805122320 1.png"
+                "file": "캡스톤/무제.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "Pasted image 20250805122320 1"
+              "icon": "lucide-file",
+              "title": "무제"
             }
           }
         ]
@@ -187,19 +189,19 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "41bfe5628e1a01bf",
+  "active": "2d99235d2f5dd987",
   "lastOpenFiles": [
+    "캡스톤/08_04.md",
+    "사진/Pasted image 20250805122320 1.png",
     "무제.canvas",
     "2025-08-18.md",
     "캡스톤/무제 1.md",
     "conflict-files-obsidian-git.md",
-    "사진/Pasted image 20250805122320 1.png",
     "캡스톤/무제.md",
     "사진/Pasted image 20250817232152.png",
     "os/11 File Systems.md",
     "사진/Pasted image 20250817232051.png",
     "사진/Pasted image 20250805122320.png",
-    "캡스톤/08_04.md",
     "사진/Pasted image 20250817232028.png",
     "캡스톤",
     "os/10 VirtualMemory.md",
