@@ -4,21 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "7b8a4bb425b5179c",
+        "id": "9a1f2d9a7d2e70f4",
         "type": "tabs",
         "children": [
           {
-            "id": "20f03e2fa80ef40e",
+            "id": "2d99235d2f5dd987",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "conflict-files-obsidian-git.md",
-                "mode": "source",
-                "source": false
+                "file": "사진/Pasted image 20250805122320 1.png"
               },
-              "icon": "lucide-file",
-              "title": "conflict-files-obsidian-git"
+              "icon": "lucide-image",
+              "title": "Pasted image 20250805122320 1"
             }
           }
         ]
@@ -189,16 +187,16 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "bcc8742d84de4527",
+  "active": "41bfe5628e1a01bf",
   "lastOpenFiles": [
-    "conflict-files-obsidian-git.md",
-    "Pasted image 20250805122320.png",
+    "무제.canvas",
+    "2025-08-18.md",
     "캡스톤/무제 1.md",
+    "conflict-files-obsidian-git.md",
+    "사진/Pasted image 20250805122320 1.png",
     "캡스톤/무제.md",
     "사진/Pasted image 20250817232152.png",
     "os/11 File Systems.md",
-    "무제.canvas",
-    "2025-08-18.md",
     "사진/Pasted image 20250817232051.png",
     "사진/Pasted image 20250805122320.png",
     "캡스톤/08_04.md",
