@@ -11,10 +11,14 @@
             "id": "20f03e2fa80ef40e",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "conflict-files-obsidian-git.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "새 탭"
+              "title": "conflict-files-obsidian-git"
             }
           }
         ]
@@ -188,6 +192,7 @@
   "active": "bcc8742d84de4527",
   "lastOpenFiles": [
     "conflict-files-obsidian-git.md",
+    "Pasted image 20250805122320.png",
     "캡스톤/무제 1.md",
     "캡스톤/무제.md",
     "사진/Pasted image 20250817232152.png",
@@ -210,7 +215,6 @@
     "사진/Pasted image 20250612121707.png",
     "사진/Pasted image 20250612121657.png",
     "사진/Pasted image 20250612114222.png",
-    "사진/Pasted image 20250612121646.png",
     "사진",
     "os/10 VirtualMemory/무제.md",
     "os/10 VirtualMemory",
