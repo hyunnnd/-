@@ -93,3 +93,27 @@
 - **HTTP** (Enterprise network ↔ Content provider network)
 - **Streaming video** (Datacenter ↔ ISP ↔ Home/Mobile)
 
+
+# 📡 What’s a protocol?
+
+## 1. Human Protocols (인간 프로토콜)
+
+- “What’s the time?”
+- “I have a question”
+- Introductions (소개)
+- 특징:
+    - 특정 메시지가 전송됨
+    - 메시지를 받거나 이벤트 발생 시 특정 행동 수행
+
+
+## 2. Network Protocols (네트워크 프로토콜)
+
+- 주체: **컴퓨터(장치)**   
+- 모든 인터넷 통신 활동은 프로토콜에 의해 규제됨
+
+## 3. Definition (정의)
+
+> **Protocols define the format, order of messages sent and received among network entities, and actions taken on message transmission, receipt.**
+
+프로토콜은 **네트워크 엔티티 간 주고받는 메시지의 형식과 순서**, 그리고 **메시지 전송·수신 시 수행되는 동작**을 정의한다.
+
