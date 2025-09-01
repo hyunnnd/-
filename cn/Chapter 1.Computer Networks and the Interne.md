@@ -33,3 +33,35 @@
 - **Content provider network** (콘텐츠 제공 네트워크, 예: 데이터센터)
 
 ※ **ISP (Internet Service Provider)**: 인터넷 서비스 제공자
+
+## 1. Internet: “network of networks”
+
+- **네트워크의 네트워크**
+- 상호 연결된 **ISPs (Internet Service Providers)**
+
+## 2. Protocols (프로토콜)
+
+- **everywhere (어디에나 존재)**
+- 메시지 전송 및 수신을 제어
+- 예시:
+
+    - **HTTP** (웹)
+    - **Streaming video** (스트리밍)
+    - **Skype**
+    - **TCP, IP**
+    - **WiFi, 4G, Ethernet**
+
+## 3. Internet Standards (인터넷 표준)
+
+- **RFC (Request for Comments)**  
+- **IETF (Internet Engineering Task Force)**
+
+## 4. 그림 속 주요 연결
+
+- **Home network** ↔ Skype   
+- **Enterprise network** ↔ HTTP, Ethernet, WiFi
+- **Mobile network** ↔ 4G
+- **Content provider network / Datacenter** ↔ Streaming video, TCP
+- **National/Global ISP** ↔ IP
+
+
