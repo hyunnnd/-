@@ -65,3 +65,31 @@
 - **National/Global ISP** ↔ IP
 
 
+
+# 🌐 The Internet: a “service” view
+
+## 1. Infrastructure (인프라)
+
+- 애플리케이션에 **서비스를 제공**
+- 예시:
+    - Web
+    - Streaming video
+    - Multimedia teleconferencing
+    - Email
+    - Games
+    - E-commerce
+    - Social media
+    - Interconnected appliances (IoT 등)
+
+## 2. Programming Interface (프로그래밍 인터페이스)
+
+- 분산 애플리케이션을 위한 **연결 지점 제공**
+- **Hooks**: 앱이 인터넷 전송 서비스를 **연결·사용**하도록 허용
+- 다양한 서비스 옵션 제공 (우편 서비스와 유사한 개념)
+
+## 3. 그림 속 예시
+
+- **Skype** (Home network ↔ Mobile network)
+- **HTTP** (Enterprise network ↔ Content provider network)
+- **Streaming video** (Datacenter ↔ ISP ↔ Home/Mobile)
+
