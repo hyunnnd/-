@@ -32,9 +32,21 @@
               "icon": "lucide-file",
               "title": "Chapter 1.Computer Networks and the Interne"
             }
+          },
+          {
+            "id": "f2fcbb259ba57db9",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.9.12"
+              },
+              "icon": "lucide-book-up",
+              "title": "릴리즈 노트 1.9.12"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -194,6 +206,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:새 베이스 생성하기": false,
       "switcher:빠른 전환기 열기": false,
       "graph:그래프 뷰 열기": false,
       "canvas:새 캔버스 만들기": false,
@@ -203,7 +216,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "667238966e79e2cc",
+  "active": "f2fcbb259ba57db9",
   "lastOpenFiles": [
     "사진/Pasted image 20250818092155.png",
     "cn/Chapter 1.Computer Networks and the Interne.md",
