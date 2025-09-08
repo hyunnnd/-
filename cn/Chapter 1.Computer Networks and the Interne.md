@@ -308,3 +308,31 @@
 - 궤도 종류: 정지궤도(geosynchronous) vs 저궤도(low-earth-orbit)
 
 
+# The Network Core
+
+## 1. 구조
+
+- **Mesh of interconnected routers**  
+    여러 개의 라우터가 상호 연결된 메시(mesh) 구조로 구성됨.
+
+## 2. Packet-Switching (패킷 교환)
+
+- **개념**: 호스트(host)는 응용 계층 메시지를 잘라 **패킷(packets)** 으로 나눔.
+- **동작 방식**:
+    - 각 패킷은 **소스에서 목적지까지** 이동하는 동안 여러 라우터를 거쳐 전달됨.
+    - 한 라우터에서 다음 라우터로 순차적으로 전달(forwarding).
+    - 각 패킷은 **링크 용량 전체**를 사용하여 전송됨.
+
+## 3. 주요 구성 요소
+
+- **Local / Regional ISP**  
+    지역 또는 중소 규모 인터넷 서비스 제공자
+- **National / Global ISP**  
+    국가 단위 또는 글로벌 규모 인터넷 서비스 제공자
+- **기타 네트워크**
+    - Home Network
+    - Enterprise Network
+    - Content Provider Network
+    - Datacenter Network
+
+
