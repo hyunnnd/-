@@ -105,7 +105,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "87d1eea742953826",
@@ -220,8 +221,10 @@
   },
   "active": "f2fcbb259ba57db9",
   "lastOpenFiles": [
-    "사진/Pasted image 20250818092155.png",
+    "무제.base",
+    "무제 1.base",
     "cn/Chapter 1.Computer Networks and the Interne.md",
+    "사진/Pasted image 20250818092155.png",
     "cn",
     "캡스톤/무제.md",
     "conflict-files-obsidian-git.md",
