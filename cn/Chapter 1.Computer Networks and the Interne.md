@@ -365,3 +365,32 @@
 - 링크 전송 속도 (_R_)가 높을수록 전송 지연 ↓
 
 
+# Packet-Switching: Store-and-Forward
+
+## 1. Transmission Delay (전송 지연)
+
+- 정의: 길이 _L_ (bits)인 패킷을 전송 속도 _R_ (bps)로 링크에 밀어 넣는 데 걸리는 시간
+- 공식:
+    Transmission Delay=LR\text{Transmission Delay} = \frac{L}{R}Transmission Delay=RL​
+
+## 2. Store and Forward (저장 및 전달)
+
+- **라우터 동작 방식**:   
+    - 전체 패킷이 라우터에 도착해야 다음 링크로 전송 가능
+    - 부분적으로 도착한 패킷은 전송되지 않음
+
+## 3. End-to-End Delay (종단 간 지연)
+
+- 정의: 여러 홉(hop)을 거칠 때 누적되는 지연   
+- 2홉 상황에서:
+    End-to-End Delay=2LR\text{End-to-End Delay} = \frac{2L}{R}End-to-End Delay=R2L​
+    (전파 지연이 0이라고 가정)
+
+## 4. Numerical Example (수치 예시: One-Hop)
+
+- L=10 KbitsL = 10 \, \text{Kbits}L=10Kbits  
+- R=100 MbpsR = 100 \, \text{Mbps}R=100Mbps
+- One-hop 전송 지연:
+    10,000 / 100×10^6=0.1 msec
+
+
