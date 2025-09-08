@@ -357,7 +357,7 @@
 
 - **정의**: L-bit 패킷을 링크에 전송하는 데 필요한 시간   
 - **공식**:
-    Packet Transmission Delay=L (bits)R (bits/sec)\text{Packet Transmission Delay} = \frac{L \ (\text{bits})}{R \ (\text{bits/sec})}Packet Transmission Delay=R (bits/sec)L (bits)​
+    Packet Transmission Delay=L (bits)/ R (bits/sec)
 
 ## 4. 요약
 
