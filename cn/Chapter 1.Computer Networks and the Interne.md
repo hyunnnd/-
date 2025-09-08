@@ -421,3 +421,84 @@
 - 큐가 꽉 차면 일부 패킷이 손실됨
 
 
+# Two Key Network-Core Functions
+
+## 1. Forwarding (포워딩)
+
+- **정의**: 패킷을 **라우터 입력 링크(input link)** 에서 **적절한 출력 링크(output link)** 로 이동시키는 동작
+- **특징**:
+    - **Local action** (개별 라우터 내부 동작)
+    - **포워딩 테이블(local forwarding table)** 참조
+        - 헤더 값(header value)에 따라 출력 링크 결정    
+- **예시**:
+    - Header value = `0111` → Output link = 2        
+
+## 2. Routing (라우팅)
+
+- **정의**: 소스에서 목적지까지 패킷이 이동하는 전체 경로(path)를 결정하는 과정
+- **특징**:
+    - **Global action** (네트워크 전체 관점에서 수행)
+    - 라우팅 알고리즘(routing algorithms)에 의해 결정됨
+- **역할**: 라우터의 **포워딩 테이블 생성/업데이트**
+
+|구분|Forwarding|Routing|
+|---|---|---|
+|범위|Local (개별 라우터 내부)|Global (네트워크 전체)|
+|기능|패킷을 입력 링크 → 출력 링크로 전달|소스~목적지 경로 결정|
+|기초 자료|Forwarding table|Routing algorithm 결과|
+
+# Alternative to Packet Switching: Circuit Switching
+
+## 1. 기본 개념
+
+- **End-to-end 자원 할당**: 소스와 목적지 간의 “call” 동안 회선이 **예약(reserved)** 됨
+- 패킷 교환과 달리 **전용 자원(dedicated resources)** 사용 → 공유 불가
+
+## 2. 동작 방식
+
+- 다이어그램 예시:
+    - 각 링크는 4개의 회선을 가짐
+    - 하나의 호출(call)이 **top 링크의 2번째 회선**과 **right 링크의 1번째 회선**을 할당받음
+- **특징**:
+    - 회선 기반(circuit-like) 성능 → **보장된 성능**
+    - 호출이 사용하지 않으면 회선 구간은 **유휴(idle)** 상태 (자원 낭비)
+    - **No sharing**: 다른 사용자와 공유 불가
+
+## 3. 활용
+
+- 전통적인 전화망(traditional telephone networks)에서 주로 사용됨  
+
+## 4. Packet Switching vs Circuit Switching (비교 요약)
+|구분|Packet Switching|Circuit Switching|
+|---|---|---|
+|자원 활용|공유 (동적 할당)|전용 (사전 예약)|
+|효율성|유휴 시간 거의 없음|유휴 자원 발생 가능|
+|성능|혼잡 시 지연/손실 발생|회선 품질 보장|
+|활용 예|인터넷 데이터 통신|전통 전화망|
+
+
+# Circuit Switching: FDM and TDM
+
+## 1. Frequency Division Multiplexing (FDM)
+
+- **개념**: 광(optical), 전자기 주파수 대역을 (좁은) 주파수 밴드로 분할
+- **특징**:
+    - 각 호출(call) → 자신의 밴드 할당
+    - 해당 밴드 내에서 최대 속도로 전송 가능
+- **시각화**: 여러 사용자가 **동시에**, 서로 다른 주파수 대역을 사용
+
+## 2. Time Division Multiplexing (TDM)
+
+- **개념**: 시간을 슬롯(slot)으로 분할   
+- **특징**:
+    - 각 호출(call) → 주기적으로 반복되는 슬롯 할당
+    - (넓은) 주파수 대역을 사용할 수 있으나, **자신의 슬롯 시간 동안만 전송 가능**
+- **시각화**: 여러 사용자가 **시간을 나눠서** 번갈아 전송
+
+## 3. 비교 요약
+|구분|FDM|TDM|
+|---|---|---|
+|자원 분할 기준|주파수 (Frequency)|시간 (Time)|
+|사용자 동작|동시에 전송 (서로 다른 대역)|번갈아 전송 (시간 슬롯)|
+|성능|각자 좁은 대역폭 보장|전체 대역폭 활용 가능하지만 시간 제한|
+|활용 예|라디오/TV 방송, 전통 전화망|디지털 회선, 위성통신, 4G/5G 일부 방식|
