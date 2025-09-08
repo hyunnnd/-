@@ -566,3 +566,30 @@
     - **Packet Switching** → 필요할 때만 할당 (예: 무작위로 식당 방문 후 자리 차지)
 
 
+
+# Internet Structure: A "Network of Networks"
+
+## 1. Host 연결 방식
+
+- 호스트(host)는 **Access ISP**(Internet Service Provider)를 통해 인터넷에 접속
+- Access ISP 종류:
+    - Residential (가정용 ISP)
+    - Enterprise (기업, 대학교, 상업적 ISP 등)
+
+## 2. ISP 상호 연결
+
+- Access ISP는 반드시 서로 연결되어야 함   
+- 목적: **임의의 두 호스트 간 패킷 전송 가능**
+
+## 3. 네트워크의 복잡성
+
+- 결과적으로 인터넷은 **네트워크들의 네트워크(network of networks)**   
+- 구조 진화 요인:
+    - **경제적 요인 (economics)**
+    - **국가 정책 (national policies)**
+
+## 4. 접근 방법
+
+- 현재 인터넷 구조를 설명하기 위해 **단계적(stepwise) 접근** 필요
+
+
