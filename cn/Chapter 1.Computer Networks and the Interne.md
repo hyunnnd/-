@@ -593,3 +593,41 @@
 - 현재 인터넷 구조를 설명하기 위해 **단계적(stepwise) 접근** 필요
 
 
+# Internet Structure: A "Network of Networks" (36~44)
+
+## 36. Internet structure: a “network of networks”
+
+- **문제 제기**: 수백만 개의 Access ISP를 어떻게 연결할 것인가?
+- **직접 연결 문제**:
+- 각 Access ISP를 서로 직접 연결하면 **O(N²) 연결** 필요
+- 비현실적 (scalability issue)
+
+- **대안 1**: 모든 Access ISP를 **하나의 글로벌 Transit ISP**에 연결
+- 고객 ISP ↔ 글로벌 ISP 간 **경제적 계약(economic agreement)** 존재
+
+- 하지만 **하나의 글로벌 ISP**만 존재한다면,  
+  → 경쟁자(competitors)가 등장하게 됨
+
+- 글로벌 ISP가 여러 개 존재한다면?  
+    → 서로 연결 필요
+- **IXP (Internet Exchange Point)**, **Peering link** 등장
+    - ISP 간 상호 연결을 가능하게 함
+
+
+- **지역 ISP (Regional ISP)** 등장
+    - Access ISP를 묶어 상위 ISP와 연결
+- 계층적 구조로 확장
+
+**콘텐츠 제공자 네트워크(Content Provider Network)** 등장
+
+- Google, Microsoft, Akamai 등
+- 자체 네트워크를 운영하여 사용자 가까이에 서비스/콘텐츠 제공
+
+**Tier 구조**:
+
+- 소수의 대형 **Tier-1 ISP**가 중심 (예: Level 3, Sprint, AT&T, NTT)
+    - 국가 및 국제 커버리지
+- **콘텐츠 제공자 네트워크**:
+    - Google, Facebook 등
+    - 자체 데이터센터 네트워크를 운영, Tier-1/Regional ISP를 우회하기도 함
+
