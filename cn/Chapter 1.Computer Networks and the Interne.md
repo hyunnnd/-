@@ -394,3 +394,30 @@
     10,000 / 100×10^6=0.1 msec
 
 
+# Packet-Switching: Queueing Delay, Loss
+
+## 1. Packet Queueing and Loss
+
+- **조건**: 링크로 들어오는 데이터 도착률(throughput, bps)이 링크 전송 속도(transmission rate, bps)를 초과할 경우
+- **결과**:
+    - 패킷은 전송을 기다리며 **큐(queue)** 에 쌓임
+    - 라우터의 메모리(버퍼)가 가득 차면 **패킷이 삭제(dropped, lost)** 될 수 있음
+
+## 2. Queueing Delay (큐잉 지연)
+
+- 출력 링크(output link)가 처리할 수 있는 속도보다 입력 패킷이 많을 때 발생   
+- 전송 대기 시간 증가
+
+## 3. Packet Loss (패킷 손실)
+
+- 라우터의 **버퍼 공간 한계**를 초과할 경우 발생   
+- 전송되지 못한 패킷은 폐기(dropped)됨
+
+## 4. 그림 설명
+
+- **입력 링크**: 100 Mb/s   
+- **출력 링크**: 1.5 Mb/s
+- 입력 속도가 출력 속도를 초과하므로 큐가 형성됨
+- 큐가 꽉 차면 일부 패킷이 손실됨
+
+
