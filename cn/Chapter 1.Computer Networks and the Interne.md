@@ -336,3 +336,32 @@
     - Datacenter Network
 
 
+# Host: Sends Packets of Data
+
+## 1. Host Sending Function
+
+- **과정**:
+    - 응용 계층(application layer) 메시지를 받음
+    - 메시지를 작은 단위로 분할 → **패킷(packets)** (길이 = _L bits_)
+    - 패킷을 접속 네트워크(access network)에 전송  
+        전송 속도 = **Transmission rate (R)**
+
+## 2. Transmission Rate (전송 속도)
+
+- **정의**: 링크 전송 속도 (link transmission rate)   
+- 다른 명칭:
+    - **Link capacity**
+    - **Link bandwidth**
+
+## 3. Packet Transmission Delay (패킷 전송 지연)
+
+- **정의**: L-bit 패킷을 링크에 전송하는 데 필요한 시간   
+- **공식**:
+    Packet Transmission Delay=L (bits)R (bits/sec)\text{Packet Transmission Delay} = \frac{L \ (\text{bits})}{R \ (\text{bits/sec})}Packet Transmission Delay=R (bits/sec)L (bits)​
+
+## 4. 요약
+
+- 패킷 크기 (_L_)가 클수록 전송 지연 ↑   
+- 링크 전송 속도 (_R_)가 높을수록 전송 지연 ↓
+
+
