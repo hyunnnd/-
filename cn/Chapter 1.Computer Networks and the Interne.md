@@ -631,3 +631,29 @@
     - Google, Facebook 등
     - 자체 데이터센터 네트워크를 운영, Tier-1/Regional ISP를 우회하기도 함
 
+
+# How Do Packet Loss and Delay Occur?
+
+## 1. Queueing in Router Buffers
+
+- 패킷은 라우터의 **버퍼(buffer)** 에 저장됨
+- **대기열(queue)** 에 쌓여 순서를 기다림
+
+## 2. Delay 발생 원인
+
+- **Transmission delay**: 패킷이 전송되는 동안 발생   
+- **Queueing delay**: 출력 링크가 혼잡할 때, 패킷이 버퍼에서 대기하는 시간
+
+## 3. Packet Loss 발생 원인
+
+- 입력 패킷 도착률이 **출력 링크 용량(output link capacity)** 을 초과하면 버퍼가 가득 참   
+- **버퍼 여유 공간이 없을 경우 → 패킷 폐기(loss)** 발생
+
+## 4. 그림 설명
+
+- A, B 호스트가 동시에 패킷을 전송  
+- 라우터 버퍼에 패킷이 쌓임 (queue 형성)
+- 일부는 전송 중 (transmission delay), 일부는 대기 (queueing delay)
+- 버퍼가 꽉 차면 → 새 패킷은 drop(loss)
+
+
