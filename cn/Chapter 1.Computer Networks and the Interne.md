@@ -277,3 +277,34 @@
         - 전자기 잡음에 영향을 받지 않음 (면역성)
 
 
+
+# Links: Physical Media (무선 전송 매체)
+
+## 1. Wireless Radio (무선 라디오)
+- **특징**:
+    - 전자기 스펙트럼을 이용하여 신호 전달
+    - 물리적인 “wire”가 없음
+    - 방송(broadcast) 및 반이중(half-duplex) 통신 방식  
+        (송신기 → 수신기)
+- **전파 환경의 영향**:
+    - 반사(reflection)
+    - 물체에 의한 차단(obstruction)
+    - 간섭(interference)
+## 2. Radio Link Types (무선 링크 유형)
+
+### (1) Terrestrial Microwave (지상 마이크로파)
+
+- 최대 45 Mbps 채널 속도  
+### (2) Wireless LAN (Wi-Fi)
+
+- 최대 수백 Mbps 속도 (up to 100’s Mbps)
+### (3) Wide-area (광역망, 예: Cellular)
+
+- 4G 셀룰러: 약 수백 Mbps
+### (4) Satellite (위성 통신)
+
+- 채널당 최대 수백 Mbps
+- 전송 지연(end-to-end delay): 약 270 ms
+- 궤도 종류: 정지궤도(geosynchronous) vs 저궤도(low-earth-orbit)
+
+
