@@ -1022,3 +1022,26 @@ traceroute: gaia.cs.umass.edu www.eurecom.fr
 - 인터넷 스택에서는 이 두 계층이 **생략**
 - 해당 기능이 필요할 경우, **애플리케이션 계층에서 직접 구현**
 - 실제로는 많은 경우, 응용 프로그램이나 라이브러리에서 처리
+
+
+# Encapsulation / Decapsulation
+## Encapsulation
+- **정의**: 상위 계층의 데이터를 받아 하위 계층 프로토콜의 데이터 부분에 넣고, 제어 정보를 담은 헤더를 추가하는 과정
+- 각 계층은 **PDU (Protocol Data Unit)** 를 형성:
+  - Application → Data
+  - Transport → Segment header + Data
+  - Network → Packet header + Segment header + Data
+  - Data Link → Frame header + Packet header + Segment header + Data + Frame trailer
+  - Physical → Bits (0과 1의 전송 신호)
+
+## De-encapsulation
+- **정의**: Encapsulation의 반대 과정
+- 수신 측에서 하위 계층부터 헤더를 제거하며 데이터를 상위 계층으로 전달
+- 최종적으로 Application 계층에서 원본 데이터 복원
+
+## 요약
+- 송신 측: **데이터에 헤더를 계속 추가** (Encapsulation)  
+- 수신 측: **헤더를 하나씩 제거** (De-encapsulation)  
+- 각 계층은 자신의 역할에 필요한 정보만 확인하고 처리
+
+
