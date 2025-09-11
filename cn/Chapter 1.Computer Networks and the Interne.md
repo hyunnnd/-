@@ -907,3 +907,20 @@ traceroute: gaia.cs.umass.edu www.eurecom.fr
 ## 실제 상황
 - 대부분의 경우 **Rc** (클라이언트 수신 속도) 또는 **Rs** (서버 송신 속도)가 병목이 됨
 - 여러 연결이 동시에 링크를 공유할 때는 **R/10**이 한 연결당 최대 처리율을 제한
+
+
+# Protocol “Layers” and Reference Models
+## 네트워크의 복잡성
+네트워크는 다양한 구성 요소로 이루어짐:
+- hosts
+- routers
+- links of various media
+- applications
+- protocols
+- hardware, software
+
+## 질문
+- 네트워크 구조를 **조직화(organize)** 할 수 있는 방법이 있을까?  
+- 최소한 네트워크를 **체계적으로 논의(discussion)** 할 수 있는 틀이 필요하지 않을까?
+
+
