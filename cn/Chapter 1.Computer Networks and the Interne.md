@@ -958,3 +958,19 @@ traceroute: gaia.cs.umass.edu www.eurecom.fr
 - → 네트워크 계층 구조와 유사한 개념
 
 
+
+# Why Layering?
+## 복잡한 시스템 다루기
+- **명확한 구조**는 복잡한 시스템의 구성 요소들을 식별하고 관계를 파악하기 쉽게 함  
+- 이를 위한 **계층적 참조 모델(reference model)** 제공
+
+## 모듈화(Modularization)의 장점
+- 유지보수와 시스템 업데이트가 쉬워짐  
+- 특정 계층의 서비스 **구현(implementation)** 변경이 다른 계층에 투명하게 처리됨  
+  - 예: 공항 게이트 절차가 바뀌어도 전체 항공 시스템에는 큰 영향 없음
+
+## 고려 사항
+- **Layering considered harmful?** → 계층화가 항상 최선일까?  
+- **Layering in other systems?** → 네트워크 외 다른 복잡한 시스템에서도 계층 구조를 활용할 수 있음
+
+
