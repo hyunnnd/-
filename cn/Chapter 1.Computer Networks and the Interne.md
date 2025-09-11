@@ -1000,3 +1000,25 @@ traceroute: gaia.cs.umass.edu www.eurecom.fr
 - 하위 계층의 서비스를 활용해 상위 계층을 지원함
 
 
+# ISO/OSI Reference Model
+## OSI 7계층 구조
+1. **Application**
+2. **Presentation**
+3. **Session**
+4. **Transport**
+5. **Network**
+6. **Link**
+7. **Physical**
+
+## Internet Protocol Stack과의 차이
+- 인터넷 스택에는 없는 계층:
+  - **Presentation Layer**
+    - 데이터 의미 해석
+    - 암호화, 압축, 기계 종속적 표현 변환
+  - **Session Layer**
+    - 동기화, 체크포인트, 데이터 교환 복구 기능
+
+## 특징
+- 인터넷 스택에서는 이 두 계층이 **생략**
+- 해당 기능이 필요할 경우, **애플리케이션 계층에서 직접 구현**
+- 실제로는 많은 경우, 응용 프로그램이나 라이브러리에서 처리
