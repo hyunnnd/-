@@ -893,3 +893,17 @@ traceroute: gaia.cs.umass.edu www.eurecom.fr
 - 전체 전송률(throughput)을 제한하는 요소
 
 
+# Throughput: Network Scenario
+
+## 시나리오
+- 10개의 연결이 **백본 병목 링크 R** (bits/sec)을 공유
+- 각 연결의 송신 속도 = Rs
+- 각 연결의 수신 속도 = Rc
+
+## per-connection throughput
+- 각 연결의 평균 end-to-end 처리율:
+  Throughput = min(R_c, R_s, R/10)
+
+## 실제 상황
+- 대부분의 경우 **Rc** (클라이언트 수신 속도) 또는 **Rs** (서버 송신 속도)가 병목이 됨
+- 여러 연결이 동시에 링크를 공유할 때는 **R/10**이 한 연결당 최대 처리율을 제한
