@@ -974,3 +974,29 @@ traceroute: gaia.cs.umass.edu www.eurecom.fr
 - **Layering in other systems?** → 네트워크 외 다른 복잡한 시스템에서도 계층 구조를 활용할 수 있음
 
 
+# Internet Protocol Stack
+## 계층 구조
+1. **Application Layer**
+   - 네트워크 애플리케이션 지원
+   - 예: IMAP, SMTP, HTTP
+
+2. **Transport Layer**
+   - 프로세스-프로세스 간 데이터 전송
+   - 예: TCP, UDP
+
+3. **Network Layer**
+   - 출발지에서 목적지까지 데이터그램 라우팅
+   - 예: IP, 라우팅 프로토콜
+
+4. **Link Layer**
+   - 인접한 네트워크 장치 간 데이터 전송
+   - 예: Ethernet, 802.11(WiFi), PPP
+
+5. **Physical Layer**
+   - 실제 비트가 전송되는 물리적 매체 (“on the wire”)
+
+## 요약
+- 각 계층은 독립적으로 기능을 수행하면서  
+- 하위 계층의 서비스를 활용해 상위 계층을 지원함
+
+
