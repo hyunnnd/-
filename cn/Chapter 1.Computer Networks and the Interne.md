@@ -860,3 +860,20 @@ traceroute: gaia.cs.umass.edu www.eurecom.fr
 - 손실 복구 방식은 **프로토콜(TCP 등)** 에 따라 달라짐
 
 
+# Throughput
+## 정의
+- **Throughput**: 단위 시간당 전송되는 비트의 양 (bits/time unit)
+- 두 가지 형태
+  - **Instantaneous**: 특정 시점에서의 순간 전송률
+  - **Average**: 일정 시간 구간 동안의 평균 전송률
+
+## 네트워크 모델
+- 서버가 비트를 "유체(fluid)"처럼 파이프에 흘려보냄
+- 파이프 1: 전송 가능 속도 = Rs (bits/sec)
+- 파이프 2: 전송 가능 속도 = Rc (bits/sec)
+
+## 요약
+- 실제 전송 속도는 **병목 구간의 대역폭**에 의해 결정됨
+- 순간 속도와 평균 속도를 구분하여 이해해야 함
+
+
