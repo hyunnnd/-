@@ -876,4 +876,20 @@ traceroute: gaia.cs.umass.edu www.eurecom.fr
 - 실제 전송 속도는 **병목 구간의 대역폭**에 의해 결정됨
 - 순간 속도와 평균 속도를 구분하여 이해해야 함
 
+## 평균 End-to-End Throughput
+- 송신 속도: Rs (bits/sec)
+- 수신 경로 속도: Rc (bits/sec)
+
+### 경우 1: Rs < Rc
+- 송신자가 느리게 전송
+- **Throughput = Rs**
+
+### 경우 2: Rs > Rc
+- 경로의 일부 구간이 느림
+- **Throughput = Rc**
+
+## Bottleneck Link
+- End-to-End 경로에서 **가장 낮은 속도를 가진 링크**
+- 전체 전송률(throughput)을 제한하는 요소
+
 
