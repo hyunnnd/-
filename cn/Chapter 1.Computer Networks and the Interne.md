@@ -924,3 +924,37 @@ traceroute: gaia.cs.umass.edu www.eurecom.fr
 - 최소한 네트워크를 **체계적으로 논의(discussion)** 할 수 있는 틀이 필요하지 않을까?
 
 
+
+# Example: Organization of Air Travel
+## 단계별 구성 (출발 → 도착)
+
+- **Ticket (purchase / complain)**  
+  - 서비스: **Ticketing service**
+  - 출발 시: 티켓 구매  
+  - 도착 시: 불만/문의  
+
+- **Baggage (check / claim)**  
+  - 서비스: **Baggage service**
+  - 출발 시: 수하물 체크인  
+  - 도착 시: 수하물 수령  
+
+- **Gates (load / unload)**  
+  - 서비스: **Gate service**
+  - 출발 시: 승객 탑승  
+  - 도착 시: 승객 하차  
+
+- **Runway (takeoff / landing)**  
+  - 서비스: **Runway service**
+  - 출발 시: 이륙  
+  - 도착 시: 착륙  
+
+- **Airplane routing**  
+  - 서비스: **Routing service**
+  - 항공편의 경로 설정 및 이동  
+
+## 개념
+- 각 단계(=layer)는 고유의 기능을 수행
+- 하위 단계(layer)가 제공하는 서비스를 기반으로 상위 단계가 동작
+- → 네트워크 계층 구조와 유사한 개념
+
+
