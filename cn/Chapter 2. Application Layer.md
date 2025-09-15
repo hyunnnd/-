@@ -128,3 +128,33 @@
 📌 요약: **프로세스를 구분하기 위해서는 IP 주소와 포트 번호가 함께 필요하다.**
 
 
+# An Application-Layer Protocol Defines (애플리케이션 계층 프로토콜이 정의하는 것)
+
+## 프로토콜이 정의하는 요소
+
+- **메시지 유형 (types of messages exchanged)**    
+    - 예: 요청(request), 응답(response)
+
+- **메시지 구문 (message syntax)**
+    - 메시지에 포함된 필드와 그 구분 방법
+
+- **메시지 의미 (message semantics)**    
+    - 각 필드의 정보 의미
+
+- **규칙 (rules)**    
+    - 언제, 어떻게 프로세스가 메시지를 보내고 응답하는지
+
+## 프로토콜 유형
+
+- **오픈 프로토콜 (open protocols)**    
+    - RFC에 정의되어 있어 누구나 접근 가능
+    - 상호 운용성(interoperability) 보장
+    - 예: HTTP, SMTP
+
+- **독점 프로토콜 (proprietary protocols)**    
+    - 특정 기업/제품 전용
+    - 예: Skype
+
+
+📌 요약: **애플리케이션 계층 프로토콜은 메시지의 형식, 의미, 규칙을 정의하며 오픈 또는 독점 방식으로 나뉜다.**
+
