@@ -178,3 +178,34 @@
 📌 요약: **애플리케이션의 특성에 따라 전송 계층이 보장해야 하는 요소(무결성, 지연, 처리량, 보안)가 달라진다.**
 
 
+![[Pasted image 20250915105132.png]]
+
+# Internet Transport Protocols Services
+
+## TCP Service
+
+- **신뢰성 있는 전송 (reliable transport)**: 송신 프로세스와 수신 프로세스 간 데이터 전송 보장   
+- **흐름 제어 (flow control)**: 송신자가 수신자를 압도하지 않도록 조절
+- **혼잡 제어 (congestion control)**: 네트워크 과부하 시 송신자 속도 제한
+- **제공하지 않는 것**: 타이밍, 최소 처리량 보장, 보안
+- **연결 지향적 (connection-oriented)**: 클라이언트와 서버 간 연결 설정 필요
+## UDP Service
+
+- **신뢰성 없는 전송 (unreliable data transfer)**: 송신-수신 간 전송 보장 없음
+- **제공하지 않는 것**:
+    - 신뢰성 (reliability)
+    - 흐름 제어 (flow control)
+    - 혼잡 제어 (congestion control)
+    - 타이밍 (timing)
+    - 처리량 보장 (throughput guarantee)
+    - 보안 (security)
+    - 연결 설정 (connection setup)
+## 질문
+- Q: 그런데 왜 굳이 UDP가 있는가?
+
+📌 요약:
+- **TCP**는 신뢰성과 제어 기능을 제공하지만, 무겁고 연결 설정이 필요함. 
+- **UDP**는 단순하고 가볍지만 신뢰성을 제공하지 않음.
+
+![[Pasted image 20250915105313.png]]
+
