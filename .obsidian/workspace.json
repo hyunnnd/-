@@ -25,12 +25,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "cn/무제.md",
+                "file": "cn/Chapter 2. Application Layer.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "무제"
+              "title": "Chapter 2. Application Layer"
             }
           }
         ],
@@ -204,10 +204,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "41bfe5628e1a01bf",
+  "active": "24bd6c58a8c85b6e",
   "lastOpenFiles": [
     "Pasted image 20250908110307.png",
-    "cn/무제.md",
+    "cn/Chapter 2. Application Layer.md",
     "무제.base",
     "무제 1.base",
     "cn/Chapter 1.Computer Networks and the Interne.md",
