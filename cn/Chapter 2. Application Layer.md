@@ -412,3 +412,34 @@ d. 지속적 연결(persistent connection), 파이프라이닝 없음, 병렬 �
     - 객체 8개: 각각 1X씩 → 8X
     - 합계: **10X**
 
+## HTTP 요청 메시지 (HTTP Request Message)
+
+### HTTP 메시지의 두 종류
+- **Request (요청)**
+- **Response (응답)**    
+
+### HTTP 요청 메시지 특징
+
+- **ASCII 기반 (사람이 읽을 수 있는 텍스트 형식)**    
+
+### 구조
+
+1. **Request line (요청 라인)**
+    - 예: `GET /index.html HTTP/1.1`        
+    - 요청 메서드(GET, POST, HEAD 등) + URL + HTTP 버전
+
+2. **Header lines (헤더 라인)**
+    - 예시:
+        Host: www-net.cs.umass.edu
+		User-Agent: Firefox/3.6.10
+		Accept: text/html,application/xhtml+xml
+		Accept-Language: en-us,en;q=0.5
+		Accept-Encoding: gzip,deflate
+		Accept-Charset: ISO-8859-1,utf-8;q=0.7
+		Keep-Alive: 115
+		Connection: keep-alive
+3. **빈 줄 (Carriage return + Line feed = `\r\n`)**    
+    - 헤더 부분이 끝났음을 알림
+
+📌 요약:  
+HTTP 요청 메시지는 **요청 라인 → 헤더 라인 → 빈 줄** 순으로 구성되며, 각 줄은 `\r\n`으로 끝납니다.
