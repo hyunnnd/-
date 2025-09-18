@@ -573,3 +573,30 @@ HTTP 요청 메시지는 **요청 라인 → 헤더 라인 → 빈 줄** 순으�
 ![[Pasted image 20250918105520.png]]
 
 
+## HTTP Cookies: Comments
+
+### 쿠키의 활용 (What cookies can be used for)
+
+- **Authorization (인증)**
+- **Shopping carts (장바구니)**
+- **Recommendations (추천 시스템)**
+- **User session state (사용자 세션 상태, 예: 웹 이메일 로그인 유지)**
+
+### 도전 과제: 상태 유지 방법 (Challenge: How to keep state)
+
+- 프로토콜 종단(endpoint)에서 **여러 트랜잭션 동안 상태를 유지**해야 함    
+- 쿠키를 통해 HTTP 메시지가 상태 정보를 함께 전달
+
+### 쿠키와 프라이버시 (Cookies and Privacy)
+
+- 쿠키는 웹사이트가 사용자에 대해 많은 것을 **학습(learn)**할 수 있도록 함    
+- 제3자 지속 쿠키(third-party persistent cookies, 추적 쿠키)는
+    - 동일한 ID(쿠키 값)를 여러 웹사이트에 걸쳐 추적 가능
+    - 즉, **사용자 활동이 사이트 간에 공유**될 수 있음
+
+📌 요약
+
+- 쿠키는 인증·세션·장바구니 등 **편리한 기능** 제공   
+- 하지만 추적 쿠키는 **개인정보 침해** 우려 존재
+
+
