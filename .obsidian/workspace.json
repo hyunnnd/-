@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "os/10 VirtualMemory.md",
+                "file": "cn/Chapter 1.Computer Networks and the Interne.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "10 VirtualMemory 의 나가는 링크"
+              "title": "Chapter 1.Computer Networks and the Interne 의 나가는 링크"
             }
           },
           {
@@ -133,7 +133,7 @@
                 "searchQuery": ""
               },
               "icon": "lucide-tags",
-              "title": "Tags"
+              "title": "태그"
             }
           },
           {
@@ -172,11 +172,12 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -189,7 +190,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "41bfe5628e1a01bf",
+  "active": "2d99235d2f5dd987",
   "lastOpenFiles": [
     "cn/Chapter 2. Application Layer.md",
     "사진/Pasted image 20250513142552.png",

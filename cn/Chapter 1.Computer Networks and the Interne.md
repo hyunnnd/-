@@ -118,7 +118,7 @@
 프로토콜은 **네트워크 엔티티 간 주고받는 메시지의 형식과 순서**, 그리고 **메시지 전송·수신 시 수행되는 동작**을 정의한다.
 
 
-## A closer look at Internet structure — _Network edge_
+# A closer look at Internet structure — _Network edge_
 
 - **호스트(클라이언트·서버)**가 네트워크 가장자리(엣지)를 구성
 - **서버**는 주로 **데이터센터**에 위치
