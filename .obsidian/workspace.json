@@ -25,12 +25,14 @@
             "id": "0511a9e7001db658",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.9.12"
+                "file": "cn/Chapter 1.Computer Networks and the Interne.md",
+                "mode": "preview",
+                "source": false
               },
-              "icon": "lucide-book-up",
-              "title": "릴리즈 노트 1.9.12"
+              "icon": "lucide-file",
+              "title": "Chapter 1.Computer Networks and the Interne"
             }
           }
         ],

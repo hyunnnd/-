@@ -796,7 +796,7 @@
     - **유한 큐**: **손실(loss)** 이 매우 커집니다.
 
 > [!important] 설계 원칙  
-> 시스템의 트래픽 강도 ρ=LαR\rho=\dfrac{L\alpha}{R}ρ=RLα​ 가 **1을 초과하지 않도록** 설계합니다.
+> 시스템의 트래픽 강도 ρ=LαR가 **1을 초과하지 않도록** 설계합니다.
 
 
 # Real Internet Delays and Routes
