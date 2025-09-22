@@ -929,3 +929,93 @@ HTTP 요청 메시지는 **요청 라인 → 헤더 라인 → 빈 줄** 순으�
 - **HTTP/3**: QUIC(UDP 기반)을 사용하여 보안 + 성능 + 신뢰성을 동시에 제공
 
 
+## E-mail
+
+### Three Major Components
+
+1. **User Agents (UA)**
+    - 메일 작성, 편집, 읽기 담당
+    - 예: Outlook, iPhone mail client
+    - 별칭: “mail reader”
+
+2. **Mail Servers**    
+    - 사용자 메일박스(user mailbox)와 발신 메시지 큐(outgoing message queue) 저장
+    - 메일 송수신의 중계 역할
+
+3. **SMTP (Simple Mail Transfer Protocol)**    
+    - 메일 서버 간 메시지 전송을 위한 프로토콜
+    - 발신 서버에서 수신 서버로 메시지 전달
+
+### User Agent (UA)
+
+- 사용자가 메일을 **작성(composing)**, **편집(editing)**, **읽기(reading)** 가능    
+- 송신(outgoing), 수신(incoming) 메시지는 서버에 저장됨
+- 예시: Outlook, iPhone mail client
+
+📌 요약
+
+- 이메일 시스템은 **User Agent + Mail Server + SMTP**로 구성    
+- User Agent는 **메일 클라이언트** 역할, Mail Server는 **저장·전송 중계**, SMTP는 **프로토콜**
+
+
+## E-mail: Mail Servers
+
+### Mail Server 기능
+
+1. **Mailbox**
+    - 사용자별로 존재
+    - 수신된 메시지(incoming messages) 저장
+
+2. **Message Queue**    
+    - 발신 메시지(outgoing messages) 저장
+    - 아직 전송되지 않은 메일들을 보관
+
+### SMTP Protocol
+
+- **메일 서버 간** 메시지 전달에 사용    
+- 송신 메일 서버 = **client** 역할
+- 수신 메일 서버 = **server** 역할
+
+📌 요약
+
+- **Mailbox**: 사용자 수신 메일 보관    
+- **Message Queue**: 발신 대기 메일 저장
+- **SMTP**: 메일 서버 간 전송을 담당 (클라이언트–서버 관계 형성)
+
+
+## E-mail: RFC 5321 (SMTP)
+
+### 전송 방식
+
+- **TCP 기반**으로 신뢰성 있게 메시지 전송
+- 포트 번호: **25번**
+- 송신 서버(클라이언트 역할) → 수신 서버(서버 역할) **직접 전송**
+
+### 전송 과정 (3단계)
+
+1. **Handshaking (인사/연결)**    
+    - 연결 성립 및 인사 교환
+
+2. **Transfer of messages (메시지 전송)**    
+    - 실제 메일 데이터 전송
+
+3. **Closure (종료)**    
+    - 세션 종료
+
+### Command/Response 구조
+
+- **Command**: 클라이언트가 ASCII 텍스트 명령 전송    
+- **Response**: 서버가 상태 코드 + 메시지로 응답
+- (HTTP와 유사한 상호작용 구조)
+
+### 메시지 형식
+
+- 반드시 **7-bit ASCII**로 인코딩    
+
+📌 요약
+
+- **SMTP (RFC 5321)**는 TCP 25번 포트 사용    
+- 전송 과정: Handshake → Message Transfer → Close
+- 명령/응답 구조, 메시지는 7-bit ASCII 기반
+
+
