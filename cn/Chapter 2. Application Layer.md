@@ -1050,3 +1050,44 @@ HTTP 요청 메시지는 **요청 라인 → 헤더 라인 → 빈 줄** 순으�
 - 메일박스(mailbox)와 메시지 큐(message queue)가 중간 저장소 역할
 
 
+## Sample SMTP Interaction
+
+### 통신 흐름
+
+- **S**: Server (수신 메일 서버)
+- **C**: Client (송신 메일 서버)
+
+### 단계별 과정
+
+1. **연결 및 인사**    
+    - `S: 220 hamburger.edu` → 서버 연결 준비 완료
+    - `C: HELO crepes.fr` → 클라이언트 인사
+    - `S: 250 Hello crepes.fr, pleased to meet you` → 서버 응답
+
+2. **발신자 지정**    
+    - `C: MAIL FROM: <alice@crepes.fr>`
+    - `S: 250 alice@crepes.fr... Sender ok`
+
+3. **수신자 지정**    
+    - `C: RCPT TO: <bob@hamburger.edu>`
+    - `S: 250 bob@hamburger.edu... Recipient ok`
+
+4. **메시지 데이터 전송**    
+    - `C: DATA`
+    - `S: 354 Enter mail, end with "." on a line by itself`
+    - `C: Do you like ketchup?`
+    - `C: How about pickles?`
+    - `C: .` (마침표로 메시지 종료 표시)
+    - `S: 250 Message accepted for delivery`
+
+5. **세션 종료**    
+    - `C: QUIT`
+    - `S: 221 hamburger.edu closing connection`
+
+📌 요약
+
+- SMTP는 **명령/응답(command/response)** 기반    
+- 주요 명령어: `HELO`, `MAIL FROM`, `RCPT TO`, `DATA`, `QUIT`
+- 메시지 본문은 `DATA` 이후 전송, `.` 단독 줄로 종료
+
+
