@@ -1091,3 +1091,28 @@ HTTP 요청 메시지는 **요청 라인 → 헤더 라인 → 빈 줄** 순으�
 - 메시지 본문은 `DATA` 이후 전송, `.` 단독 줄로 종료
 
 
+## SMTP: Closing Observations
+
+### HTTP와 비교
+
+- **HTTP**: **Pull 방식** (클라이언트가 요청 → 서버 응답)
+- **SMTP**: **Push 방식** (송신 서버가 직접 수신 서버로 전송)
+- 공통점: **ASCII 기반 명령/응답 구조**, 상태 코드 사용
+- **HTTP**: 각 객체가 **독립적인 응답 메시지**로 캡슐화
+- **SMTP**: 여러 객체를 **multipart message**로 묶어 전송
+
+### SMTP 추가 특징
+
+- **Persistent connections** (지속 연결 사용)    
+- 메시지(헤더 + 본문)는 반드시 **7-bit ASCII** 형식
+- 메시지 종료 구분: `CRLF.CRLF` 사용
+
+📌 요약
+
+- SMTP와 HTTP 모두 명령/응답 구조를 사용하지만,    
+    - HTTP는 **클라이언트 pull 기반**
+    - SMTP는 **서버 간 push 기반**
+
+- SMTP는 지속 연결을 활용하며, 메시지 종료를 CRLF.CRLF로 표시
+
+
