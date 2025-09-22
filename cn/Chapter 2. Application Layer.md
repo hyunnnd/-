@@ -1019,3 +1019,34 @@ HTTP 요청 메시지는 **요청 라인 → 헤더 라인 → 빈 줄** 순으�
 - 명령/응답 구조, 메시지는 7-bit ASCII 기반
 
 
+## Scenario: Alice sends e-mail to Bob
+
+1. **Alice 작성**
+    - Alice는 User Agent(UA)를 사용해 이메일 작성
+    - 수신자: `bob@someschool.edu`
+
+2. **Alice → Mail Server**    
+    - Alice의 UA가 메시지를 Alice의 메일 서버로 전송
+    - 메시지는 **메시지 큐(message queue)**에 저장
+
+3. **SMTP 연결 생성**    
+    - Alice의 메일 서버가 SMTP 클라이언트 역할 수행
+    - TCP 연결을 Bob의 메일 서버와 설정
+
+4. **메시지 전송**    
+    - SMTP 클라이언트가 TCP 연결을 통해 메시지 전송
+
+5. **Bob의 Mailbox 저장**    
+    - Bob의 메일 서버가 메시지를 수신
+    - 메시지를 Bob의 **메일박스(mailbox)**에 저장
+
+6. **Bob 읽기**    
+    - Bob은 자신의 User Agent를 실행하여 메시지를 확인
+
+📌 요약
+
+- 이메일은 **UA → 발신자 메일 서버 → 수신자 메일 서버 → UA** 흐름으로 전송됨    
+- SMTP는 서버 간 메시지 전달을 담당
+- 메일박스(mailbox)와 메시지 큐(message queue)가 중간 저장소 역할
+
+
