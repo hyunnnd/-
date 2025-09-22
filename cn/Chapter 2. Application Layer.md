@@ -1116,3 +1116,89 @@ HTTP 요청 메시지는 **요청 라인 → 헤더 라인 → 빈 줄** 순으�
 - SMTP는 지속 연결을 활용하며, 메시지 종료를 CRLF.CRLF로 표시
 
 
+## Mail Message Format
+
+### 정의
+
+- **SMTP (RFC 5321)**: 이메일 메시지 전송을 위한 프로토콜 (HTTP와 유사)
+- **RFC 5322**: 이메일 메시지 자체의 **구문(syntax)** 정의 (HTML과 유사한 역할)
+
+### 구성 요소
+
+1. **Header (헤더)**    
+    - 예:
+        - `From:` 송신자 주소   
+        - `To:` 수신자 주소
+        - `Subject:` 메일 제목
+    - 주의: 이 헤더는 **SMTP 명령어(MAIL FROM, RCPT TO)**와 다름
+
+2. **Body (본문)**    
+    - 실제 메시지 내용
+    - **ASCII 문자만 허용 (7-bit)**
+
+### 구분 방법
+
+- **Header와 Body 사이**: 반드시 **빈 줄(blank line)**로 구분    
+
+📌 요약
+
+- 이메일 메시지는 **Header + Body**로 구성    
+- Header: 메타데이터 (발신자, 수신자, 제목)
+- Body: 실제 메시지, ASCII만 허용
+- 구분: **빈 줄(blank line)**
+
+
+## Mail Access Protocols
+
+### 1. SMTP (Simple Mail Transfer Protocol)
+
+- 역할: **송신자 메일 서버 → 수신자 메일 서버**로 이메일 전달/저장
+
+- 단점: **사용자가 서버에서 메일을 읽는 기능은 제공하지 않음**
+    
+
+---
+
+### 2. Mail Access Protocols (사용자가 메일 서버에서 메일을 가져올 때 사용)
+
+- **POP3 (Post Office Protocol v3, RFC 1939)**
+    
+    - 단순한 프로토콜, 기능 제한적
+        
+    - 메일을 클라이언트로 가져오고 서버에서는 삭제하는 방식 (기본 동작)
+        
+- **IMAP (Internet Mail Access Protocol, RFC 3501)**
+    
+    - 메일이 서버에 저장됨
+        
+    - 클라이언트는 서버에 접근하여 **조회, 삭제, 폴더 관리** 가능
+        
+    - 여러 디바이스에서 동기화 가능
+        
+
+---
+
+### 3. HTTP (웹 메일)
+
+- Gmail, Hotmail, Yahoo! Mail 등
+    
+- **웹 기반 인터페이스 제공**
+    
+- 내부적으로:
+    
+    - SMTP (메일 송신)
+        
+    - IMAP/POP3 (메일 수신)
+        
+
+---
+
+📌 요약
+
+- **SMTP**: 서버 간 메일 전달
+    
+- **POP3**: 단순 다운로드 방식 (서버에 메일 유지 제한적)
+    
+- **IMAP**: 서버 중심, 다양한 기능 제공 (멀티 디바이스에 적합)
+    
+- **HTTP**: 웹 메일 서비스, SMTP + IMAP/POP 기반
