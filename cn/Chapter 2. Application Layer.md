@@ -1491,3 +1491,64 @@ TLD 서버는 **최상위 도메인**을 관리하고,
 DNS 캐싱은 성능 향상에 유리하지만, **IP 변경 시 전파 지연 문제**가 발생할 수 있다.
 
 
+## DNS Records (자원 레코드, RR)
+
+### RR 형식
+
+- **(name, value, type, ttl)**
+
+### 주요 타입
+
+- **A 레코드 (type=A)**   
+    - name = 호스트 이름
+    - value = IP 주소
+
+- **NS 레코드 (type=NS)**    
+    - name = 도메인 이름 (예: foo.com)
+    - value = 해당 도메인의 권한 있는 네임 서버(hostname)
+
+- **CNAME 레코드 (type=CNAME)**    
+    - name = 별칭(alias) 이름
+    - value = 실제 정식(canonical) 이름
+    - 예: `www.ibm.com` → `servereast.backup2.ibm.com`
+
+- **MX 레코드 (type=MX)**    
+    - value = 해당 도메인의 메일 서버 이름
+
+
+👉 **정리:**  
+DNS 레코드는 **도메인 이름 ↔ IP 주소, 네임 서버, 별칭, 메일 서버**와 같은 매핑 정보를 저장하는 구조이다.
+
+
+## DNS Protocol Messages
+
+### 형식 (Query와 Reply 동일)
+
+- **메시지 헤더 구조**
+    - **Identification**
+        - 16비트 번호 (Query ↔ Reply 매칭용)
+
+    - **Flags**        
+        - Query인지 Reply인지
+        - Recursion 원하는지 표시
+        - Recursion 가능한지 표시
+        - Reply가 권한(authoritative) 응답인지 여부
+
+### 메시지 구성
+
+1. **Identification (2 bytes)**    
+2. **Flags (2 bytes)**
+3. **# Questions** (질문 개수)
+4. **# Answer RRs** (응답 자원 레코드 개수)
+5. **# Authority RRs** (권한 서버 정보 개수)
+6. **# Additional RRs** (추가 정보 개수)
+7. **Questions** (가변 길이)
+8. **Answers** (가변 길이)
+9. **Authority** (가변 길이)
+10. **Additional Info** (가변 길이)
+
+👉 **정리:**  
+DNS 메시지는 **Query/Reply 모두 같은 구조**를 가지며,  
+**Identification + Flags + RRs(질문/응답/권한/추가)** 로 이루어진다.
+
+
