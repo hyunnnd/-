@@ -25,12 +25,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "cn/Chapter 2. Application Layer.md",
+                "file": "cn/Chapter 1.Computer Networks and the Interne.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Chapter 2. Application Layer"
+              "title": "Chapter 1.Computer Networks and the Interne"
             }
           }
         ],
@@ -206,13 +206,13 @@
   },
   "active": "24bd6c58a8c85b6e",
   "lastOpenFiles": [
+    "cn/Chapter 2. Application Layer.md",
     "Pasted image 20250922105754.png",
     "Pasted image 20250922105710.png",
     "Pasted image 20250918105520.png",
     "cn/Chapter 1.Computer Networks and the Interne.md",
     "Pasted image 20250918103348.png",
     "Pasted image 20250918103346.png",
-    "cn/Chapter 2. Application Layer.md",
     "Pasted image 20250918102850.png",
     "os/10 VirtualMemory.md",
     "os/7 Synchronization Examples.md",
@@ -227,7 +227,6 @@
     "캡스톤/무제.md",
     "conflict-files-obsidian-git.md",
     "os/11 File Systems.md",
-    "사진/Pasted image 20250817232152.png",
     "os/9 main memory.md",
     "os/6 Synchronization Tools.md",
     "캡스톤/08_04.md",
