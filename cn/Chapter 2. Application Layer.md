@@ -1337,3 +1337,49 @@ DNS는 **Root → TLD → Authoritative** 순서로 내려가면서,
 루트 네임 서버는 DNS 계층 구조의 **최상위에 있는 서버**로,  
 전 세계 인터넷 동작에 반드시 필요한 핵심 인프라이다.
 
+
+## TLD: 권한 있는 서버 (Authoritative Servers)
+
+### Top-Level Domain (TLD) 서버
+
+- `.com`, `.org`, `.net`, `.edu`, `.aero`, `.jobs`, `.museums` 와 같은 **최상위 도메인** 관리    
+- 국가 도메인도 포함 (예: `.cn`, `.uk`, `.fr`, `.ca`, `.jp`)
+- 예시
+    - **Network Solutions** → `.com`, `.net` TLD 관리
+    - **Educause** → `.edu` TLD 관리
+
+### 권한 있는 DNS 서버 (Authoritative DNS Servers)
+
+- 조직(organization)의 자체 DNS 서버    
+    - 도메인 이름 ↔ IP 주소 매핑 정보 보관
+
+- 조직 또는 서비스 제공자(service provider)가 관리 가능    
+
+
+👉 **정리:**  
+TLD 서버는 **최상위 도메인**을 관리하고,  
+**권한 있는 DNS 서버**는 실제 도메인에 대한 IP 주소를 최종적으로 알려준다.
+
+
+## Local DNS Name Servers
+
+### 특징
+
+- **DNS 계층 구조(hierarchy)에 엄밀히 속하지 않음**
+- 각 ISP(통신사, 회사, 대학 등)는 자체 **로컬 DNS 서버**를 가짐
+    - "기본 네임 서버(default name server)" 라고도 부름
+
+
+### 동작 방식
+
+- 호스트가 DNS 질의를 하면, 먼저 **로컬 DNS 서버**로 전송됨    
+- 로컬 DNS 서버는
+    - **최근 질의 결과 캐시(local cache)** 를 보관 (단, 오래되었을 수 있음)
+    - **프록시 역할**을 하여, 계층 구조 상위 DNS 서버로 질의를 전달
+
+
+👉 **정리:**  
+로컬 DNS 서버는 사용자가 가장 먼저 접근하는 DNS 서버로,  
+캐시를 활용해 빠르게 응답하거나, 계층 구조에 질의를 대신 전달한다.
+
+
