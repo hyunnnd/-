@@ -661,6 +661,11 @@ HTTP 요청 메시지는 **요청 라인 → 헤더 라인 → 빈 줄** 순으�
 - 브라우저 → 원 서버 평균 요청률: **15회/초**
     - 평균 데이터 전송률: **1.50 Mbps**
 
+초당 데이터량=100,000(100k)×15=1,500,000 bits/초
+1 Mbps = 1,000,000 bits/sec
+
+1,500,000/1,000,000=1.5 Mbps
+
 ### 성능 (Performance)
 
 - LAN 이용률: **0.0015** (거의 영향 없음)    
@@ -675,4 +680,875 @@ HTTP 요청 메시지는 **요청 라인 → 헤더 라인 → 빈 줄** 순으�
 - LAN은 충분히 빠르지만(1 Gbps),    
 - **병목 현상**은 1.54 Mbps의 **Access Link**에서 발생
 - 높은 활용률(97%) 때문에 **지연 시간 심각**
+
+
+## Caching Example: Buy a Faster Access Link
+
+### 시나리오 (Scenario)
+
+- 접속 링크 속도: **154 Mbps** (업그레이드 전: 1.54 Mbps)
+- RTT (기관 라우터 ↔ 서버): **2초**
+- 웹 객체 크기: **100K bits**
+- 브라우저 → 원 서버 평균 요청률: **15회/초**
+    - 평균 데이터 전송률: **1.50 Mbps**
+
+### 성능 (Performance)
+
+- LAN 이용률: **0.0015** (거의 영향 없음)   
+- 접속 링크 이용률: **0.0097 (0.97%)**
+    - 업그레이드 전: 97% → 병목
+    - 업그레이드 후: 0.97% → 충분한 대역폭
+- End-to-End 지연
+    - = 인터넷 지연 + 접속 링크 지연 + LAN 지연
+    - ≈ **2초 + 밀리초(ms) 단위 지연**
+
+### 비용 (Cost)
+
+- 빠른 접속 링크 구입은 **매우 비쌈**   
+
+📌 요약
+
+- **문제 해결 방법:** 접속 링크 속도를 늘리면 병목 해소 가능   
+- **단점:** 비용이 크므로 모든 기관에서 적용하기 어려움
+
+
+## Caching Example: Install a Web Cache
+
+### 시나리오 (Scenario)
+
+- 접속 링크 속도: **1.54 Mbps**
+- RTT (기관 라우터 ↔ 서버): **2초**
+- 웹 객체 크기: **100K bits**
+- 브라우저 → 원 서버 평균 요청률: **15회/초**
+    - 평균 데이터 전송률: **1.50 Mbps**
+
+### 성능 지표 (Performance)
+
+- **LAN Utilization = ?**   
+    - 대부분의 요청이 **Local Cache**에서 처리되므로 LAN 이용률은 약간 증가
+- **Access Link Utilization = ?**
+    - 원 서버(origin server)로 가는 요청이 줄어듦 → Access link 이용률 크게 감소
+- **평균 End-to-End Delay = ?**
+    - 캐시 hit 시: LAN 지연(매우 작음, ms 수준)
+    - 캐시 miss 시: 기존과 동일 (2초 + 전송 지연)
+    - 따라서 전체 평균 지연은 크게 감소
+
+### 비용 (Cost)
+
+- **웹 캐시 설치 비용은 저렴함**   
+- 빠른 링크 구매(비싸고 지속적 비용)보다 효율적
+
+📌 요약
+
+- **웹 캐시의 장점:**   
+    - 트래픽 감소 → Access link 부하 해소
+    - 평균 응답 시간 단축
+    - 비용 절감
+
+- **웹 캐시와 빠른 링크 업그레이드 비교**    
+    - 빠른 링크: 고비용, 단순 대역폭 증가
+    - 웹 캐시: 저비용, 효율적 자원 활용
+
+
+## Caching Example: Install a Web Cache (with calculation)
+
+### 가정
+
+- 캐시 히트율(Cache hit rate) = **0.4 (40%)**
+    - 40% 요청은 **캐시에서 처리**
+    - 60% 요청은 **원 서버(origin)에서 처리**
+
+### Access Link Utilization 계산
+
+- 60% 요청이 Access Link 사용   
+- 데이터 전송률 =
+    0.6×1.50 Mbps=0.9 Mbps
+- 이용률(Utilization) =
+    0.9/1.54≈0.58
+
+### 평균 End-to-End Delay 계산
+
+- 평균 지연 =
+    0.6×(origin server 지연)+0.4×(cache 지연)
+- Origin server 지연 ≈ 2.01초
+- Cache 지연 ≈ 수 밀리초(ms)
+=0.6×2.01 sec+0.4×( ms)≈1.2 sec
+
+### 결과
+
+- **Access Link Utilization:** 0.58 (기존 0.97 → 개선됨)
+- **Average End-to-End Delay:** ≈ 1.2초 (기존 2초+ → 크게 단축)
+- **비용:** 캐시 설치는 링크 업그레이드보다 훨씬 저렴
+
+📌 결론
+
+- **웹 캐시**는 고비용의 링크 업그레이드보다    
+    - **낮은 비용**으로
+    - **낮은 지연 시간**을 제공
+
+
+![[Pasted image 20250922105710.png]]
+
+
+![[Pasted image 20250922105754.png]]
+
+
+## Conditional GET
+
+### Goal
+
+- 캐시에 있는 버전이 최신이면 **객체를 다시 전송하지 않음**
+- 장점:
+    - 객체 전송 지연 없음
+    - 링크 사용량 감소
+
+### 동작 방식
+
+1. **클라이언트(캐시 포함)**    
+    - HTTP 요청 시 `If-Modified-Since: <date>` 헤더 포함
+    - `<date>`는 캐시에 저장된 복사본의 날짜
+
+2. **서버**    
+    - 캐시된 복사본이 최신이면:  
+        → `HTTP/1.0 304 Not Modified` 응답 (데이터 전송 안 함)
+    - 캐시된 복사본이 오래되었으면:  
+        → `HTTP/1.0 200 OK` + 객체 데이터 전송
+
+### 요약
+
+- **If-Modified-Since** 헤더는 클라이언트 캐시가 최신인지 확인 요청    
+- 서버는 **304 Not Modified** 또는 **200 OK + data**로 응답
+- 효율적인 대역폭 사용과 빠른 응답을 가능하게 함
+
+
+## HTTP/2
+
+### Key Goal
+
+- **여러 객체를 동시에 요청할 때 지연 감소**    
+
+### HTTP/1.1 특징
+
+- **여러 개의 GET 요청을 단일 TCP 연결에서 파이프라이닝(pipelining) 지원**    
+- 서버는 요청을 **순서대로(in-order)** 처리
+    - FCFS (First-Come-First-Served) 방식
+
+### 문제점 (HTTP/1.1의 한계)
+
+1. **Head-of-Line (HOL) Blocking**    
+    - 큰 객체 뒤에 작은 객체가 있어도 반드시 순서를 기다려야 함
+
+2. **손실 복구 문제**    
+    - TCP 세그먼트 손실 시 재전송 필요 → 모든 객체 전송이 지연됨
+
+📌 요약
+
+- HTTP/1.1은 파이프라이닝으로 성능을 개선했지만, **순차 처리(in-order)** 특성 때문에 HOL blocking과 손실 복구 지연 문제가 발생    
+- HTTP/2는 이 문제를 해결하기 위해 등장
+
+
+### 주요 특징 (HTTP/2)
+
+- **기본 메서드, 상태 코드, 대부분의 헤더 필드**는 HTTP/1.1과 동일
+- 요청된 객체의 **전송 순서를 클라이언트가 지정한 우선순위**에 따라 조정 가능
+    - 더 이상 단순 **FCFS(First-Come-First-Served)** 아님
+
+- 서버가 클라이언트가 요청하지 않은 객체도 **push** 가능    
+- 객체를 **프레임 단위로 분할**하여 전송
+    - 이를 스케줄링해서 **HOL(Head-of-Line) Blocking** 문제 완화
+
+📌 요약
+
+- HTTP/2는 **멀티플렉싱(multiplexing)과 프레임화**를 통해 객체를 유연하게 전송    
+- HOL blocking 문제를 줄이고, 응답 지연을 크게 개선
+- 서버 push로 클라이언트 체감 속도 향상
+
+
+## HTTP/2: Mitigating HOL Blocking
+
+### 문제 (HTTP/1.1)
+
+- 클라이언트가 여러 객체 요청:
+    - 큰 객체 O1O_1O1​ (예: 비디오 파일)
+    - 작은 객체 O2,O3,O4O_2, O_3, O_4O2​,O3​,O4​
+
+- **HTTP/1.1 특징**: 요청 순서대로(in-order) 객체 전송    
+- 결과:
+    - O2,O3,O4O_2, O_3, O_4O2​,O3​,O4​는 큰 객체 O1O_1O1​이 끝나야 전송 시작 가능
+    - 즉, **Head-of-Line Blocking (HOL Blocking)** 발생
+
+### 요약
+
+- **HTTP/1.1**: FCFS 처리 → 작은 객체도 큰 객체 뒤에서 대기   
+- **문제점**: 응답 지연 증가, 사용자 경험 저하
+
+
+## HTTP/2: Mitigating HOL Blocking
+
+### 방법
+
+- HTTP/1.1과 달리, **객체를 프레임 단위로 분할**
+- 여러 객체의 프레임을 **교차(interleaved)** 하여 전송
+- 큰 객체 O1O_1O1​도 전송되지만, 작은 객체들 O2,O3,O4O_2, O_3, O_4O2​,O3​,O4​의 프레임을 중간중간 섞어서 전송
+
+### 결과
+
+- 작은 객체 O2,O3,O4O_2, O_3, O_4O2​,O3​,O4​: **빠르게 전달**    
+- 큰 객체 O1O_1O1​: 약간 늦어지지만 전체 지연 감소
+- **HOL Blocking 완화** → 사용자 체감 속도 개선
+
+📌 요약
+
+- **HTTP/1.1**: 큰 객체가 먼저 전송되면 작은 객체는 대기해야 함 → HOL Blocking 심각    
+- **HTTP/2**: 객체를 프레임 단위로 쪼개어 동시 전송 → HOL Blocking 완화, 작은 객체 빠르게 수신 가능
+
+
+## HTTP/2 → HTTP/3
+
+### Key Goal
+
+- 여러 객체 요청 시 지연 감소
+
+### HTTP/2의 한계 (TCP 기반)
+
+- **단일 TCP 연결** 위에서 동작    
+- **패킷 손실 발생 시** → 모든 객체 전송이 지연됨 (stalling)
+    - → 브라우저는 이를 피하려고 **여러 개의 병렬 TCP 연결**을 열어 사용
+- 기본 TCP 연결은 **보안(Encryption)**이 없음
+
+### HTTP/3 (UDP 기반, QUIC 프로토콜)
+
+- **보안 강화**: 암호화 기본 적용    
+- **객체 단위 오류 및 혼잡 제어** 가능
+- UDP 기반 멀티플렉싱 → **패킷 손실 시 다른 객체 전송은 영향 없음**
+- 더 많은 파이프라이닝 지원
+
+📌 요약
+
+- **HTTP/2**: HOL 완화는 가능했지만, TCP 특성 때문에 여전히 패킷 손실에 취약    
+- **HTTP/3**: QUIC(UDP 기반)을 사용하여 보안 + 성능 + 신뢰성을 동시에 제공
+
+
+## E-mail
+
+### Three Major Components
+
+1. **User Agents (UA)**
+    - 메일 작성, 편집, 읽기 담당
+    - 예: Outlook, iPhone mail client
+    - 별칭: “mail reader”
+
+2. **Mail Servers**    
+    - 사용자 메일박스(user mailbox)와 발신 메시지 큐(outgoing message queue) 저장
+    - 메일 송수신의 중계 역할
+
+3. **SMTP (Simple Mail Transfer Protocol)**    
+    - 메일 서버 간 메시지 전송을 위한 프로토콜
+    - 발신 서버에서 수신 서버로 메시지 전달
+
+### User Agent (UA)
+
+- 사용자가 메일을 **작성(composing)**, **편집(editing)**, **읽기(reading)** 가능    
+- 송신(outgoing), 수신(incoming) 메시지는 서버에 저장됨
+- 예시: Outlook, iPhone mail client
+
+📌 요약
+
+- 이메일 시스템은 **User Agent + Mail Server + SMTP**로 구성    
+- User Agent는 **메일 클라이언트** 역할, Mail Server는 **저장·전송 중계**, SMTP는 **프로토콜**
+
+
+## E-mail: Mail Servers
+
+### Mail Server 기능
+
+1. **Mailbox**
+    - 사용자별로 존재
+    - 수신된 메시지(incoming messages) 저장
+
+2. **Message Queue**    
+    - 발신 메시지(outgoing messages) 저장
+    - 아직 전송되지 않은 메일들을 보관
+
+### SMTP Protocol
+
+- **메일 서버 간** 메시지 전달에 사용    
+- 송신 메일 서버 = **client** 역할
+- 수신 메일 서버 = **server** 역할
+
+📌 요약
+
+- **Mailbox**: 사용자 수신 메일 보관    
+- **Message Queue**: 발신 대기 메일 저장
+- **SMTP**: 메일 서버 간 전송을 담당 (클라이언트–서버 관계 형성)
+
+
+## E-mail: RFC 5321 (SMTP)
+
+### 전송 방식
+
+- **TCP 기반**으로 신뢰성 있게 메시지 전송
+- 포트 번호: **25번**
+- 송신 서버(클라이언트 역할) → 수신 서버(서버 역할) **직접 전송**
+
+### 전송 과정 (3단계)
+
+1. **Handshaking (인사/연결)**    
+    - 연결 성립 및 인사 교환
+
+2. **Transfer of messages (메시지 전송)**    
+    - 실제 메일 데이터 전송
+
+3. **Closure (종료)**    
+    - 세션 종료
+
+### Command/Response 구조
+
+- **Command**: 클라이언트가 ASCII 텍스트 명령 전송    
+- **Response**: 서버가 상태 코드 + 메시지로 응답
+- (HTTP와 유사한 상호작용 구조)
+
+### 메시지 형식
+
+- 반드시 **7-bit ASCII**로 인코딩    
+
+📌 요약
+
+- **SMTP (RFC 5321)**는 TCP 25번 포트 사용    
+- 전송 과정: Handshake → Message Transfer → Close
+- 명령/응답 구조, 메시지는 7-bit ASCII 기반
+
+
+## Scenario: Alice sends e-mail to Bob
+
+1. **Alice 작성**
+    - Alice는 User Agent(UA)를 사용해 이메일 작성
+    - 수신자: `bob@someschool.edu`
+
+2. **Alice → Mail Server**    
+    - Alice의 UA가 메시지를 Alice의 메일 서버로 전송
+    - 메시지는 **메시지 큐(message queue)**에 저장
+
+3. **SMTP 연결 생성**    
+    - Alice의 메일 서버가 SMTP 클라이언트 역할 수행
+    - TCP 연결을 Bob의 메일 서버와 설정
+
+4. **메시지 전송**    
+    - SMTP 클라이언트가 TCP 연결을 통해 메시지 전송
+
+5. **Bob의 Mailbox 저장**    
+    - Bob의 메일 서버가 메시지를 수신
+    - 메시지를 Bob의 **메일박스(mailbox)**에 저장
+
+6. **Bob 읽기**    
+    - Bob은 자신의 User Agent를 실행하여 메시지를 확인
+
+📌 요약
+
+- 이메일은 **UA → 발신자 메일 서버 → 수신자 메일 서버 → UA** 흐름으로 전송됨    
+- SMTP는 서버 간 메시지 전달을 담당
+- 메일박스(mailbox)와 메시지 큐(message queue)가 중간 저장소 역할
+
+
+## Sample SMTP Interaction
+
+### 통신 흐름
+
+- **S**: Server (수신 메일 서버)
+- **C**: Client (송신 메일 서버)
+
+### 단계별 과정
+
+1. **연결 및 인사**    
+    - `S: 220 hamburger.edu` → 서버 연결 준비 완료
+    - `C: HELO crepes.fr` → 클라이언트 인사
+    - `S: 250 Hello crepes.fr, pleased to meet you` → 서버 응답
+
+2. **발신자 지정**    
+    - `C: MAIL FROM: <alice@crepes.fr>`
+    - `S: 250 alice@crepes.fr... Sender ok`
+
+3. **수신자 지정**    
+    - `C: RCPT TO: <bob@hamburger.edu>`
+    - `S: 250 bob@hamburger.edu... Recipient ok`
+
+4. **메시지 데이터 전송**    
+    - `C: DATA`
+    - `S: 354 Enter mail, end with "." on a line by itself`
+    - `C: Do you like ketchup?`
+    - `C: How about pickles?`
+    - `C: .` (마침표로 메시지 종료 표시)
+    - `S: 250 Message accepted for delivery`
+
+5. **세션 종료**    
+    - `C: QUIT`
+    - `S: 221 hamburger.edu closing connection`
+
+📌 요약
+
+- SMTP는 **명령/응답(command/response)** 기반    
+- 주요 명령어: `HELO`, `MAIL FROM`, `RCPT TO`, `DATA`, `QUIT`
+- 메시지 본문은 `DATA` 이후 전송, `.` 단독 줄로 종료
+
+
+## SMTP: Closing Observations
+
+### HTTP와 비교
+
+- **HTTP**: **Pull 방식** (클라이언트가 요청 → 서버 응답)
+- **SMTP**: **Push 방식** (송신 서버가 직접 수신 서버로 전송)
+- 공통점: **ASCII 기반 명령/응답 구조**, 상태 코드 사용
+- **HTTP**: 각 객체가 **독립적인 응답 메시지**로 캡슐화
+- **SMTP**: 여러 객체를 **multipart message**로 묶어 전송
+
+### SMTP 추가 특징
+
+- **Persistent connections** (지속 연결 사용)    
+- 메시지(헤더 + 본문)는 반드시 **7-bit ASCII** 형식
+- 메시지 종료 구분: `CRLF.CRLF` 사용
+
+📌 요약
+
+- SMTP와 HTTP 모두 명령/응답 구조를 사용하지만,    
+    - HTTP는 **클라이언트 pull 기반**
+    - SMTP는 **서버 간 push 기반**
+
+- SMTP는 지속 연결을 활용하며, 메시지 종료를 CRLF.CRLF로 표시
+
+
+## Mail Message Format
+
+### 정의
+
+- **SMTP (RFC 5321)**: 이메일 메시지 전송을 위한 프로토콜 (HTTP와 유사)
+- **RFC 5322**: 이메일 메시지 자체의 **구문(syntax)** 정의 (HTML과 유사한 역할)
+
+### 구성 요소
+
+1. **Header (헤더)**    
+    - 예:
+        - `From:` 송신자 주소   
+        - `To:` 수신자 주소
+        - `Subject:` 메일 제목
+    - 주의: 이 헤더는 **SMTP 명령어(MAIL FROM, RCPT TO)**와 다름
+
+2. **Body (본문)**    
+    - 실제 메시지 내용
+    - **ASCII 문자만 허용 (7-bit)**
+
+### 구분 방법
+
+- **Header와 Body 사이**: 반드시 **빈 줄(blank line)**로 구분    
+
+📌 요약
+
+- 이메일 메시지는 **Header + Body**로 구성    
+- Header: 메타데이터 (발신자, 수신자, 제목)
+- Body: 실제 메시지, ASCII만 허용
+- 구분: **빈 줄(blank line)**
+
+
+## Mail Access Protocols
+
+### 1. SMTP (Simple Mail Transfer Protocol)
+
+- 역할: **송신자 메일 서버 → 수신자 메일 서버**로 이메일 전달/저장
+- 단점: **사용자가 서버에서 메일을 읽는 기능은 제공하지 않음**
+
+### 2. Mail Access Protocols (사용자가 메일 서버에서 메일을 가져올 때 사용)
+
+- **POP3 (Post Office Protocol v3, RFC 1939)**    
+    - 단순한 프로토콜, 기능 제한적
+    - 메일을 클라이언트로 가져오고 서버에서는 삭제하는 방식 (기본 동작)
+
+- **IMAP (Internet Mail Access Protocol, RFC 3501)**    
+    - 메일이 서버에 저장됨
+    - 클라이언트는 서버에 접근하여 **조회, 삭제, 폴더 관리** 가능
+    - 여러 디바이스에서 동기화 가능
+
+### 3. HTTP (웹 메일)
+
+- Gmail, Hotmail, Yahoo! Mail 등    
+- **웹 기반 인터페이스 제공**
+- 내부적으로:
+    - SMTP (메일 송신)
+    - IMAP/POP3 (메일 수신)
+
+📌 요약
+
+- **SMTP**: 서버 간 메일 전달    
+- **POP3**: 단순 다운로드 방식 (서버에 메일 유지 제한적)
+- **IMAP**: 서버 중심, 다양한 기능 제공 (멀티 디바이스에 적합)
+- **HTTP**: 웹 메일 서비스, SMTP + IMAP/POP 기반
+
+
+## 풀이
+
+### 1. Incoming Mail Server (수신 서버)
+
+- Outlook 설정에서 **Account Type = POP3**로 지정됨
+- 따라서 **POP 서버 주소** 필요 → `pop.gmail.com`
+
+### 2. Outgoing Mail Server (발신 서버)
+
+- 발신은 항상 **SMTP** 사용   
+- 따라서 주소는 → `smtp.gmail.com`
+
+## 정답
+
+- **Incoming mail server**: `pop.gmail.com` (선택지 ③)    
+- **Outgoing mail server**: `smtp.gmail.com` (선택지 ⑤)
+
+📌 참고:
+
+- IMAP을 사용할 경우: `imap.gmail.com`    
+- POP3를 사용할 경우: `pop.gmail.com`
+- 발신(SMTP)은 항상: `smtp.gmail.com`
+
+
+## DNS: Domain Name System
+
+### 1. 사람과 인터넷 비교
+
+- **사람(people)** → 여러 가지 식별자 사용
+    - 주민번호, 이름, 여권번호 등
+
+- **인터넷 호스트/라우터** → 두 가지 식별자 사용    
+    - **IP 주소 (32비트)** → 데이터 전송용
+    - **도메인 이름 (예: cs.umass.edu)** → 사람이 쓰기 쉬움
+
+👉 문제: IP 주소와 이름을 어떻게 연결할까?
+
+### 2. DNS란?
+
+- **분산 데이터베이스**   
+    - 여러 네임 서버가 계층적으로 연결됨
+
+- **애플리케이션 계층 프로토콜**    
+    - 호스트 ↔ 네임 서버가 통신하여  
+        도메인 이름을 IP 주소로 변환(resolve)
+
+### 3. 특징
+
+- 인터넷 핵심 기능이지만,  
+    **애플리케이션 계층에서 동작**    
+- 네트워크 중심부가 아닌 **엣지(Edge)** 에 복잡성이 있음
+
+👉 **정리:**  
+DNS는 사람이 쓰는 **도메인 이름**과 컴퓨터가 쓰는 **IP 주소**를 서로 연결해 주는 시스템이다.
+
+
+## DNS: 동작 방식 (How it works)
+
+사용자가 **www.handong.edu** 에 접속하려고 할 때:
+
+1. 사용자 컴퓨터에서 **DNS 클라이언트 프로그램**이 실행됨.
+2. 브라우저는 URL에서 **호스트 이름(www.handong.edu)** 을 추출하여 DNS 클라이언트에 전달함.
+3. DNS 클라이언트는 **호스트 이름을 포함한 질의(Query)** 를 DNS 서버로 전송함.
+4. DNS 서버는 **호스트 이름에 해당하는 IP 주소** 를 찾아서 DNS 클라이언트에 응답함.
+5. 브라우저는 받은 **IP 주소** 를 사용하여, 해당 서버(IP)의 80번 포트(HTTP 서버)로 **TCP 연결**을 시작함.
+
+👉 **정리:**  
+DNS는 브라우저가 입력한 **도메인 이름 → IP 주소** 변환을 해주고,  
+브라우저는 그 IP를 이용해 실제 웹 서버와 연결한다.
+
+
+## DNS: 서비스와 구조
+
+### DNS 제공 서비스
+
+- **호스트 이름 → IP 주소 변환**
+- **호스트 별칭 (aliasing)**
+    - 정식 이름(canonical), 별칭(alias) 이름 지원
+
+- **메일 서버 별칭**    
+- **부하 분산 (load distribution)**
+    - 복제된 웹 서버 운영: 하나의 도메인 이름이 여러 IP 주소와 매핑됨
+
+### 중앙 집중식 DNS는 왜 안 될까?
+
+- **단일 장애 지점 (single point of failure)**    
+- **트래픽 과부하**
+- **중앙 DB와의 거리 문제**
+- **유지보수 어려움**
+
+### 답: 확장성 문제 (doesn’t scale)
+
+- 예: Comcast DNS 서버만 해도 하루 **6000억 건 이상의 DNS 질의** 처리    
+
+👉 **정리:**  
+DNS는 전 세계적으로 분산 구조로 운영되어야 하며,  
+중앙 집중 방식으로는 트래픽과 장애에 대응할 수 없다.
+
+
+## DNS: 분산된 계층형 데이터베이스
+
+### 계층 구조
+
+- **Root DNS 서버**
+    - 최상위 계층, TLD 서버를 가리킴
+
+- **Top Level Domain (TLD) DNS 서버**    
+    - 예: `.com`, `.org`, `.edu`
+
+- **권한 있는(Authoritative) DNS 서버**    
+    - 실제 도메인(예: amazon.com, yahoo.com)의 IP 주소를 알려줌
+
+
+### 예시: `www.amazon.com` IP 주소 찾기
+
+1. 클라이언트 → **Root 서버**에 질의    
+    - `.com DNS 서버` 위치를 알려줌
+
+2. 클라이언트 → **.com DNS 서버**에 질의    
+    - `amazon.com DNS 서버` 위치를 알려줌
+
+3. 클라이언트 → **amazon.com DNS 서버**에 질의    
+    - `www.amazon.com` 의 실제 **IP 주소**를 알려줌
+
+
+👉 **정리:**  
+DNS는 **Root → TLD → Authoritative** 순서로 내려가면서,  
+	도메인 이름에 해당하는 IP 주소를 찾아낸다.
+
+
+## DNS: 루트 네임 서버 (Root Name Servers)
+
+### 역할
+
+- 다른 네임 서버들이 이름을 해결하지 못할 때 **마지막으로 참조하는 공식 서버**
+- 인터넷에서 **매우 중요한 핵심 기능**
+    - 루트 서버 없이는 인터넷이 동작 불가
+    - **DNSSEC 지원** → 보안 제공 (인증, 무결성 보장)
+
+### 관리
+
+- **ICANN** (Internet Corporation for Assigned Names and Numbers)    
+    - 루트 DNS 도메인을 관리
+
+### 전 세계 배치
+
+- **논리적 루트 서버 13개** 존재    
+- 각 서버는 여러 번 복제되어 전 세계에 분산 배치됨
+    - 미국에만 약 **200개 이상** 존재
+
+
+👉 **정리:**  
+루트 네임 서버는 DNS 계층 구조의 **최상위에 있는 서버**로,  
+전 세계 인터넷 동작에 반드시 필요한 핵심 인프라이다.
+
+
+## TLD: 권한 있는 서버 (Authoritative Servers)
+
+### Top-Level Domain (TLD) 서버
+
+- `.com`, `.org`, `.net`, `.edu`, `.aero`, `.jobs`, `.museums` 와 같은 **최상위 도메인** 관리    
+- 국가 도메인도 포함 (예: `.cn`, `.uk`, `.fr`, `.ca`, `.jp`)
+- 예시
+    - **Network Solutions** → `.com`, `.net` TLD 관리
+    - **Educause** → `.edu` TLD 관리
+
+### 권한 있는 DNS 서버 (Authoritative DNS Servers)
+
+- 조직(organization)의 자체 DNS 서버    
+    - 도메인 이름 ↔ IP 주소 매핑 정보 보관
+
+- 조직 또는 서비스 제공자(service provider)가 관리 가능    
+
+
+👉 **정리:**  
+TLD 서버는 **최상위 도메인**을 관리하고,  
+**권한 있는 DNS 서버**는 실제 도메인에 대한 IP 주소를 최종적으로 알려준다.
+
+
+## Local DNS Name Servers
+
+### 특징
+
+- **DNS 계층 구조(hierarchy)에 엄밀히 속하지 않음**
+- 각 ISP(통신사, 회사, 대학 등)는 자체 **로컬 DNS 서버**를 가짐
+    - "기본 네임 서버(default name server)" 라고도 부름
+
+
+### 동작 방식
+
+- 호스트가 DNS 질의를 하면, 먼저 **로컬 DNS 서버**로 전송됨    
+- 로컬 DNS 서버는
+    - **최근 질의 결과 캐시(local cache)** 를 보관 (단, 오래되었을 수 있음)
+    - **프록시 역할**을 하여, 계층 구조 상위 DNS 서버로 질의를 전달
+
+
+👉 **정리:**  
+로컬 DNS 서버는 사용자가 가장 먼저 접근하는 DNS 서버로,  
+캐시를 활용해 빠르게 응답하거나, 계층 구조에 질의를 대신 전달한다.
+
+
+## DNS 이름 해석: 반복 질의 (Iterated Query)
+
+### 예시
+
+- **요청 호스트**: `engineering.nyu.edu`
+- **찾고 싶은 주소**: `gaia.cs.umass.edu` 의 IP
+
+### 반복 질의(Iterated Query) 방식
+
+- 질의받은 서버가 직접 답을 주지 않고,  
+    **“나는 모르지만, 이 서버에 물어봐라”** 라고 다음 서버를 알려줌    
+- 클라이언트(로컬 DNS)가 순서대로 여러 서버를 거쳐 최종 답을 얻음
+
+
+### 동작 흐름
+
+1. `engineering.nyu.edu` 호스트 → 로컬 DNS (`dns.nyu.edu`)    
+2. 로컬 DNS → 루트 DNS 서버
+3. 루트 DNS → “.edu TLD 서버에 물어보라” 응답
+4. 로컬 DNS → .edu TLD DNS 서버
+5. TLD 서버 → “umass.edu 권한 서버에 물어보라” 응답
+6. 로컬 DNS → `umass.edu` 권한 DNS 서버
+7. 권한 DNS 서버 → `gaia.cs.umass.edu` 의 IP 주소 전달
+8. 로컬 DNS → 원래 호스트에 최종 IP 주소 전달
+
+👉 **정리:**  
+반복 질의는 클라이언트가 여러 DNS 서버를 직접 순차적으로 거쳐서,  
+최종적으로 **도메인 이름에 해당하는 IP 주소**를 얻는 방식이다.
+
+## Recursive Query (재귀 질의)
+
+### 특징
+
+- **이름 해석(name resolution)의 부담**을 질의받은 DNS 서버가 짐
+- 상위 계층 서버(root, TLD)에 **부하가 많이 걸릴 수 있음**
+
+👉 **정리:**  
+재귀 질의는 클라이언트가 아닌 **서버가 대신 다음 서버에 계속 질의**하여 최종 IP 주소를 찾아 클라이언트에게 전달하는 방식이다.
+
+
+
+## DNS Exercise
+
+### 조건
+
+- 클라이언트 ↔ 로컬 DNS 서버 RTT = **RTTₗ**
+- 로컬 DNS 서버 ↔ 다른 DNS 서버 RTT = **RTTᵣ**
+- DNS 서버는 **캐싱 없음** (단, c에서 캐싱 고려)
+
+### 문제
+
+**a. 시나리오 A의 총 응답 시간은?**
+
+- 클라이언트 ↔ 로컬 DNS: **RTTₗ**    
+- 로컬 DNS ↔ Root DNS: **RTTᵣ**
+- 로컬 DNS ↔ TLD DNS: **RTTᵣ**
+- 로컬 DNS ↔ Authoritative DNS: **RTTᵣ**
+
+👉 총 응답 시간 = **RTTₗ + 3RTTᵣ**
+
+**b. 시나리오 B의 총 응답 시간은?**
+
+- 클라이언트 ↔ 로컬 DNS: **RTTₗ**    
+- 로컬 DNS ↔ Root DNS: **RTTᵣ**
+- Root ↔ TLD DNS: **RTTᵣ**
+- TLD ↔ Authoritative DNS: **RTTᵣ**
+
+👉 총 응답 시간 = **RTTₗ + 3RTTᵣ**  
+(시나리오 A와 동일)
+
+**c. 로컬 DNS 서버가 요청한 이름의 캐시를 가지고 있다면?**
+
+- 클라이언트 ↔ 로컬 DNS: **RTTₗ**    
+- 추가 질의 불필요
+
+👉 총 응답 시간 = **RTTₗ** (양쪽 시나리오 동일)
+
+👉 **정리:**
+
+- 시나리오 A = RTTₗ + 3RTTᵣ    
+- 시나리오 B = RTTₗ + 3RTTᵣ
+- 캐싱 있는 경우 = RTTₗ
+
+
+## DNS 레코드 캐싱과 갱신
+
+### 캐싱 동작
+
+- 어떤 네임 서버든 매핑(IP ↔ 이름)을 알게 되면 **캐시에 저장**
+- 캐시 항목은 일정 시간(TTL)이 지나면 삭제됨
+- 보통 **로컬 네임 서버가 TLD 서버 결과를 캐싱** → 루트 서버는 자주 호출되지 않음
+
+### 문제점
+
+- 캐시된 정보는 **구식(out-of-date)** 일 수 있음    
+    - → “최선의 노력(best-effort)” 기반의 이름-주소 변환
+
+- 만약 호스트가 **IP 주소를 변경**해도, TTL이 만료되기 전까지는 인터넷 전역에 반영되지 않음    
+
+### 표준화
+
+- **갱신/알림(update/notify) 메커니즘**    
+- IETF 표준 제안: **RFC 2136**
+
+👉 **정리:**  
+DNS 캐싱은 성능 향상에 유리하지만, **IP 변경 시 전파 지연 문제**가 발생할 수 있다.
+
+
+## DNS Records (자원 레코드, RR)
+
+### RR 형식
+
+- **(name, value, type, ttl)**
+
+### 주요 타입
+
+- **A 레코드 (type=A)**   
+    - name = 호스트 이름
+    - value = IP 주소
+
+- **NS 레코드 (type=NS)**    
+    - name = 도메인 이름 (예: foo.com)
+    - value = 해당 도메인의 권한 있는 네임 서버(hostname)
+
+- **CNAME 레코드 (type=CNAME)**    
+    - name = 별칭(alias) 이름
+    - value = 실제 정식(canonical) 이름
+    - 예: `www.ibm.com` → `servereast.backup2.ibm.com`
+
+- **MX 레코드 (type=MX)**    
+    - value = 해당 도메인의 메일 서버 이름
+
+
+👉 **정리:**  
+DNS 레코드는 **도메인 이름 ↔ IP 주소, 네임 서버, 별칭, 메일 서버**와 같은 매핑 정보를 저장하는 구조이다.
+
+
+## DNS Protocol Messages
+
+### 형식 (Query와 Reply 동일)
+
+- **메시지 헤더 구조**
+    - **Identification**
+        - 16비트 번호 (Query ↔ Reply 매칭용)
+
+    - **Flags**        
+        - Query인지 Reply인지
+        - Recursion 원하는지 표시
+        - Recursion 가능한지 표시
+        - Reply가 권한(authoritative) 응답인지 여부
+
+### 메시지 구성
+
+1. **Identification (2 bytes)**    
+2. **Flags (2 bytes)**
+3. **# Questions** (질문 개수)
+4. **# Answer RRs** (응답 자원 레코드 개수)
+5. **# Authority RRs** (권한 서버 정보 개수)
+6. **# Additional RRs** (추가 정보 개수)
+7. **Questions** (가변 길이)
+8. **Answers** (가변 길이)
+9. **Authority** (가변 길이)
+10. **Additional Info** (가변 길이)
+
+👉 **정리:**  
+DNS 메시지는 **Query/Reply 모두 같은 구조**를 가지며,  
+**Identification + Flags + RRs(질문/응답/권한/추가)** 로 이루어진다.
+
 
