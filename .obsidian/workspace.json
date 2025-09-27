@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "cn/Chapter 1.Computer Networks and the Interne.md",
+                "file": "cn/Chapter 2. Application Layer.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Chapter 1.Computer Networks and the Interne"
+              "title": "Chapter 2. Application Layer"
             }
           }
         ],
@@ -208,6 +208,7 @@
   },
   "active": "0511a9e7001db658",
   "lastOpenFiles": [
+    "cn/Chapter 1.Computer Networks and the Interne.md",
     "cn/Chapter 2. Application Layer.md",
     "사진/Pasted image 20250513142552.png",
     "캡스톤/무제.md",
@@ -215,7 +216,6 @@
     "사진/Pasted image 20250915105132.png",
     "사진/Pasted image 20250908110307.png",
     "사진/Pasted image 20250818092155.png",
-    "cn/Chapter 1.Computer Networks and the Interne.md",
     "cn",
     "Pasted image 20250918105520.png",
     "Pasted image 20250918103346.png",
