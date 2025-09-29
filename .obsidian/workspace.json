@@ -4,23 +4,25 @@
     "type": "split",
     "children": [
       {
-        "id": "440109118b6ea228",
+        "id": "9a1f2d9a7d2e70f4",
         "type": "tabs",
         "children": [
           {
-            "id": "f2fcbb259ba57db9",
+            "id": "2d99235d2f5dd987",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "Pasted image 20250908110307.png"
+                "file": "cn/Chapter 1.Computer Networks and the Interne.md",
+                "mode": "preview",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "Pasted image 20250908110307"
+              "icon": "lucide-file",
+              "title": "Chapter 1.Computer Networks and the Interne"
             }
           },
           {
-            "id": "24bd6c58a8c85b6e",
+            "id": "6a61637f82e41f75",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -33,8 +35,7 @@
               "title": "Chapter 2. Application Layer"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -126,12 +127,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "os/10 VirtualMemory.md",
+                "file": "cn/Chapter 1.Computer Networks and the Interne.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "10 VirtualMemory 의 나가는 링크"
+              "title": "Chapter 1.Computer Networks and the Interne 의 나가는 링크"
             }
           },
           {
@@ -146,7 +147,7 @@
                 "searchQuery": ""
               },
               "icon": "lucide-tags",
-              "title": "Tags"
+              "title": "태그"
             }
           },
           {
@@ -185,7 +186,7 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -204,34 +205,36 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "24bd6c58a8c85b6e",
+  "active": "2d99235d2f5dd987",
   "lastOpenFiles": [
-    "cn/Chapter 1.Computer Networks and the Interne.md",
     "cn/Chapter 2. Application Layer.md",
-    "Pasted image 20250922105754.png",
+    "cn/Chapter 1.Computer Networks and the Interne.md",
     "Pasted image 20250922105710.png",
-    "Pasted image 20250918105520.png",
-    "Pasted image 20250918103348.png",
-    "Pasted image 20250918103346.png",
-    "Pasted image 20250918102850.png",
-    "os/10 VirtualMemory.md",
-    "os/7 Synchronization Examples.md",
-    "os/4 Threads & Concurrency.md",
+    "Pasted image 20250922105754.png",
+    "conflict-files-obsidian-git.md",
+    "2025-09-27.md",
+    "무제.canvas",
+    "사진/Pasted image 20250513142552.png",
+    "캡스톤/무제.md",
     "사진/Pasted image 20250915105313.png",
     "사진/Pasted image 20250915105132.png",
     "사진/Pasted image 20250908110307.png",
-    "무제.base",
-    "무제 1.base",
     "사진/Pasted image 20250818092155.png",
     "cn",
-    "캡스톤/무제.md",
-    "conflict-files-obsidian-git.md",
-    "os/11 File Systems.md",
-    "os/9 main memory.md",
-    "os/6 Synchronization Tools.md",
+    "Pasted image 20250918105520.png",
+    "Pasted image 20250918103346.png",
+    "Pasted image 20250918102850.png",
     "캡스톤/08_04.md",
+    "2025-08-18.md",
+    "캡스톤/무제 1.md",
+    "os/11 File Systems.md",
     "캡스톤",
+    "os/10 VirtualMemory.md",
     "os/8 Deadlocks.md",
+    "os/7 Synchronization Examples.md",
+    "os/6 Synchronization Tools.md",
+    "os/4 Threads & Concurrency.md",
+    "os/9 main memory.md",
     "사진",
     "os/10 VirtualMemory/무제.md",
     "os/10 VirtualMemory",
