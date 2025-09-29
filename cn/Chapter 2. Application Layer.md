@@ -1856,3 +1856,25 @@ D_P2P=max⁡{F/u_s, F/d_min⁡, NF/u_s+∑u_i}
 - **Optimistic unchoking**: 새로운 피어가 네트워크에 들어올 수 있는 기회를 주고, 더 나은 교환 상대를 찾기 위한 탐색 기능.
 
 
+## BitTorrent: tit-for-tat
+
+### 동작 과정
+
+1. Alice가 Bob을 **optimistically unchoke** (임시로 무작위 선택하여 청크를 전송 시작).  
+2. Alice가 Bob의 **상위 4명 제공자(top-four providers)** 중 하나가 됨 → Bob은 보답(reciprocate)하여 Alice에게도 청크를 보냄.
+3. 결과적으로 Bob도 Alice의 상위 4명 제공자 중 하나가 됨.
+
+### 핵심 포인트
+
+- **높은 업로드 속도를 가진 피어일수록 더 좋은 교환 파트너를 찾을 수 있음.**
+- 업로드에 적극적으로 기여할수록 더 많은 다운로드를 빠르게 받을 수 있음.
+
+## 추가 설명
+
+- **Tit-for-tat 전략**은 협력을 유도하는 메커니즘임.    
+    - 자신이 업로드를 잘 해주면 다른 피어들도 다운로드를 열심히 제공해 줌.
+    - 반대로 업로드에 기여하지 않는 피어는 **choked(차단)** 당하여 다운로드 기회를 얻기 어려움.
+- **Optimistic unchoking**은 새로운 파트너를 탐색하기 위한 기능으로, 잠재적으로 더 빠른 교환 상대를 찾을 수 있는 기회를 제공함.
+- 이 구조 덕분에 BitTorrent는 무임승차자(free rider) 문제를 방지하면서도 **자체 확장성(self-scalability)**을 유지할 수 있음.
+
+
