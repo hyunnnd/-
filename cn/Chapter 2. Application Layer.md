@@ -1556,34 +1556,24 @@ DNS 메시지는 **Query/Reply 모두 같은 구조**를 가지며,
 
 ### 공통 형식
 
-- **Identification (16bit)**
-    
+- **Identification (16bit)**    
     - Query ↔ Reply 매칭용 번호
-        
-- **Flags**
-    
-    - Query/Reply 여부, 재귀 요청 여부, 권한 응답 여부 등
-        
-- **# Questions / # Answer RRs / # Authority RRs / # Additional RRs**
-    
-    - 각각 질문, 응답, 권한 서버 정보, 추가 정보 개수
-        
 
----
+- **Flags**    
+    - Query/Reply 여부, 재귀 요청 여부, 권한 응답 여부 등
+
+- **# Questions / # Answer RRs / # Authority RRs / # Additional RRs**
+    - 각각 질문, 응답, 권한 서버 정보, 추가 정보 개수        
 
 ### 주요 필드
 
 - **Questions**: 질의 내용 (이름, 타입)
-    
 - **Answers**: 질의에 대한 응답 RR(Resource Record)
-    
 - **Authority**: 권한 있는 서버 정보
-    
 - **Additional Info**: 추가적인 “도움이 될 수 있는” 정보
-    
-
----
 
 👉 **정리:**  
 DNS Query와 Reply 메시지는 동일한 구조를 가지며,  
 **헤더 + 질문 + 응답 + 권한 서버 + 추가 정보** 로 구성된다.
+
+키워드만 외워도 절반 + 나머지는 이것들이 어떻게 기능하는가
