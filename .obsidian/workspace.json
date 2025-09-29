@@ -28,14 +28,15 @@
               "type": "markdown",
               "state": {
                 "file": "cn/Chapter 2. Application Layer.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
               "title": "Chapter 2. Application Layer"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -191,7 +192,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -205,10 +207,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "bcc8742d84de4527",
+  "active": "6a61637f82e41f75",
   "lastOpenFiles": [
-    "cn/Chapter 1.Computer Networks and the Interne.md",
     "conflict-files-obsidian-git.md",
+    "cn/Chapter 1.Computer Networks and the Interne.md",
     "Pasted image 20250929105624.png",
     "Pasted image 20250929105031.png",
     "Pasted image 20250929102327.png",
