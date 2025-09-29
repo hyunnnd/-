@@ -35,7 +35,8 @@
               "title": "Chapter 2. Application Layer"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -92,7 +93,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "87d1eea742953826",
@@ -205,10 +207,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "2d99235d2f5dd987",
+  "active": "6a61637f82e41f75",
   "lastOpenFiles": [
-    "cn/Chapter 2. Application Layer.md",
     "cn/Chapter 1.Computer Networks and the Interne.md",
+    "cn/Chapter 2. Application Layer.md",
     "Pasted image 20250922105710.png",
     "Pasted image 20250922105754.png",
     "conflict-files-obsidian-git.md",
