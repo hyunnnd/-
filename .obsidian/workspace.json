@@ -11,14 +11,14 @@
             "id": "2d99235d2f5dd987",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "split-diff-view",
               "state": {
-                "file": "cn/Chapter 1.Computer Networks and the Interne.md",
-                "mode": "preview",
-                "source": false
+                "aFile": ".obsidian/workspace.json",
+                "bFile": ".obsidian/workspace.json",
+                "aRef": ""
               },
-              "icon": "lucide-file",
-              "title": "Chapter 1.Computer Networks and the Interne"
+              "icon": "diff",
+              "title": "Diff: workspace.json"
             }
           },
           {
@@ -35,8 +35,7 @@
               "title": "Chapter 2. Application Layer"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -188,12 +187,11 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -207,13 +205,16 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6a61637f82e41f75",
+  "active": "2d99235d2f5dd987",
   "lastOpenFiles": [
+    "Pasted image 20250929105624.png",
+    "Pasted image 20250929105031.png",
+    "Pasted image 20250929102327.png",
     "cn/Chapter 1.Computer Networks and the Interne.md",
+    "conflict-files-obsidian-git.md",
     "cn/Chapter 2. Application Layer.md",
     "Pasted image 20250922105710.png",
     "Pasted image 20250922105754.png",
-    "conflict-files-obsidian-git.md",
     "2025-09-27.md",
     "무제.canvas",
     "사진/Pasted image 20250513142552.png",
@@ -223,9 +224,6 @@
     "사진/Pasted image 20250908110307.png",
     "사진/Pasted image 20250818092155.png",
     "cn",
-    "Pasted image 20250918105520.png",
-    "Pasted image 20250918103346.png",
-    "Pasted image 20250918102850.png",
     "캡스톤/08_04.md",
     "2025-08-18.md",
     "캡스톤/무제 1.md",
