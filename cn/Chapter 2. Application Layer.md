@@ -1877,4 +1877,73 @@ D_P2P=max⁡{F/u_s, F/d_min⁡, NF/u_s+∑u_i}
 - **Optimistic unchoking**은 새로운 파트너를 탐색하기 위한 기능으로, 잠재적으로 더 빠른 교환 상대를 찾을 수 있는 기회를 제공함.
 - 이 구조 덕분에 BitTorrent는 무임승차자(free rider) 문제를 방지하면서도 **자체 확장성(self-scalability)**을 유지할 수 있음.
 
+블록체인 건너뜀?
+## Video Streaming and CDNs: context
+
+### 스트리밍 트래픽 (stream video traffic)
+
+- 인터넷 대역폭을 가장 많이 소비하는 트래픽 중 하나.    
+- 예: **Netflix, YouTube, Amazon Prime** → 2020년 기준 가정용 ISP 트래픽의 약 80% 차지.
+
+### 도전 과제 1: 확장성 (scale)
+
+- 약 10억 명의 사용자에게 어떻게 도달할 것인가?
+- 단일 대형 비디오 서버(single mega-video server)는 불가능 → 병목, 지연, 서버 부하 문제.
+
+### 도전 과제 2: 이질성 (heterogeneity)
+
+- 사용자별 환경이 다양함.
+    - 유선 vs 모바일
+    - 대역폭 풍부 vs 대역폭 부족
+
+### 해결책
+
+- **분산형(distributed), 애플리케이션 수준(application-level)의 인프라** 구축.
+
+## 추가 설명
+
+- **CDN (Content Delivery Network)**의 필요성:  
+    - 단일 서버로는 전 세계 사용자의 수요를 처리할 수 없음.
+    - 따라서 전 세계 여러 지역에 **분산 서버(캐시 서버)**를 배치하여 사용자가 가까운 서버로부터 콘텐츠를 받을 수 있도록 함.
+
+- **이질성 문제 해결**:    
+    - 각 사용자 네트워크 환경에 맞게 **적응형 스트리밍(adaptive streaming)** 적용 (예: YouTube의 화질 자동 조정).
+    - 고대역폭 사용자는 고화질(HD/4K), 저대역폭 사용자는 저화질을 제공하여 품질과 안정성을 균형 있게 유지.
+
+비디오 건너뜀
+
+
+
+## Streaming stored video
+
+### 단순 시나리오
+
+- **비디오 서버(video server)** → 인터넷(Internet) → **클라이언트(client)**    
+- 서버에 저장된 영상을 클라이언트가 실시간으로 받아서 재생.
+
+### 주요 과제 (Main challenges)
+
+1. **서버-클라이언트 간 대역폭 변동**
+    - 네트워크 혼잡 수준에 따라 시간에 따라 달라짐.
+    - 혼잡은 다양한 위치에서 발생할 수 있음:
+        - 가정 내부 네트워크 (in house)
+        - 접속망 (access network)
+        - 백본망 (network core)
+        - 비디오 서버 자체 (at video server)
+
+2. **혼잡으로 인한 패킷 손실 및 지연**    
+    - 비디오 재생 지연 발생.
+    - 영상 품질 저하 발생 (화질 저하, 끊김).
+
+## 추가 설명
+
+- **특징**: 저장된 동영상 스트리밍은 사용자가 요청하면 서버에서 영상을 **실시간 전송**해야 함 → 따라서 네트워크 상태에 따라 시청 경험이 크게 달라짐.    
+- **문제점**: 네트워크 혼잡 시, 지연(latency)과 버퍼링(buffering)이 발생하고, 심할 경우 화질이 낮아지거나 재생이 멈춤.
+- **해결책**:
+    - CDN(Content Delivery Network) 활용 → 사용자와 가까운 위치에서 콘텐츠 제공.
+    - 적응형 스트리밍(Adaptive streaming, 예: MPEG-DASH, HLS) → 네트워크 상태에 따라 화질 자동 조정.
+
+
+![[Pasted image 20250929105031.png]]
+
 
