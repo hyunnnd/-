@@ -2107,3 +2107,80 @@ Streaming video=Encoding+DASH+Playout buffering
 - 예: YouTube, Netflix → 클라이언트 단에서 네트워크 상태를 감지하여 화질 자동 전환.
 
 
+## Content distribution networks (CDNs)
+
+### Challenge (도전 과제)
+
+- 수백만 개의 비디오 중 선택된 콘텐츠를 **수십만 명의 동시 사용자(simultaneous users)**에게 어떻게 스트리밍할 것인가?
+
+### Option 1: 단일 대형 “메가 서버” 사용
+
+- **문제점**:    
+    - **Single point of failure** → 서버 하나가 다운되면 전체 서비스 중단.
+    - **Network congestion** 발생 지점이 됨.
+    - 먼 지역의 클라이언트까지 **긴 전송 경로** 필요 → 지연(latency) 증가.
+    - 동일한 비디오가 여러 번 복제되어 같은 링크를 통해 전송 → **네트워크 비효율** 발생.
+
+### 결론
+
+- 단일 서버 방식은 **확장 불가능(doesn’t scale)**.    
+## 추가 설명
+
+- 인터넷 사용자 수가 기하급수적으로 증가하는 상황에서 **메가 서버 하나로 모든 요청을 처리하는 것은 불가능**.
+- 이 문제를 해결하기 위해 **CDN(Content Delivery Network)** 개념이 등장 → 여러 지역에 서버를 분산 배치하여 지연과 혼잡을 줄이고 확장성을 확보.
+
+
+## Content distribution networks (CDNs)
+
+### Challenge (도전 과제)
+
+- 수백만 개의 비디오 중 선택된 콘텐츠를 **수십만 명의 동시 사용자(simultaneous users)**에게 어떻게 스트리밍할 것인가?    
+
+### Option 2: 분산 서버 활용 (CDN 방식)
+
+- 여러 지역(geographically distributed sites)에 **동일한 비디오 복사본을 저장 및 제공**.    
+
+#### 전략 1: **Enter deep**
+
+- CDN 서버를 여러 접근망(access networks) 깊숙이 배치.
+- 장점: 사용자와 가까운 곳에서 콘텐츠 제공 → 지연 감소.
+- 예시: **Akamai**
+    - 2015년 기준, 120개국 이상에 약 240,000대 서버 배치.
+
+#### 전략 2: **Bring home**
+
+- 접근망 내부가 아니라 가까운 위치(POP: Point of Presence)에 **소수(수십 개)의 대형 클러스터**를 설치.    
+- 장점: 관리 효율성 ↑, 규모의 경제 가능.
+- 예시: **Limelight Networks**.
+
+### 핵심 요약
+
+- CDN은 **단일 서버 문제(확장성, 혼잡, 장애)**를 해결하는 방법.    
+- 사용자와 가까운 위치에 서버를 두어 **지연(latency)**과 **네트워크 부하**를 줄이고, 대규모 사용자에게 안정적으로 서비스를 제공.
+
+
+## Content distribution networks (CDNs)
+
+### CDN의 동작 방식
+
+- **콘텐츠 저장**    
+    - CDN 노드에 콘텐츠 복사본 저장.
+    - 예: **Netflix**가 인기 드라마 _MadMen_의 복사본을 여러 CDN 서버에 저장.
+
+- **사용자 요청 처리 (subscriber request)**    
+    - 사용자가 콘텐츠 요청 시, **가장 가까운 복사본(nearby copy)**으로 안내되어 콘텐츠를 가져옴.
+    - 만약 특정 경로가 **혼잡(congestion)**하다면, 다른 복사본 서버를 선택할 수 있음.
+
+### 그림 설명
+
+- 사용자가 “Where’s MadMen?” 요청 →    
+- CDN 시스템은 **manifest file**을 참고하여 콘텐츠가 저장된 노드를 확인.
+- 가장 효율적인 서버(지리적으로 가까운 곳, 또는 네트워크 부하가 적은 곳)를 선택해 콘텐츠를 전송.
+
+### 핵심 요약
+
+- CDN은 동일 콘텐츠를 여러 서버에 분산 저장.    
+- 사용자 요청은 **가까운 서버** 또는 **혼잡이 덜한 서버**로 라우팅됨.
+- 결과적으로 **지연(latency) 감소, 속도 향상, 혼잡 분산**을 달성.
+
+
