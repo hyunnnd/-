@@ -2184,3 +2184,113 @@ Streaming video=Encoding+DASH+Playout buffering
 - 결과적으로 **지연(latency) 감소, 속도 향상, 혼잡 분산**을 달성.
 
 
+## Content distribution networks (CDNs)
+
+### OTT(Over The Top)
+
+- **OTT**: 인터넷을 통해 직접 사용자에게 서비스를 제공하는 방식.
+- 예: Netflix, YouTube 등.
+- **“Over the top”** = 기존 통신사/케이블 사업자의 네트워크 위에서 독립적으로 서비스 제공.
+- 인터넷의 **host-to-host 통신 기능**을 그대로 활용.
+
+### OTT의 주요 도전 과제 (OTT challenges)
+
+1. **혼잡한 인터넷에서의 문제 (coping with congestion)**    
+    - 어떤 **CDN 노드에서 콘텐츠를 가져올 것인가?**
+    - 네트워크 경로가 혼잡할 경우, 다른 CDN 노드 선택 필요.
+
+2. **시청자 행동 분석 (viewer behavior)**    
+    - 혼잡 상황에서 시청자가 어떻게 반응하는가? (버퍼링 발생 시 이탈 가능성 등).
+
+3. **콘텐츠 배치 전략 (content placement)**    
+    - 어떤 콘텐츠를 어떤 CDN 노드에 저장할 것인가?
+    - 인기 있는 콘텐츠는 사용자와 가까운 노드에 배치하여 지연 최소화.
+
+### 핵심 요약
+
+- OTT 서비스는 **CDN에 크게 의존**하며,    
+- 효율적인 **노드 선택, 혼잡 관리, 콘텐츠 배치 전략**이 QoE(Quality of Experience)를 좌우.
+
+
+## CDN content access: a closer look
+
+### 시나리오:
+
+**Bob(클라이언트)**이 `http://netcinema.com/6Y7B23V` 동영상을 요청.  
+(실제 비디오는 **CDN 서버**에 저장되어 있음: `http://KingCDN.com/NetC6y&B23V`)
+
+### 단계별 과정
+
+1. **Bob이 URL 획득**    
+    - Bob은 `netcinema.com` 웹 페이지에서 비디오 URL (`http://netcinema.com/6Y7B23V`)을 얻음.
+
+2. **DNS 질의 시작**    
+    - Bob의 로컬 DNS 서버가 `http://netcinema.com/6Y7B23V`를 해석(resolve) 시도.
+
+3. **권한 있는 DNS 응답 (Authoritative DNS)**    
+    - `netcinema.com`의 권한 DNS가 **CNAME 레코드**를 반환.
+    - 예: `http://KingCDN.com/NetC6y&B23V`
+
+4. **CDN DNS 질의**    
+    - Bob의 로컬 DNS 서버가 `KingCDN.com`의 권한 DNS에 질의.
+
+5. **DNS 응답**    
+    - `KingCDN.com`의 권한 DNS가 Bob에게 가장 적절한 CDN 서버 IP를 반환.
+    - (보통 지리적으로 가까운 서버 또는 혼잡이 덜한 서버 선택).
+
+6. **비디오 요청 및 스트리밍**    
+    - Bob은 `KingCDN` 서버로부터 HTTP를 통해 비디오 스트리밍을 받음.
+
+### 핵심 포인트
+
+- **CNAME 레코드 활용**    
+    - 원래 도메인(`netcinema.com`)은 CDN 도메인(`KingCDN.com`)으로 매핑됨.
+
+- **DNS 기반 로드 밸런싱**    
+    - 어떤 CDN 서버가 응답할지는 **CDN DNS**가 결정.
+
+- **최종 사용자 경험**    
+    - Bob은 `netcinema.com`에서 동영상을 요청했지만, 실제 데이터는 **KingCDN** 서버에서 전송됨.
+
+
+## 추가 설명
+
+- CDN은 **DNS 리디렉션(DNS redirection)** 방식을 이용해 **사용자 요청을 최적 서버로 유도**.    
+- 이 과정에서 **위치 기반, 네트워크 혼잡, 서버 부하** 등을 고려.
+- 덕분에 사용자 가까운 서버에서 콘텐츠를 가져올 수 있어 **지연 감소**와 **QoE 향상**이 가능.
+
+
+## Case study: Netflix
+
+### 단계별 과정
+
+1. **Netflix 계정 관리 (Account management)**
+    - Bob은 Netflix 등록/계정 서버를 통해 로그인, 계정 관리 수행.
+
+2. **콘텐츠 탐색 (Browsing videos)**    
+    - Bob은 Netflix UI를 통해 시청할 비디오를 탐색.
+
+3. **Manifest 파일 요청 및 수신**    
+    - Bob이 특정 비디오를 선택하면, Netflix는 해당 비디오에 대한 **Manifest 파일**을 반환.
+    - Manifest에는 여러 화질/비트레이트 버전이 저장된 CDN 서버들의 URL 포함.
+
+4. **스트리밍 시작 (DASH 기반)**    
+    - Bob의 클라이언트는 가장 적절한 **CDN 서버**를 선택.
+    - DASH 프로토콜을 통해 상황에 맞는 비트레이트로 청크 단위 스트리밍 시작.
+
+### 아키텍처 개요
+
+- **Amazon Cloud**:    
+    - Netflix는 Amazon 클라우드를 사용하여 비디오를 저장.
+    - 여러 버전(다양한 화질/비트레이트)의 복사본을 **CDN 서버**에 업로드.
+
+- **CDN 서버**:    
+    - 전 세계 여러 지역에 분산 배치.
+    - 사용자(Bob)는 지리적으로 가까운 CDN 서버 또는 부하가 덜한 서버로부터 스트리밍.
+
+### 핵심 포인트
+
+- Netflix는 **Amazon Cloud + CDN 인프라**를 조합.    
+- **DASH(동적 적응형 스트리밍)**을 통해 네트워크 상황에 따라 화질 조절.
+- 사용자 가까운 CDN 서버에서 스트리밍 → **지연 감소, QoE 향상**.
+
