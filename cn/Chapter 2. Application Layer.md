@@ -2184,3 +2184,122 @@ Streaming video=Encoding+DASH+Playout buffering
 - 결과적으로 **지연(latency) 감소, 속도 향상, 혼잡 분산**을 달성.
 
 
+# CDN 콘텐츠 접근 과정 (예시: Bob이 비디오 요청)
+
+## 요청 시나리오
+
+- Bob은 `http://netcinema.com/6Y7B23V` 비디오를 요청합니다.
+- 실제 비디오는 CDN 서버(`http://KingCDN.com/NetC6y&B23V`)에 저장되어 있습니다.
+
+
+## 단계별 흐름
+
+1. **URL 획득**
+    - Bob은 `netcinema.com` 웹페이지에서 비디오 URL(`http://netcinema.com/6Y7B23V`)을 받습니다.
+
+2. **DNS 요청 시작**
+    - Bob의 컴퓨터는 해당 URL을 해석하기 위해 **로컬 DNS 서버**에 질의합니다.
+
+3. **네임서버 CNAME 반환**
+    - `netcinema.com`의 권한 있는 DNS 서버는  
+        `http://netcinema.com/6Y7B23V` 대신 **CNAME 레코드**(별칭)를 반환합니다.  
+        → `http://KingCDN.com/NetC6y&B23V` 로 매핑됨.
+
+4. **CDN DNS 요청**
+    - 로컬 DNS 서버는 이제 `KingCDN.com` 도메인에 대한 IP 주소를 얻기 위해 **KingCDN의 권한 DNS 서버**에 질의합니다.
+
+5. **IP 주소 반환**
+    - KingCDN의 권한 DNS는 **가장 적절한 CDN 서버(위치/부하 기반 선택)**의 IP 주소를 반환합니다.
+    - 로컬 DNS 서버는 이 IP를 Bob의 컴퓨터에 전달합니다.
+
+6. **콘텐츠 요청 및 전송**
+    - Bob의 컴퓨터는 해당 CDN 서버에 직접 HTTP 요청을 보냅니다.
+    - 비디오는 **가까운 CDN 서버에서 스트리밍**되어 전달됩니다.
+
+
+## 핵심 포인트
+
+- **CNAME 사용**: 원래 도메인(`netcinema.com`) 요청을 CDN 도메인(`KingCDN.com`)으로 우회.
+- **DNS 기반 서버 선택**: CDN의 authoritative DNS가 클라이언트 위치 등을 고려하여 가장 효율적인 서버를 할당.
+- **콘텐츠는 CDN에서 제공**: 원 서버(netcinema)가 아닌 CDN 서버에서 비디오 제공.
+
+
+# Netflix 스트리밍 사례 (Case Study)
+
+## 과정 개요
+
+- Netflix는 **Amazon Cloud**를 기반으로 운영하며, 비디오 콘텐츠를 **여러 CDN 서버**에 분산 저장합니다.
+- 사용자가 영상을 재생할 때, 가까운 CDN 서버에서 스트리밍을 받아 효율적인 서비스가 제공됩니다.
+
+## 단계별 흐름
+
+1. **계정 관리 (Account Management)**
+    - Bob은 Netflix 계정을 관리합니다.
+    - Netflix의 등록 및 회계 서버와 통신합니다.
+
+2. **비디오 탐색 (Browsing Video)**
+    - Bob이 Netflix에서 시청할 비디오를 선택합니다.
+    - 이 과정에서 Amazon Cloud에 질의가 이루어집니다.
+
+3. **Manifest 파일 반환**
+    - Amazon Cloud는 특정 비디오에 대한 **Manifest 파일**(메타데이터, 재생 정보 포함)을 Bob에게 전달합니다.
+    - Manifest에는 사용 가능한 다양한 화질/버전이 명시됩니다.
+
+4. **스트리밍 시작 (DASH 기반)**
+    - Bob의 클라이언트는 **DASH 서버(Dynamic Adaptive Streaming over HTTP)**를 선택하고 연결합니다.
+    - 적절한 **CDN 서버**와 연결되어 스트리밍이 시작됩니다.
+    - 네트워크 상태에 따라 적절한 화질의 세그먼트가 전송됩니다.
+
+## 핵심 포인트
+
+- **콘텐츠 배포**: Amazon Cloud에서 여러 버전을 CDN 서버들에 업로드.
+- **Manifest 파일**: 어떤 비디오 버전을 받을지 결정하는 지침 제공.
+- **DASH 프로토콜**: 네트워크 상태에 따라 동적으로 비디오 품질을 조정.
+- **CDN 역할**: 사용자가 가장 가까운/효율적인 CDN 서버에서 직접 스트리밍.
+
+
+# Chapter 2: Summary (네트워크 애플리케이션 계층)
+
+## 1. Application Architectures
+
+- **Client-Server**
+- **P2P (Peer-to-Peer)**
+
+## 2. Application Service Requirements
+
+- **Reliability** (신뢰성)
+- **Bandwidth** (대역폭)
+- **Delay** (지연)
+
+## 3. Internet Transport Service Model
+
+- **TCP**: 연결 지향, 신뢰성 보장
+- **UDP**: 비연결성, 비신뢰성 (datagram 기반)
+
+## 4. Specific Protocols
+
+- HTTP
+- SMTP, IMAP
+- DNS
+- P2P: BitTorrent
+- Video streaming, CDNs
+
+
+# Chapter 2: Protocols & Themes
+
+## 1. Typical Request/Reply Exchange
+
+- Client → 요청 (정보/서비스)
+- Server → 응답 (데이터, 상태 코드)
+## 2. Message Formats
+
+- **Headers**: 데이터에 관한 정보 포함
+- **Data (Payload)**: 실제 전달되는 내용
+
+## 3. Important Themes
+
+- Centralized vs. Decentralized (집중형 vs 분산형)
+- Stateless vs. Stateful (상태 없음 vs 상태 유지)
+- Scalability (확장성)
+- Reliable vs. Unreliable Message Transfer (신뢰성 여부)
+- **Complexity at Network Edge** (네트워크 가장자리에서의 복잡성)
