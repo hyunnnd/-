@@ -92,7 +92,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "87d1eea742953826",
@@ -205,7 +206,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "41bfe5628e1a01bf",
+  "active": "554531ecb1ec0328",
   "lastOpenFiles": [
     "cn/Chapter 2. Application Layer.md",
     "무제 1.base",
