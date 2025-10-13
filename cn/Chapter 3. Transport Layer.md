@@ -465,3 +465,25 @@
 - 다중화와 역다중화 과정은 **모든 계층(all layers)** 에서 발생한다.
 
 
+## UDP: 사용자 데이터그램 프로토콜 (User Datagram Protocol)
+
+- **“no frills”, “bare bones”**: 최소한의 기능만 제공하는 인터넷 전송 프로토콜
+
+- **“best effort” 서비스**: UDP 세그먼트는 다음과 같은 문제가 발생할 수 있음
+    - 손실될 수 있음 (lost)        
+    - 순서가 뒤바뀐 채로 애플리케이션에 도착할 수 있음 (delivered out-of-order)
+
+- **비연결형(connectionless)**
+    - 송신자와 수신자 간 **핸드셰이킹(handshaking)** 과정이 없음        
+    - 각 UDP 세그먼트는 **서로 독립적으로 처리됨**
+
+### 왜 UDP가 존재하는가? (Why is there a UDP?)
+
+- **연결 설정(connection establishment)** 과정이 없음 → RTT 지연이 추가되지 않음
+- **단순성(simple)**: 송신자와 수신자 모두 **연결 상태(state)** 를 유지하지 않음
+- **헤더 크기가 작음 (small header size)**
+- **혼잡 제어 없음 (no congestion control)**
+    - UDP는 원하는 속도로 데이터를 전송할 수 있음
+    - 네트워크 혼잡 상황에서도 동작 가능
+
+
