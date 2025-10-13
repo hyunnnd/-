@@ -1,2 +1,56 @@
 
 
+## Transport Layer: Overview (전송 계층 개요)
+
+### 🎯 목표 (Our goal)
+
+#### 1. 전송 계층 서비스의 기본 원리 이해
+
+- **Multiplexing, Demultiplexing (다중화, 역다중화)**  
+    여러 애플리케이션의 데이터를 하나의 네트워크 연결로 통합하거나, 수신된 데이터를 올바른 애플리케이션으로 분리하는 과정입니다.
+- **Reliable Data Transfer (신뢰성 있는 데이터 전송)**  
+    전송 중 손실되거나 손상된 데이터를 재전송하여 신뢰성을 보장하는 메커니즘입니다.    
+- **Flow Control (흐름 제어)**  
+    송신자가 수신자의 처리 속도를 초과하지 않도록 조절하는 기능입니다.
+- **Congestion Control (혼잡 제어)**  
+    네트워크가 과부하되지 않도록 데이터 전송 속도를 조절하는 기술입니다.
+
+#### 2. 인터넷 전송 계층 프로토콜 학습
+
+- **UDP (User Datagram Protocol)**  
+    연결을 설정하지 않는 비연결형 전송 방식 (connectionless transport)
+- **TCP (Transmission Control Protocol)**  
+    연결을 설정하고 신뢰성 있는 전송을 제공하는 연결지향형 전송 방식 (connection-oriented reliable transport)
+- **TCP Congestion Control (TCP 혼잡 제어)**  
+    네트워크 혼잡을 방지하기 위한 TCP의 전송 제어 메커니즘
+
+
+## Transport Services and Protocols (전송 서비스와 프로토콜)
+
+### 1. 전송 계층의 역할
+
+- **논리적 통신(logical communication)** 제공  
+    → 서로 다른 호스트에서 실행 중인 **애플리케이션 프로세스 간**의 통신을 가능하게 함.  
+    (즉, 실제 물리적 연결이 아니라 논리적으로 종단 간 통신을 제공함)
+
+### 2. 전송 프로토콜의 동작 (end system에서의 동작)
+
+- **송신자(Sender)**
+    - 애플리케이션 계층의 메시지를 **세그먼트(segments)** 단위로 분할
+    - 분할된 세그먼트를 **네트워크 계층(Network Layer)** 으로 전달
+
+- **수신자(Receiver)**    
+    - 네트워크 계층으로부터 받은 **세그먼트들을 재조립(reassemble)** 하여 원래의 메시지 복원
+    - 복원된 메시지를 **애플리케이션 계층(Application Layer)** 으로 전달
+
+### 3. 인터넷에서 사용되는 주요 전송 계층 프로토콜
+
+- **TCP (Transmission Control Protocol)**  
+    → 연결 지향적, 신뢰성 있는 데이터 전송 제공    
+- **UDP (User Datagram Protocol)**  
+    → 비연결형, 빠르지만 신뢰성 보장은 없음
+
+**핵심 요약:**  
+전송 계층은 네트워크를 통한 실제 데이터 이동이 아닌, **종단 간(end-to-end) 논리적 연결**을 제공하여 애플리케이션 간 메시지 교환이 가능하도록 합니다.
+
+
