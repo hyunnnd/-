@@ -487,3 +487,18 @@
     - 네트워크 혼잡 상황에서도 동작 가능
 
 
+## UDP: 사용자 데이터그램 프로토콜 (User Datagram Protocol)
+
+- **UDP의 사용 예시:**
+    - **스트리밍 멀티미디어 애플리케이션** (손실 허용, 전송 속도에 민감함)
+    - **DNS (Domain Name System)**
+    - **SNMP (Simple Network Management Protocol)**
+    - **HTTP/3**
+
+
+- **UDP 위에서 신뢰성 있는 전송이 필요한 경우** (예: HTTP/3):    
+    - 필요한 **신뢰성(reliability)** 을 **애플리케이션 계층(application layer)** 에서 추가함
+    - **혼잡 제어(congestion control)** 또한 **애플리케이션 계층** 에서 구현함
+
+
+
