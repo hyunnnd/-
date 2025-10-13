@@ -138,3 +138,43 @@
 > 해당 메시지를 올바른 **소켓(프로세스)** 으로 전달합니다.
 
 
+## Two Principal Internet Transport Protocols
+
+### 1. **TCP (Transmission Control Protocol)**
+
+- **신뢰성 있는, 순서 보장 전송 (reliable, in-order delivery)**  
+    → 데이터 손실 없이, 전송 순서를 유지하여 전달함.
+- **혼잡 제어 (Congestion control)**  
+    → 네트워크 혼잡을 감지하고 전송 속도를 조절함.
+- **흐름 제어 (Flow control)**  
+    → 송신 측이 수신 측의 처리 속도를 초과하지 않도록 제어함.
+- **연결 지향형 (Connection-oriented)**  
+    → 통신 전, **연결 설정 과정(setup)** 이 필요함.
+
+### 2. **UDP (User Datagram Protocol)**
+
+- **비신뢰성, 무순서 전송 (unreliable, unordered delivery)**  
+    → 패킷 손실, 중복, 순서 뒤바뀜이 발생할 수 있음.    
+- **비연결형 (Connection-less)**  
+    → 연결 설정 과정이 필요하지 않음.
+- **단순한(best-effort) IP의 확장**  
+    → IP 프로토콜을 기반으로 하되, 추가적인 제어 기능이 거의 없음.  
+    → 오버헤드가 작고 빠르지만, 신뢰성은 제공하지 않음.
+
+### 3. **전송 계층에서 제공하지 않는 서비스**
+
+- **지연 보장 (Delay guarantees)** 없음    
+- **대역폭 보장 (Bandwidth guarantees)** 없음
+
+즉, 전송 계층은 “가능한 한 최선을 다하는(best-effort)” 전송만 제공합니다.
+
+### 💡 요약
+
+| 항목    | TCP                           | UDP               |
+| ----- | ----------------------------- | ----------------- |
+| 연결 방식 | 연결 지향형                        | 비연결형              |
+| 신뢰성   | 높음 (재전송, 순서 보장)               | 낮음 (손실 가능)        |
+| 속도    | 느림 (제어 많음)                    | 빠름 (단순 구조)        |
+| 사용 예시 | 웹(HTTP), 이메일(SMTP), 파일전송(FTP) | 스트리밍, DNS, VoIP 등 |
+
+
