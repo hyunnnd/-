@@ -214,3 +214,44 @@
 > 수신 측에서 이를 다시 분리하여 각 프로세스에 전달(demultiplexing)합니다.
 
 
+## How Demultiplexing Works
+
+### 🧩 1. IP 데이터그램 수신 과정
+
+- 호스트(host)는 **IP 데이터그램(datagram)** 을 수신함.
+- 각 데이터그램에는 다음 정보가 포함되어 있음:
+    - **출발지 IP 주소 (Source IP Address)**
+    - **목적지 IP 주소 (Destination IP Address)**
+
+- 각 데이터그램은 **하나의 전송 계층 세그먼트(transport-layer segment)** 를 포함함.    
+- 각 세그먼트에는 다음 정보가 포함됨:
+    - **출발지 포트 번호 (Source Port Number)**
+    - **목적지 포트 번호 (Destination Port Number)**
+
+### ⚙️ 2. 세그먼트의 전달 과정
+
+- 호스트는 **IP 주소와 포트 번호(IP addresses & port numbers)** 를 사용하여  
+    수신된 세그먼트를 **올바른 소켓(socket)** 으로 전달함.    
+- 즉,
+    (Source IP, Source Port, Destination IP, Destination Port)
+    조합을 이용하여 해당 세그먼트가 어떤 프로세스의 데이터인지 식별함.
+
+### 📦 3. TCP/UDP 세그먼트 구조
+
+| 필드                             | 설명                  |
+| ------------------------------ | ------------------- |
+| **Source Port #**              | 송신 측 포트 번호          |
+| **Destination Port #**         | 수신 측 포트 번호          |
+| **Other Header Fields**        | 순서 번호, 체크섬, 제어 비트 등 |
+| **Application Data (Payload)** | 실제 애플리케이션 계층의 데이터   |
+
+> 포트 번호(Port number)는 전송 계층이 어떤 애플리케이션 프로세스로 데이터를 보낼지 결정하는 핵심 정보입니다.
+
+### 💡 요약
+
+- **IP 계층:** 호스트 간 데이터 전달    
+- **전송 계층:** 포트 번호를 기반으로 프로세스 간 데이터 전달
+- **Demultiplexing:**  
+    IP + 포트 정보를 이용해 세그먼트를 올바른 소켓으로 라우팅하는 과정
+
+
