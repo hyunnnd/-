@@ -743,3 +743,46 @@ part 2
 - 데이터 **순서 변경(reordering)**
 
 
+# Reliable Data Transfer: Getting Started
+
+## 개요
+
+- 송신자와 수신자 측의 **신뢰성 전송 프로토콜(rdt)** 을 **단계적으로(incrementally)** 개발함.
+- **단방향 데이터 전송(unidirectional transfer)**만 고려하지만,  
+    **제어 정보(control info)**는 양방향으로 흐름.
+- 송신자와 수신자를 **유한 상태 기계(FSM, Finite State Machine)**로 표현함.
+
+## FSM (유한 상태 기계) 개념
+
+- **state (상태):** 현재 상황을 나타내며, 다음 상태는 발생하는 **이벤트(event)**에 의해 결정됨.   
+- **event:** 상태 변화를 일으키는 사건.
+- **actions:** 상태 전이 시 수행되는 동작.
+
+
+# Reliable Data Transfer Protocol (rdt): Interfaces
+
+## 주요 함수 요약
+
+- **`rdt_send()`**    
+    - 상위 계층(예: 애플리케이션)에서 호출됨.
+    - 송신 측에서 데이터를 수신 측으로 전달하기 위해 사용.
+
+- **`udt_send()`**    
+    - `rdt` 내부에서 호출되어 **비신뢰적 채널(unreliable channel)**을 통해 패킷을 전송함.
+
+- **`rdt_rcv()`**    
+    - 수신 측에서 패킷이 도착했을 때 호출됨.
+    - 수신된 데이터를 처리 후 상위 계층에 전달.
+
+- **`deliver_data()`**    
+    - `rdt`가 수신 데이터를 상위 계층(예: 애플리케이션)으로 넘겨줄 때 호출됨.
+
+## 데이터 흐름
+
+**송신 측:**  
+`application → rdt_send() → udt_send() → unreliable channel`
+
+**수신 측:**  
+`unreliable channel → rdt_rcv() → deliver_data() → application`
+
+
