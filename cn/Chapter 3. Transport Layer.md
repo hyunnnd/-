@@ -894,3 +894,36 @@ part 2
 ✅ rdt2.0은 **비트 오류 탐지(checksum)**와 **ACK/NAK 기반 재전송**을 **FSM 형태로 구체화한 모델**임.
 
 
+# rdt2.0: Operation with No Errors
+
+## 동작 개요
+
+- 채널에 **비트 오류가 없을 때**의 rdt2.0 동작 과정.
+- 송신자(sender)와 수신자(receiver)가 **ACK/NAK 절차 없이 정상 통신**하는 경우.    
+
+## 송신자 (Sender)
+
+1. `rdt_send(data)`
+    - 상위 계층에서 데이터 수신.
+    - `sndpkt = make_pkt(data, checksum)` → 패킷 생성.
+    - `udt_send(sndpkt)` → 패킷 전송.
+2. 상태 전이: **Wait for ACK or NAK**    
+3. 수신자로부터 ACK 수신 시 (`isACK(rcvpkt)`)  
+    → 다음 데이터 전송을 위해 **초기 상태로 복귀**.
+
+## 수신자 (Receiver)
+
+1. `rdt_rcv(rcvpkt)` → 패킷 수신.
+2. 패킷이 손상되지 않음 (`notcorrupt(rcvpkt)`).
+3. `extract(rcvpkt, data)` → 데이터 추출.
+4. `deliver_data(data)` → 상위 계층에 전달.
+5. `udt_send(ACK)` → 송신자에게 정상 수신 응답 전송.    
+
+✅ 요약
+
+- 오류가 없는 경우:  
+    송신자는 데이터 전송 후 **ACK만 받고 다음 데이터 전송**.
+- NAK나 재전송 과정이 필요하지 않음 → **이상적인 정상 통신 흐름**.
+
+
+
