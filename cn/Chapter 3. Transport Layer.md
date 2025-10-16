@@ -1089,3 +1089,113 @@ rdt2.0의 ACK/NAK 손상 문제를 해결함.
     **시퀀스 번호(0/1)**를 기반으로 상태를 관리하며,  
     **손상된 ACK/NAK 및 중복 패킷 문제를 해결**함.
 
+# rdt2.2: A NAK-Free Protocol
+
+## 핵심 개념
+
+- **rdt2.1과 동일한 기능**을 수행하지만, **NAK 없이 ACK만 사용**함.
+- 수신자는 **NAK 대신**, 마지막으로 **정상 수신된 패킷에 대한 ACK**를 보냄.
+    - 이때, **ACK에는 명시적으로(implicitly)** 해당 패킷의 **시퀀스 번호(seq #)**가 포함되어야 함.
+
+## 송신자 동작
+
+- 동일한 ACK가 **중복(duplicate)**으로 수신되면,  
+    송신자는 이를 **NAK와 동일하게 해석**하여 **현재 패킷을 재전송(retransmit current pkt)** 함.    
+
+## 특징
+
+- **rdt2.2는 rdt2.1과 동등한 신뢰성**을 가지며,  
+    **NAK 없이 ACK만으로 오류 복구**를 수행.    
+- **TCP(Transmission Control Protocol)** 역시 이 방식을 채택하여 **NAK-free**하게 동작함.
+
+✅ 요약
+
+- rdt2.2 = rdt2.1 (−NAK, +중복 ACK 사용)    
+- 수신자는 **“마지막 정상 패킷 번호”를 포함한 ACK**를 전송
+- 송신자는 **중복 ACK 수신 시 재전송 수행**
+
+
+# rdt2.2: Sender
+
+## 핵심 개념
+
+- rdt2.2는 **NAK 없이 ACK만 사용하는 프로토콜**로,  
+    송신자는 수신된 **ACK의 시퀀스 번호(0 또는 1)**를 기반으로 동작함.
+- **중복 ACK**를 받으면 NAK와 동일하게 처리 → **현재 패킷 재전송**.
+
+## 송신자 (Sender) FSM 동작
+
+### ① Wait for call 0 from above
+
+- `rdt_send(data)`  
+    → `sndpkt = make_pkt(0, data, checksum)`  
+    → `udt_send(sndpkt)`    
+- 상태 전이 → **Wait for ACK 0**
+### ② Wait for ACK 0
+
+- `rdt_rcv(rcvpkt)`
+    - 손상(`corrupt(rcvpkt)`) 또는 **잘못된 ACK (isACK(rcvpkt, 1))** → 재전송(`udt_send(sndpkt)`)
+    - 정상(`notcorrupt(rcvpkt) && isACK(rcvpkt, 0)`) → **Wait for call 1** 상태로 전이
+### ③ Wait for call 1 from above
+
+- `rdt_send(data)`  
+    → `sndpkt = make_pkt(1, data, checksum)`  
+    → `udt_send(sndpkt)`    
+- 상태 전이 → **Wait for ACK 1**
+### ④ Wait for ACK 1
+
+- `rdt_rcv(rcvpkt)`
+    - 손상(`corrupt(rcvpkt)`) 또는 **잘못된 ACK (isACK(rcvpkt, 0))** → 재전송(`udt_send(sndpkt)`)
+    - 정상(`notcorrupt(rcvpkt) && isACK(rcvpkt, 1)`) → **Wait for call 0** 상태로 복귀
+
+## 요약
+
+- **ACK만으로 신뢰성 보장** (NAK 불필요)    
+- **시퀀스 번호 0/1**을 번갈아 사용
+- **중복 ACK → 재전송**
+- rdt2.2는 TCP의 **NAK-free 설계 원리**와 동일한 개념을 가짐.
+
+
+# rdt2.2: Receiver
+
+## 핵심 개념
+
+- **rdt2.2**는 **NAK 없는 프로토콜**로,  
+    수신자는 항상 **ACK만 전송**하여 송신자에게 상태를 알림.    
+- 수신자는 패킷의 **시퀀스 번호(seq #)**를 사용해  
+    올바른 패킷과 **중복 패킷을 구분**함.
+
+## 수신자 (Receiver) FSM 동작
+
+### ① Wait for 0 from below
+
+- `rdt_rcv(rcvpkt)`    
+    - 손상(`corrupt(rcvpkt)`) 또는 잘못된 시퀀스(`has_seq1(rcvpkt)`)  
+        → `sndpkt = make_pkt(ACK, 1, chksum)` → `udt_send(sndpkt)` (이전 ACK 재전송)
+    - 정상(`notcorrupt(rcvpkt) && has_seq0(rcvpkt)`)  
+        → `extract(data)` → `deliver_data(data)`  
+        → `sndpkt = make_pkt(ACK, 0, chksum)` → `udt_send(sndpkt)`  
+        → 상태 전이 → **Wait for 1 from below**
+
+### ② Wait for 1 from below
+
+- `rdt_rcv(rcvpkt)`
+    
+    - 손상(`corrupt(rcvpkt)`) 또는 잘못된 시퀀스(`has_seq0(rcvpkt)`)  
+        → `sndpkt = make_pkt(ACK, 0, chksum)` → `udt_send(sndpkt)` (이전 ACK 재전송)   
+    - 정상(`notcorrupt(rcvpkt) && has_seq1(rcvpkt)`)  
+        → `extract(data)` → `deliver_data(data)`  
+        → `sndpkt = make_pkt(ACK, 1, chksum)` → `udt_send(sndpkt)`  
+        → 상태 전이 → **Wait for 0 from below**
+
+## 요약
+
+- **NAK 불필요:** 수신자는 항상 ACK만 전송.    
+- **중복 패킷:** 이전 ACK 재전송으로 처리.
+- **시퀀스 번호(0/1)**로 순서 유지 및 중복 방지.
+- 송신자는 **중복 ACK을 NAK처럼 해석**해 패킷을 재전송함.
+
+✅ rdt2.2의 수신자는 TCP의 동작 방식과 동일하게,  
+**ACK만으로 오류 복구를 수행하는 NAK-free 구조**를 구현함.
+
+
