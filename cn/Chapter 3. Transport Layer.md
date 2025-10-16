@@ -1024,3 +1024,42 @@ part 2
 ✅ rdt2.1은 rdt2.0의 치명적 결함(ACK/NAK 손상 시 모호함)을 해결하기 위한 **송신자 측 개선 모델**임.
 
 
+# rdt2.1: Receiver, Handling Garbled ACK/NAKs
+
+## 핵심 개념
+
+- **rdt2.1**의 수신자(receiver)는 **ACK/NAK 손상(garbled)** 상황을 처리하기 위해  
+    **시퀀스 번호(sequence number)**를 사용하여 올바른 패킷인지 확인함.    
+- 송신자와 마찬가지로, 수신자도 **0과 1을 번갈아 처리**하며 중복 전송을 구분함.
+
+## 수신자 (Receiver) FSM 동작
+
+### ① **Wait for 0 from below**
+
+- `rdt_rcv(rcvpkt)`    
+    - 손상(`corrupt(rcvpkt)`) → `make_pkt(NAK, chksum)` → `udt_send(sndpkt)`
+    - 정상(`notcorrupt(rcvpkt) && has_seq0(rcvpkt)`) →  
+        `extract(data)` → `deliver_data(data)` →  
+        `make_pkt(ACK, chksum)` → `udt_send(sndpkt)` → 다음 상태로 전이 (**Wait for 1**)
+    - `notcorrupt(rcvpkt) && has_seq1(rcvpkt)` → 중복 → `send(ACK)`
+
+### ② **Wait for 1 from below**
+
+- `rdt_rcv(rcvpkt)`    
+    - 손상(`corrupt(rcvpkt)`) → `make_pkt(NAK, chksum)` → `udt_send(sndpkt)`
+    - 정상(`notcorrupt(rcvpkt) && has_seq1(rcvpkt)`) →  
+        `extract(data)` → `deliver_data(data)` →  
+        `make_pkt(ACK, chksum)` → `udt_send(sndpkt)` → 다음 상태로 전이 (**Wait for 0**)
+    - `notcorrupt(rcvpkt) && has_seq0(rcvpkt)` → 중복 → `send(ACK)`
+
+## 요약
+
+- 수신자는 **시퀀스 번호를 통해 중복 패킷을 식별**하고,  
+    이미 받은 패킷은 **상위 계층에 전달하지 않음**.    
+- ACK/NAK가 손상되더라도 송신자와 수신자가 **패킷 순서(0/1)**를 기준으로 동기 유지 가능.
+
+
+✅ rdt2.1의 수신자 FSM은 **오류 감지 + 시퀀스 번호 기반 중복 방지** 기능을 결합하여  
+rdt2.0의 ACK/NAK 손상 문제를 해결함.
+
+
