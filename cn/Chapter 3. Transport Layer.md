@@ -987,3 +987,40 @@ part 2
 시퀀스 번호를 이용한 **중복 탐지 및 재전송 제어**가 추가됨.
 
 
+# rdt2.1: Sender, Handling Garbled ACK/NAKs
+
+## 핵심 개념
+
+- **rdt2.1**은 **ACK/NAK 손상(garbled)** 문제를 해결하기 위해  
+    송신자 측에 **시퀀스 번호(sequence number)** 개념을 도입한 버전임.    
+- 송신자는 **0과 1을 번갈아** 사용하여 중복 패킷을 구분함.
+
+## 송신자 (Sender) FSM 동작
+
+1. **Wait for call 0 from above**    
+    - 상위 계층에서 데이터 수신
+    - `sndpkt = make_pkt(0, data, checksum)`
+    - `udt_send(sndpkt)` → 패킷 전송
+
+2. **Wait for ACK or NAK 0**    
+    - `rdt_rcv(rcvpkt)`
+    - 손상(`corrupt(rcvpkt)`)되었거나 NAK 수신 시 → `udt_send(sndpkt)` (재전송)
+    - 정상 ACK(`notcorrupt(rcvpkt) && isACK(rcvpkt)`)이면 → **call 1 상태로 전이**
+
+3. **Wait for call 1 from above**    
+    - `sndpkt = make_pkt(1, data, checksum)`
+    - `udt_send(sndpkt)`
+
+4. **Wait for ACK or NAK 1**    
+    - ACK 손상 or NAK 수신 시 → 재전송
+    - 정상 ACK 수신 시 → 다시 **call 0 상태로 전환**
+
+## 요약
+
+- **시퀀스 번호 0, 1 교차 사용**으로 중복 전송 문제 해결.    
+- **손상된 ACK/NAK 수신 시 재전송** 수행.
+- 여전히 **Stop-and-Wait 방식** 유지.
+
+✅ rdt2.1은 rdt2.0의 치명적 결함(ACK/NAK 손상 시 모호함)을 해결하기 위한 **송신자 측 개선 모델**임.
+
+
