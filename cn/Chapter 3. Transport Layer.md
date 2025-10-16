@@ -1255,3 +1255,119 @@ rdt2.0의 ACK/NAK 손상 문제를 해결함.
 - rdt3.0은 **패킷 손상 + 손실 모두 처리 가능**.    
 - **핵심 기법:** 타이머 기반 재전송과 시퀀스 번호로 중복 문제 해결.
 
+# rdt3.0: Sender
+
+## 핵심 개념
+
+- **rdt3.0**은 손실(loss)과 오류(error)가 모두 발생할 수 있는 채널에서 **신뢰적 데이터 전송(reliable data transfer)**을 보장함.    
+- 송신자(sender)는 **타이머(timer)**를 이용하여 ACK 손실 또는 지연 상황을 감지하고,  
+    필요 시 **패킷 재전송(retransmission)**을 수행함.
+
+## 송신자 동작 요약
+
+1. **데이터 전송 요청 (rdt_send)**    
+    - 송신자가 상위 계층으로부터 데이터를 전달받으면  
+        → `sndpkt = make_pkt(seq, data, checksum)`  
+        → `udt_send(sndpkt)` (비신뢰적 채널로 전송)  
+        → **타이머 시작 (`start_timer`)**
+
+2. **ACK 수신 (rdt_rcv)**    
+    - ACK 패킷이 도착하면,
+        - 손상되지 않았고(`notcorrupt`)
+        - 올바른 시퀀스 번호의 ACK이면(`isACK(rcvpkt, seq)`)  
+            → **타이머 중지 (`stop_timer`)**  
+            → 다음 데이터 전송 단계로 이동.
+
+3. **ACK 미수신 (Timeout 발생)**    
+    - 설정된 시간 내에 ACK이 도착하지 않으면  
+        → **Timeout 이벤트 발생**  
+        → 같은 패킷을 다시 전송 (`udt_send(sndpkt)`)  
+        → 타이머 재시작 (`start_timer`)
+
+## FSM (유한상태기계) 구조 설명
+
+- 두 개의 시퀀스 번호(0, 1)를 사용하여 교대로 패킷 전송.    
+- 각 시퀀스 번호에 대해 다음 동작을 수행함:
+    - **`Wait for call 0 (or 1) from above`**: 상위 계층에서 데이터 대기.
+    - **`Wait for ACK0 (or ACK1)`**: 해당 패킷에 대한 ACK 대기.
+    - ACK이 수신되면 → `stop_timer`
+    - Timeout 발생 시 → 패킷 재전송 + `start_timer` 유지.
+
+✅ **요약**
+
+- **start_timer:** 데이터 전송 후 타이머 시작.    
+- **stop_timer:** 올바른 ACK 수신 시 타이머 종료.
+- **Timeout:** ACK 손실 시 자동 재전송.
+- 결과적으로 rdt3.0은 **손실 및 오류 모두 복구 가능한 완전 신뢰형 프로토콜**임.
+
+
+# dt3.0: Sender (송신자 동작 FSM)
+
+## 개요
+
+이 다이어그램은 **rdt3.0 (reliable data transfer 3.0)** 프로토콜의 **송신자(sender)** 동작을 나타냅니다.  
+`rdt3.0`은 **손상된 패킷(bit errors)**과 **손실된 패킷(loss)**을 모두 처리할 수 있는 신뢰적 전송 프로토콜입니다.
+
+## 상태(State) 설명
+
+### 1. **Wait for call 0 from above**
+
+- 상위 계층에서 전송 요청을 기다리는 상태.    
+- 이벤트:
+    - `rdt_send(data)` 발생 시  
+        → `sndpkt = make_pkt(0, data, checksum)`  
+        → `udt_send(sndpkt)`  
+        → **타이머 시작(`start_timer`)**  
+        → 다음 상태로 전이 → **Wait for ACK0**
+
+### 2. **Wait for ACK0**
+
+- 데이터(시퀀스 번호 0)를 보낸 뒤, 해당 패킷에 대한 ACK을 기다리는 상태.    
+- 이벤트:
+    - `rdt_rcv(rcvpkt)`
+        - 손상되지 않고(`notcorrupt`), ACK0이면(`isACK(rcvpkt,0)`)  
+            → **타이머 정지(`stop_timer`)**  
+            → 다음 데이터 전송 대기 (**Wait for call 1 from above**)
+
+    - `timeout` 발생 시  
+        → 패킷 재전송(`udt_send(sndpkt)`)  
+        → **타이머 재시작(`start_timer`)**        
+
+### 3. **Wait for call 1 from above**
+
+- ACK0이 도착한 뒤, 시퀀스 번호 1의 새 데이터를 전송하기 위해 대기하는 상태.    
+- 이벤트:
+    - `rdt_send(data)`  
+        → `sndpkt = make_pkt(1, data, checksum)`  
+        → `udt_send(sndpkt)`  
+        → **타이머 시작(`start_timer`)**  
+        → 다음 상태로 전이 → **Wait for ACK1**
+
+### 4. **Wait for ACK1**
+
+- 데이터(시퀀스 번호 1)를 보낸 뒤, 해당 ACK을 기다리는 상태.    
+- 이벤트:
+    - `rdt_rcv(rcvpkt)`
+        - 손상되지 않고(`notcorrupt`), ACK1이면(`isACK(rcvpkt,1)`)  
+            → **타이머 정지(`stop_timer`)**  
+            → 다음 데이터 전송 대기 (**Wait for call 0 from above**)
+
+    - `timeout` 발생 시  
+        → 패킷 재전송(`udt_send(sndpkt)`)  
+        → **타이머 재시작(`start_timer`)**        
+
+## 타이머 역할 요약
+
+| 이벤트          | 동작                              |
+| ------------ | ------------------------------- |
+| 데이터 전송 직후    | **start_timer**                 |
+| 올바른 ACK 수신   | **stop_timer**                  |
+| ACK 손실 또는 지연 | **timeout → 재전송 + start_timer** |
+
+✅ **정리**
+
+- `rdt3.0`은 **타이머 기반 재전송 기법**으로 손실을 복구함.    
+- **시퀀스 번호 0과 1을 교대로 사용**하여 중복 패킷을 구분.
+- `ACK`, `timeout`, `retransmission`을 이용하여 **완전한 신뢰성 보장**.
+
+
