@@ -786,3 +786,31 @@ part 2
 `unreliable channel → rdt_rcv() → deliver_data() → application`
 
 
+# rdt1.0: Reliable Transfer over a Reliable Channel
+
+## 핵심 내용
+
+- 기본 채널이 **완전히 신뢰할 수 있음**
+    - 비트 오류 없음        
+    - 패킷 손실 없음
+
+- 송신자(sender)와 수신자(receiver)는 **각각 독립적인 FSM(유한 상태 기계)** 사용
+    - 송신자: 상위 계층에서 받은 데이터를 채널로 전송
+    - 수신자: 채널에서 데이터를 읽어 상위 계층으로 전달        
+
+## Sender
+
+1. Wait for call from above
+2. `rdt_send(data)`
+3. `packet = make_pkt(data)`    
+4. `udt_send(packet)`
+
+## Receiver
+
+1. Wait for call from below
+2. `rdt_rcv(packet)`
+3. `extract(packet, data)`    
+4. `deliver_data(data)`
+
+
+✅ 오류나 손실이 없으므로 **가장 단순한 형태의 rdt**, 즉 **rdt1.0** 구조임.
