@@ -927,3 +927,63 @@ part 2
 
 
 
+# rdt2.0: Corrupted Packet Scenario
+
+## 동작 개요
+
+- 전송 중 패킷이 **손상(corrupted)** 되었을 때의 동작 과정.
+- 수신자가 오류를 감지하면 **NAK**(Negative Acknowledgement)를 송신자에게 보냄.
+- 송신자는 **NAK 수신 시 재전송(retransmit)** 수행.
+
+## 송신자 (Sender)
+
+1. `rdt_send(data)`  
+    → `sndpkt = make_pkt(data, checksum)`  
+    → `udt_send(sndpkt)`    
+2. 상태 전이: **Wait for ACK or NAK**
+3. 수신자로부터 NAK 수신 시 (`isNAK(rcvpkt)`)  
+    → 동일한 패킷을 **다시 전송 (`udt_send(sndpkt)`)**
+4. ACK 수신 시 (`isACK(rcvpkt)`)  
+    → 다음 데이터 전송 준비로 복귀.
+
+## 수신자 (Receiver)
+
+1. `rdt_rcv(rcvpkt)`    
+2. 패킷이 손상됨 (`corrupt(rcvpkt)`)  
+    → `udt_send(NAK)` (재전송 요청).
+3. 패킷이 정상(`notcorrupt(rcvpkt)`)이면  
+    → `extract(rcvpkt, data)` → `deliver_data(data)` → `udt_send(ACK)`.
+
+✅ **요약**
+
+- 손상된 패킷 발생 시 수신자는 **NAK**를 송신.    
+- 송신자는 **NAK 수신 후 즉시 재전송**.
+- rdt2.0은 **비트 오류 감지 + 재전송(Stop-and-Wait 방식)** 으로 신뢰성 확보.
+
+
+# rdt2.0 Has a Fatal Flaw!
+
+## 문제점 (ACK/NAK 손상 시)
+
+- **ACK 또는 NAK 패킷이 손상되면**,  
+    송신자는 수신 측에서 무슨 일이 일어났는지 알 수 없음.
+
+- 무작정 재전송하면 **중복 패킷(duplicate)** 발생 가능.    
+
+## 중복 처리 (Handling Duplicates)
+
+- ACK/NAK가 손상된 경우 송신자는 **현재 패킷을 재전송**함.    
+- 송신자는 각 패킷에 **시퀀스 번호(sequence number)**를 부여.
+- 수신자는 **중복된 패킷을 폐기(discard)**하고 상위 계층으로 전달하지 않음.
+
+## 전송 방식
+
+**Stop and Wait**
+
+- 송신자는 한 번에 **한 패킷만 전송**하고,  
+    수신자의 응답(ACK/NAK)을 **기다린 후 다음 패킷 전송**.    
+
+✅ 이 문제를 해결하기 위해 **rdt3.0**에서는  
+시퀀스 번호를 이용한 **중복 탐지 및 재전송 제어**가 추가됨.
+
+
