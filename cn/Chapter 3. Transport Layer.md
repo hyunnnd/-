@@ -862,3 +862,35 @@ part 2
 ✅ rdt2.0은 **비트 오류 탐지(Checksum)** + **ACK/NAK 기반 재전송**을 통해 신뢰성을 보장하는 모델임.
 
 
+# rdt2.0: FSM Specification
+
+## Sender FSM
+
+- **State 1: Wait for call from above**
+    - `rdt_send(data)` 호출 → `sndpkt = make_pkt(data, checksum)`
+    - `udt_send(sndpkt)` → 패킷 전송
+    - 이후 **ACK/NAK 대기 상태로 전이**
+
+- **State 2: Wait for ACK or NAK**    
+    - `rdt_rcv(rcvpkt)`
+    - `isNAK(rcvpkt)` → 오류 시 **재전송** (`udt_send(sndpkt)`)
+    - `isACK(rcvpkt)` → 정상 수신 확인, 다음 데이터 전송 준비
+
+## Receiver FSM
+
+- **State: Wait for call from below**    
+    - `rdt_rcv(rcvpkt)`
+    - `corrupt(rcvpkt)` → 오류 시 `udt_send(NAK)`
+    - `notcorrupt(rcvpkt)` →  
+        `extract(rcvpkt, data)` → `deliver_data(data)` → `udt_send(ACK)`
+
+## 핵심 포인트
+
+- 송신자는 **수신자의 상태(state)**를 직접 알 수 없음.  
+    → 따라서 **ACK/NAK 신호를 통한 상태 전달**이 필요함.    
+- 이런 이유로 **프로토콜(protocol)**이 필요함.
+
+
+✅ rdt2.0은 **비트 오류 탐지(checksum)**와 **ACK/NAK 기반 재전송**을 **FSM 형태로 구체화한 모델**임.
+
+
