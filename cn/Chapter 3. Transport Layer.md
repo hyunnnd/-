@@ -2213,3 +2213,35 @@ Selective Repeat에서는 번호 중복으로 인한 혼동을 피하기 위해
 - **SampleRTT는 변동성이 있습니다**: RTT 추정값을 "부드럽게" 만들기 위해 여러 최근의 SampleRTT 측정을 평균하여 사용합니다.
 
 
+### **TCP 왕복 시간 (RTT), 타임아웃**
+
+- **EstimatedRTT 공식**:    
+    - EstimatedRTT=(1−α)∗EstimatedRTT+α∗SampleRTT
+
+- **지수 가중 이동 평균 (EWMA)**:
+    - 과거 샘플의 영향은 지수적으로 빠르게 감소합니다.
+
+- **일반적인 값**:    
+    - α=0.125\alpha = 0.125α=0.125
+
+**그래프 설명**:
+
+- **SampleRTT**는 실시간으로 측정된 RTT 값을 나타내며, 파란색 점으로 표시됩니다.    
+- **EstimatedRTT**는 예측된 RTT 값을 나타내며, 분홍색 선으로 표시됩니다.
+- **그래프의 x축**은 시간(초)이고, **y축**은 RTT(밀리초)입니다.
+
+
+### **TCP 왕복 시간 (RTT), 타임아웃**
+
+- **타임아웃 인터벌**:
+    - 타임아웃 시간은 **EstimatedRTT**(예상 RTT)와 **안전 여유 시간(safety margin)**의 합으로 설정됩니다.
+    - **EstimatedRTT**가 크게 변동하는 경우에는 더 큰 여유 시간을 두는 것이 좋습니다.
+    TimeoutInterval=EstimatedRTT+4∗DevRTT
+    - 여기서 **DevRTT**는 RTT의 변동을 나타내는 값입니다.
+
+- **DevRTT**:    
+    - **SampleRTT**(실제 RTT 측정값)과 **EstimatedRTT**(예상 RTT) 사이의 편차를 **지수 가중 이동 평균 (EWMA)** 방식으로 계산합니다.
+    DevRTT=(1−β)∗DevRTT+β∗∣SampleRTT−EstimatedRTT∣
+    - **β**의 일반적인 값은 0.25입니다.
+
+
