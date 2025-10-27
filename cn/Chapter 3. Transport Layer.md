@@ -2379,3 +2379,35 @@ TCP의 흐름 제어는 송신자가 수신자의 버퍼 상태를 실시간으�
 
 
 
+## 📘 TCP 연결 관리 (TCP Connection Management)
+
+데이터를 교환하기 전에 송신자와 수신자는 **“핸드셰이크(handshake)”** 과정을 통해 연결을 설정한다.
+
+- 두 통신 주체는 **상호 연결 의사**를 확인하여, 서로가 연결을 수립할 준비가 되었음을 인식한다.
+- 또한 **연결 매개변수(connection parameters)** 를 합의한다.  
+    (예: 초기 순서 번호(starting sequence number), 수신 버퍼 크기(rcvBuffer) 등)
+
+### 🔹 동작 예시
+
+- **클라이언트 측:**  
+    `Socket clientSocket = newSocket("hostname", "port number");`  
+    → 서버에 연결 요청을 보냄.    
+- **서버 측:**  
+    `Socket connectionSocket = welcomeSocket.accept();`  
+    → 클라이언트의 요청을 수락하고 연결을 수립함.
+
+
+### 🔹 연결 상태 변수
+
+연결이 설정되면, 양쪽 호스트는 다음과 같은 변수를 관리한다.
+
+- `seq#` : 송수신 방향별 초기 순서 번호 (client→server, server→client)    
+- `rcvBuffer size` : 각 측의 수신 버퍼 크기 정보
+
+이 상태는 **ESTAB(Established)** 상태로 유지되며, 이후 실제 데이터 전송이 이루어진다.
+
+**설명:**  
+TCP 연결 관리 과정은 **3-way handshake**로 구현되며, 양측이 서로의 연결 의사와 초기 설정 값을 교환한 후 데이터 통신을 시작한다.  
+즉, 신뢰성 있는 데이터 전송을 위한 **논리적 연결 수립 단계**를 의미한다.
+
+
