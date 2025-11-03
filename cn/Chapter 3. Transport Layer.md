@@ -3249,3 +3249,99 @@ ECN은 네트워크 혼잡을 명시적으로 표시하고 송신자에게 알�
 - 따라서 네트워크의 “공정성”은 **프로토콜 설계 원칙일 뿐**, **모든 응용에서 강제되는 것은 아님**.
 
 
+### 📘 **전송 계층 기능의 진화 (Evolving Transport-layer Functionality)**
+
+#### **핵심 내용**
+
+- **TCP와 UDP**는 약 **40년 동안 주요 전송 계층 프로토콜**로 사용되어 왔음.
+- 다양한 네트워크 환경에 대응하기 위해 **특정 시나리오별 “변형된 TCP (flavors of TCP)”** 가 개발됨.
+
+#### **TCP의 시나리오별 과제**
+
+| **Scenario (상황)**                        | **Challenges (문제점)**                        |
+| ---------------------------------------- | ------------------------------------------- |
+| **Long, fat pipes (대용량 데이터 전송)**         | 많은 패킷이 동시에 전송되어 손실 발생 시 파이프라인이 중단됨          |
+| **Wireless networks (무선 네트워크)**          | 무선 잡음 및 이동성으로 인한 손실 발생 → TCP가 이를 혼잡 손실로 오인함 |
+| **Long-delay links (지연이 긴 링크)**          | RTT가 매우 큼 (예: 위성 통신 등)                      |
+| **Data center networks (데이터센터 네트워크)**    | 지연(latency)에 매우 민감함                         |
+| **Background traffic flows (백그라운드 트래픽)** | 낮은 우선순위의 백그라운드 트래픽으로 동작해야 함                 |
+
+#### **기능 이동의 흐름**
+
+- 최근에는 전송 계층 기능이 **응용 계층(application layer)** 으로 이동하는 추세임.  
+    → UDP 위에서 구현되는 새로운 전송 프로토콜 등장  
+    → 대표적 예: **HTTP/3 (QUIC)**
+
+### 🧭 **요약**
+
+- TCP와 UDP는 오랫동안 인터넷의 핵심 전송 프로토콜이었지만, 다양한 환경 요구에 따라 여러 **TCP 변형 버전**이 개발됨.
+- **QUIC(HTTP/3)** 은 이러한 한계를 극복하기 위해 **UDP 기반의 새로운 전송 계층 기능을 응용 계층으로 이전한 대표적인 사례**임.
+
+
+### 📘 **QUIC: Quick UDP Internet Connections**
+
+#### **개요**
+
+- **QUIC**은 **UDP 위에서 동작하는 응용 계층 프로토콜(application-layer protocol)** 입니다.
+- 주요 목적은 **HTTP의 성능 향상**입니다.
+- 현재 **Google 서버 및 다양한 앱(예: Chrome, YouTube 모바일 앱)** 에 널리 사용되고 있습니다
+
+#### **구조 비교**
+
+| 계층                      | 기존 구조 (HTTP/2 over TCP) | QUIC 구조 (HTTP/3) |
+| ----------------------- | ----------------------- | ---------------- |
+| **Application (응용 계층)** | HTTP/2                  | HTTP/2 (경량화된 형태) |
+| **보안 계층 (Security)**    | TLS                     | QUIC에 통합됨        |
+| **Transport (전송 계층)**   | TCP                     | UDP              |
+| **Network (네트워크 계층)**   | IP                      | IP               |
+
+→ QUIC은 TCP와 TLS 기능을 통합하여 **UDP 위에서 작동**함으로써 연결 지연을 줄이고 데이터 전송 효율을 향상시킴.  
+→ 즉, **HTTP/3 = HTTP/2 (slimmed) + QUIC (over UDP)** 구조임.
+
+### 🧭 **요약**
+
+- QUIC은 **TCP 기반의 한계를 극복**하기 위해 개발된 **UDP 기반 고성능 전송 프로토콜**입니다.    
+- **전송 계층(TCP)과 보안 계층(TLS)** 을 하나로 통합하여, **연결 설정 지연(latency)** 을 줄이고 **HTTP의 성능을 개선**함.
+- HTTP/3은 QUIC 위에서 동작하며, 웹 브라우저와 스트리밍 서비스에서 이미 광범위하게 활용되고 있습니다.
+
+
+
+### 📘 **QUIC: Quick UDP Internet Connections**
+
+#### **개요**
+
+QUIC은 우리가 이전 장에서 학습한 **연결 설정(connection establishment)**, **오류 제어(error control)**, **혼잡 제어(congestion control)** 개념을 기반으로 발전한 프로토콜입니다.
+
+#### **1. 오류 제어 및 혼잡 제어 (Error and Congestion Control)**
+
+> “TCP의 손실 감지(loss detection) 및 혼잡 제어(congestion control)에 익숙한 사람이라면, QUIC에서도 유사한 알고리즘을 찾을 수 있을 것이다.”  
+> _(출처: QUIC specification)_
+
+→ 즉, QUIC은 TCP와 유사한 **손실 감지 및 혼잡 제어 메커니즘**을 사용하지만, 이를 **UDP 기반**에서 더 효율적으로 수행합니다.
+
+#### **2. 연결 설정 (Connection Establishment)**
+
+- **신뢰성(reliability)**
+- **혼잡 제어(congestion control)**
+- **인증(authentication)**
+- **암호화(encryption)**
+- **상태 설정(state establishment)**
+
+→ 이러한 모든 과정이 **한 번의 RTT(Round Trip Time)** 내에 이루어져, TCP보다 훨씬 **빠른 연결 설정 속도**를 가집니다.
+
+
+#### **3. 다중 스트림 전송 (Multiplexed Streams)**
+
+- 하나의 QUIC 연결 내에서 여러 개의 **응용 계층 스트림(streams)** 을 동시에 전송할 수 있음.
+- 각 스트림은 **독립적인 신뢰성과 보안**을 보장하면서,  
+    **공통 혼잡 제어(congestion control)** 를 공유함.
+
+→ 이를 통해 **Head-of-line blocking** 문제(하나의 패킷 손실이 전체 전송을 지연시키는 문제)를 해결함.
+
+### 🧭 **요약**
+
+- QUIC은 TCP의 신뢰성 및 혼잡 제어 개념을 유지하면서 **UDP 기반의 빠른 연결 설정**을 구현함.    
+- **1 RTT 내 연결 수립**, **암호화 내장**, **다중 스트림 병렬 전송** 등으로  
+    HTTP/3에서 **성능 향상 및 지연 감소**를 달성함.
+
+
