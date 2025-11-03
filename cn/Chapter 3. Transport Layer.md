@@ -1,5 +1,4 @@
 
-
 ## Transport Layer: Overview (전송 계층 개요)
 
 ### 🎯 목표 (Our goal)
@@ -3381,3 +3380,33 @@ QUIC은 우리가 이전 장에서 학습한 **연결 설정(connection establis
 
 
 
+### 📘 **QUIC: 스트림(Streams) — 병렬성, HOL 차단 없음**
+
+#### **(a) HTTP 1.1**
+
+- **전송 구조:**  
+    TCP + TLS 위에서 여러 HTTP 요청(HTTP GET)이 순차적으로 전송됨.
+
+- **문제점:**    
+    - TCP는 순서 보장(reliable ordered delivery)을 위해 한 패킷이 손실되면 이후 패킷의 전달이 모두 지연됨.
+    - 이를 **HOL(Head-Of-Line) Blocking**이라고 함.
+    - 즉, 하나의 오류(`error`)가 전체 연결의 지연을 유발함.
+
+#### **(b) HTTP/2 with QUIC**
+
+- **QUIC 기반의 구조:**    
+    - 각 HTTP 요청이 독립적인 **스트림(stream)** 으로 전송됨.
+    - 각 스트림은 자체적인 신뢰성(RDT)과 암호화(encryption) 기능을 가짐.
+    - UDP 기반이므로 전송 계층 수준의 순차적 의존성이 없음.
+
+- **장점:**    
+    - 한 스트림에서 오류가 발생해도 다른 스트림에는 영향을 주지 않음.
+    - 따라서 **Head-Of-Line Blocking이 발생하지 않음.**
+    - 여러 요청을 동시에 병렬로 처리할 수 있어 **응답 지연(latency)** 이 대폭 감소함.
+
+
+### 🧭 **요약**
+
+- **HTTP 1.1 (TCP 기반):** 패킷 손실 시 전체 데이터 전송이 지연됨 → HOL Blocking 발생    
+- **HTTP/2 + QUIC (UDP 기반):** 각 요청이 독립 스트림으로 전송되어 오류가 분리됨 → HOL Blocking 제거
+- 결과적으로 QUIC은 **병렬성(Parallelism)** 과 **전송 효율성(Throughput)** 을 크게 향상시킴.
