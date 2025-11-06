@@ -243,3 +243,214 @@ TCP 통신은 **연결 지향형(connection-oriented)** 프로토콜로,
 | Registered Port | 1024 ~ 49151              | 사용자 정의 서비스        | 등록 가능      |
 | Ephemeral Port  | 49152 ~ 65535 (또는 OS별 다름) | 클라이언트 임시 통신       | 자동 할당      |
 
+## 🧱 Address Structure (IPv4)
+
+### 1. 개요
+
+IPv4 통신에서 소켓 주소 정보를 저장하기 위한 구조체는 `<netinet/in.h>`에 정의되어 있습니다. 
+이 구조체는 소켓을 특정 IP 주소와 포트 번호에 **바인딩(bind)** 할 때 사용됩니다.
+
+
+### 2. 구조체 정의
+
+`struct sockaddr_in {     sa_family_t    sin_family;   // 주소 체계 (Address family): AF_INET     in_port_t      sin_port;     // 포트 번호 (16비트), 네트워크 바이트 순서     struct in_addr sin_addr;     // IP 주소 (32비트), 네트워크 바이트 순서     char           sin_zero[8];  // 사용되지 않음 (패딩) };`
+
+#### 하위 구조체:
+
+`struct in_addr {     in_addr_t s_addr;            // IPv4 주소 (32비트) };`
+
+> **참고:**  
+> `sin_zero`는 구조체 크기를 맞추기 위한 **패딩용 필드**로 실제 사용되지 않습니다.
+
+### 3. 구조체 비교
+
+|구조체|정의 헤더|주요 역할|
+|---|---|---|
+|`sockaddr_in`|`<netinet/in.h>`|IPv4용 주소 정보 저장|
+|`sockaddr`|`<sys/socket.h>`|프로토콜 독립적 주소 구조 (범용 포인터로 사용됨)|
+
+#### 범용 구조체 예시
+
+`struct sockaddr {     sa_family_t sa_family;   // 주소 체계 (예: AF_INET)     char        sa_data[14]; // 주소 데이터 (포트 + IP 등) };`
+
+> 대부분의 소켓 함수(`bind()`, `connect()` 등)는 `sockaddr_in` 대신  
+> `sockaddr *` 형태의 포인터를 인자로 받습니다.  
+> 따라서 `struct sockaddr_in` → `(struct sockaddr *)`로 형 변환이 필요합니다.
+
+### 4. 예시 코드 설명
+
+`struct sockaddr_in serv_addr; memset(&serv_addr, 0, sizeof(serv_addr));  serv_addr.sin_family = AF_INET;             // IPv4 주소 체계 지정 serv_addr.sin_addr.s_addr = htonl(INADDR_ANY); // 모든 IP에서 수신 허용 serv_addr.sin_port = htons(atoi(argv[1]));     // 명령행 인자로 포트 입력받음  if (bind(serv_sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) == -1)     error_handling("bind() error");`
+
+#### 주요 포인트:
+
+- `htonl()`, `htons()`:  
+    호스트 바이트 순서(Host Byte Order)를 네트워크 바이트 순서(Network Byte Order)로 변환합니다.
+    
+    - `htonl()`: 32비트용 (IP 주소)
+    - `htons()`: 16비트용 (포트 번호)
+- `INADDR_ANY`:  
+    특정 IP가 아닌, **모든 로컬 인터페이스**에서 오는 연결을 수락합니다.
+
+
+## 🔄 Byte Order Conversion (바이트 순서 변환)
+
+### 1. Byte Ordering (바이트 정렬 방식)
+
+컴퓨터는 다바이트 데이터를 메모리에 저장할 때 **바이트 순서**를 다르게 사용할 수 있습니다.
+
+| 구분                | 정의                                          | 저장 순서 (예: 0A 0B 0C 0D) | 설명                                |
+| ----------------- | ------------------------------------------- | ---------------------- | --------------------------------- |
+| **Little Endian** | Least Significant Byte first (하위 바이트 먼저 저장) | `0D 0C 0B 0A`          | Intel CPU 계열 등에서 사용               |
+| **Big Endian**    | Most Significant Byte first (상위 바이트 먼저 저장)  | `0A 0B 0C 0D`          | 네트워크 전송 시 사용 (Network Byte Order) |
+
+### 2. Network Byte Order (네트워크 바이트 순서)
+
+- **정의:**  
+    네트워크에서 데이터를 전송할 때는 모든 시스템 간 호환을 위해  
+    **Big Endian 방식**을 표준으로 사용합니다.  
+    → 즉, **Network Byte Order = Big Endian**
+- **특징:**
+    
+    - 가장 큰 자리 바이트(MSB, Most Significant Byte)가 메모리의 낮은 주소(x)에 위치
+    - CPU의 구조에 따라 Host Byte Order는 다를 수 있음  
+        (예: Intel = Little Endian, 일부 네트워크 장비 = Big Endian)
+
+### 3. 시각적 예시
+
+#### 32비트 정수 (예: 0x0A0B0C0D)
+
+| 메모리 주소            | x   | x+1 | x+2 | x+3 |
+| ----------------- | --- | --- | --- | --- |
+| **Big Endian**    | 0A  | 0B  | 0C  | 0D  |
+| **Little Endian** | 0D  | 0C  | 0B  | 0A  |
+
+> **Big Endian:** 포인터가 “큰 쪽” (MSB)부터 가리킴  
+> **Little Endian:** 포인터가 “작은 쪽” (LSB)부터 가리킴
+
+### 4. Host vs Network Conversion 함수
+
+네트워크 프로그램에서는 **엔디안 차이를 자동으로 변환**하기 위해  
+다음 함수를 사용합니다. (`<arpa/inet.h>` 헤더 포함)
+
+| 함수명       | 역할                            | 변환 방향          |
+| --------- | ----------------------------- | -------------- |
+| `htons()` | Host to Network Short (16bit) | Host → Network |
+| `htonl()` | Host to Network Long (32bit)  | Host → Network |
+| `ntohs()` | Network to Host Short         | Network → Host |
+| `ntohl()` | Network to Host Long          | Network → Host |
+
+### 🧭 요약
+
+- **Host Byte Order:** CPU 아키텍처에 따라 다름 (예: x86 = Little Endian)    
+- **Network Byte Order:** 항상 **Big Endian**
+- **데이터 송수신 시 변환 필수:** `htons()`, `htonl()` 등 사용
+
+
+## 🌐 `inet_pton()` 함수
+
+### 1. 개요
+
+**헤더 파일**
+
+`#include <arpa/inet.h>`
+
+**함수 원형**
+
+`int inet_pton(int af, const char *restrict src, void *restrict dst);`
+
+**설명:**  
+`inet_pton()` 함수는 **문자열 형태의 IPv4 또는 IPv6 주소를**  
+**이진(binary) 네트워크 바이트 순서로 변환**합니다.
+
+즉, `"192.168.0.1"` → `0xC0A80001` 형태로 바꿔줍니다.  
+이진 주소는 소켓 구조체(`struct in_addr`, `struct in6_addr`)에 저장됩니다.
+
+### 2. 매개변수 설명
+
+| 매개변수    | 자료형            | 설명                                                           |
+| ------- | -------------- | ------------------------------------------------------------ |
+| **af**  | `int`          | 주소 체계(Address Family): `AF_INET` (IPv4) 또는 `AF_INET6` (IPv6) |
+| **src** | `const char *` | 문자열 형태의 IP 주소                                                |
+| **dst** | `void *`       | 변환된 네트워크 주소를 저장할 구조체 포인터                                     |
+
+### 3. 반환값
+
+| 값      | 의미                                      |
+| ------ | --------------------------------------- |
+| **1**  | 변환 성공                                   |
+| **0**  | 주소 문자열이 잘못됨 (Invalid address string)    |
+| **-1** | 주소 체계가 유효하지 않음 (Invalid address family) |
+
+
+### 4. 예제 코드
+
+`const char *ip1 = "1.2.3.4"; const char *ip2 = "239.1.2.3"; struct in_addr addr1, addr2;  if (inet_pton(AF_INET, ip1, &addr1) <= 0)     perror("inet_pton IPv4 error"); else     printf("IP#1's binary: 0x%08x\n", addr1.s_addr);  if (inet_pton(AF_INET, ip2, &addr2) <= 0)     perror("inet_pton IPv4 error"); else     printf("IP#2's binary: 0x%08x\n", addr2.s_addr);`
+
+**출력 결과**
+
+`IP#1's binary: 0x04030201 IP#2's binary: 0x030201ef`
+
+### 5. 동작 원리
+
+- `inet_pton()`은 “Presentation to Numeric”의 약어입니다.  
+    (문자열 표현 → 숫자 표현)    
+- `inet_ntop()`은 반대 기능을 수행합니다.  
+    (Numeric → Presentation)
+- 내부적으로 `htons()`/`htonl()` 변환이 적용되어  
+    **네트워크 바이트 순서(Big Endian)** 로 저장됩니다.
+
+
+## 🧭 `getaddrinfo()` 함수
+
+### 1. 개요
+
+**헤더 파일**
+
+`#include <sys/types.h> #include <sys/socket.h> #include <netdb.h>`
+
+**함수 원형**
+
+`int getaddrinfo(     const char *restrict node,      const char *restrict service,     const struct addrinfo *restrict hints,     struct addrinfo **restrict res );`
+
+**설명:**  
+`getaddrinfo()` 함수는 **호스트 이름(또는 IP 주소 문자열)** 과  
+**서비스 이름(또는 포트 번호)** 을 **소켓 주소 구조체(`struct addrinfo`) 리스트**로 변환합니다.  
+즉, 사람이 읽을 수 있는 주소를 소켓에서 사용할 수 있는 형태로 바꿔주는 함수입니다.
+
+> `getnameinfo()`는 반대 기능(주소 → 이름)을 수행합니다.
+
+
+### 2. 매개변수 설명
+
+|매개변수|자료형|설명|
+|---|---|---|
+|**node**|`const char *`|호스트 이름 또는 IP 주소 문자열 (예: `"www.google.com"` 또는 `"192.168.0.1"`)|
+|**service**|`const char *`|서비스 이름 또는 포트 번호 (예: `"http"` 또는 `"80"`)|
+|**hints**|`const struct addrinfo *`|(선택사항) 주소 패밀리, 소켓 타입 등 설정을 담은 구조체|
+|**res**|`struct addrinfo **`|변환 결과를 저장할 연결 리스트의 시작 주소 (성공 시 메모리 할당됨)|
+
+> `res`는 사용 후 반드시 `freeaddrinfo(res)`로 해제해야 합니다.
+
+### 3. 반환값
+
+|반환값|의미|
+|---|---|
+|**0**|성공|
+|**비 0 값**|오류 (에러 코드 반환, `gai_strerror()`로 문자열 변환 가능)|
+
+
+### 4. 구조체 정의
+
+`struct addrinfo {     int              ai_flags;      // 옵션 플래그     int              ai_family;     // 주소 체계 (AF_INET, AF_INET6, AF_UNSPEC)     int              ai_socktype;   // 소켓 타입 (SOCK_STREAM, SOCK_DGRAM)     int              ai_protocol;   // 프로토콜 (IPPROTO_TCP, IPPROTO_UDP)     socklen_t        ai_addrlen;    // 주소 길이     struct sockaddr *ai_addr;       // 실제 주소 정보     char            *ai_canonname;  // 정식 호스트 이름 (canonical name)     struct addrinfo *ai_next;       // 다음 노드 (연결 리스트 형태) };`
+
+### 5. 사용 예시
+
+`struct addrinfo hints, *res; memset(&hints, 0, sizeof(hints)); hints.ai_family = AF_INET;        // IPv4 hints.ai_socktype = SOCK_STREAM;  // TCP  if (getaddrinfo("example.com", "80", &hints, &res) != 0) {     perror("getaddrinfo() error");     exit(1); }  // res를 사용하여 socket(), connect() 등 수행 가능  freeaddrinfo(res);  // 메모리 해제`
+
+### 6. 특징 및 장점
+
+- **IPv4/IPv6를 모두 지원** (주소 체계 자동 구분 가능)
+- **DNS 이름 해석 기능 포함** (호스트 이름 → IP 변환)
+- 여러 주소 후보를 **연결 리스트로 반환**하여 유연한 소켓 설정 가능
+- 고전 함수인 `gethostbyname()`과 `getservbyname()`을 대체
+
