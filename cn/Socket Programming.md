@@ -155,3 +155,39 @@ TCP 통신은 **연결 지향형(connection-oriented)** 프로토콜로,
 이 과정을 통해 TCP는 **신뢰성 있고 순서가 보장된** 데이터 전송을 수행합니다.
 
 
+## 🧩 `socket()` 함수
+
+`#include <sys/socket.h> int socket(int domain, int type, int protocol);`
+
+### 1. 개요
+
+`socket()` 함수는 **통신의 끝단(endpoint)을 생성**하여 프로세스 간 네트워크 통신을 가능하게 합니다.  
+성공 시 **새 소켓의 파일 디스크립터(fd)** 를 반환하고, 실패 시 **-1**을 반환합니다.
+
+### 2. 매개변수 설명
+
+|인자|의미|예시|
+|---|---|---|
+|**domain**|사용할 **프로토콜 패밀리(Protocol Family)**|`PF_INET` : IPv4  <br>`PF_INET6` : IPv6|
+|**type**|**서비스의 종류(Type of Service)**|`SOCK_STREAM` : TCP (연결지향형)  <br>`SOCK_DGRAM` : UDP (비연결형)  <br>`SOCK_RAW` : Raw IP|
+|**protocol**|사용할 **특정 프로토콜 번호** (일반적으로 0)|`IPPROTO_TCP` 또는 `IPPROTO_UDP`|
+
+> 💡 보통 `protocol` 인자는 `0`으로 설정합니다.  
+> 이는 `type` 인자에 따라 기본 프로토콜(TCP 또는 UDP)이 자동으로 선택됨을 의미합니다.
+
+### 3. 반환값 (Return Value)
+
+- **성공 시**: 새 소켓의 **파일 디스크립터** (정수 값)
+- **실패 시**: `-1` 반환  
+    → 에러 발생 시 `perror()` 또는 `errno`를 통해 원인 확인 가능
+
+
+### 4. 사용 예시
+
+#### ✅ TCP 소켓 생성
+
+`int sock = socket(PF_INET, SOCK_STREAM, 0); if (sock == -1)     error_handling("socket() error");`
+
+#### ✅ UDP 소켓 생성
+
+`int sock = socket(PF_INET, SOCK_DGRAM, 0); if (sock == -1)     error_handling("socket() error");`
