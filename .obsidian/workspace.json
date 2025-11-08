@@ -95,7 +95,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "cn/Chapter 3. Transport Layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Chapter 3. Transport Layer 의 백링크"
+              "title": "백링크"
             }
           },
           {
@@ -114,12 +113,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "cn/Chapter 3. Transport Layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Chapter 3. Transport Layer 의 나가는 링크"
+              "title": "나가는 링크"
             }
           },
           {
@@ -177,8 +175,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -192,16 +189,8 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "c74f9b757f1fc614",
+  "active": "bcc8742d84de4527",
   "lastOpenFiles": [
-    "cn/Chapter 2. Application Layer.md",
-    "무제.canvas",
-    "무제 4.base",
-    "사진/2025-11-08.md",
-    "무제.base",
-    "무제 3.base",
-    "무제 2.base",
-    "무제 1.base",
     "Pasted image 20250929105624.png",
     "Pasted image 20250929105031.png",
     "Pasted image 20250929102327.png",
@@ -210,15 +199,23 @@
     "Pasted image 20250918105520.png",
     "Pasted image 20250918103346.png",
     "Pasted image 20250918102850.png",
+    "cn/Chapter 3. Transport Layer.md",
+    "conflict-files-obsidian-git.md",
+    "cn/Chapter 2. Application Layer.md",
+    "무제.canvas",
+    "무제 4.base",
+    "사진/2025-11-08.md",
+    "무제.base",
+    "무제 3.base",
+    "무제 2.base",
+    "무제 1.base",
     "2025-11-08.md",
     "사진/무제 1.base",
     "사진/무제 3.base",
     "사진/Pasted image 20250929105624 1.png",
     "cn/Socket Programming.md",
-    "cn/Chapter 3. Transport Layer.md",
     "사진/무제 2.base",
     "사진/Pasted image 20250929105031 1.png",
-    "conflict-files-obsidian-git.md",
     "사진/무제.base",
     "cn/Chapter 1.Computer Networks and the Interne.md",
     "2025-09-27.md",
