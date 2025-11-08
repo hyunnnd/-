@@ -34,9 +34,21 @@
               "icon": "lucide-file",
               "title": "Chapter 2. Application Layer"
             }
+          },
+          {
+            "id": "2133936634bff98f",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.9.14"
+              },
+              "icon": "lucide-book-up",
+              "title": "릴리즈 노트 1.9.14"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -207,7 +219,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6a61637f82e41f75",
+  "active": "2133936634bff98f",
   "lastOpenFiles": [
     "cn/Chapter 1.Computer Networks and the Interne.md",
     "cn/Chapter 2. Application Layer.md",
