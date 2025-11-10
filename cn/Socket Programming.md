@@ -455,4 +455,30 @@ IPv4 통신에서 소켓 주소 정보를 저장하기 위한 구조체는 `<net
 - 고전 함수인 `gethostbyname()`과 `getservbyname()`을 대체
 
 
+## TCP에는 메시지 경계가 없음
+
+- **“메시지 경계(message boundary)”**란, 네트워크 프로토콜을 통해 전송되는 두 개의 메시지를 구분하는 경계를 의미함.
+- **UDP는 메시지 경계를 보존함.**
+    - 예를 들어, 서버가 `write()`를 두 번 호출하면, 클라이언트는 각각의 메시지를 받기 위해 `read()`를 두 번 호출해야 함.
+
+- **TCP는 메시지 경계를 보존하지 않음.**    
+    - 예를 들어, 서버가 `write()`를 두 번 호출하더라도, 클라이언트는 한 번의 `read()` 호출로 모든 데이터를 한꺼번에 읽을 수 있음.
+
+### 서버 코드 예시
+
+`char message1[] = "Hello World!111"; char message2[] = "Hello World!222"; write(clnt_sock, message1, sizeof(message1)); write(clnt_sock, message2, sizeof(message2));`
+
+### 클라이언트 코드 예시
+
+`sleep(1); read_len = read(sock, message, sizeof(message)); printf("Message from server: "); for (i = 0; i < sizeof(message); i++)     printf("%c", message[i]); printf("Read_len: %d\n", read_len);`
+
+### 실행 결과
+
+`Message from server: Hello World!111Hello World!222 Read_len: 32`
+
+**설명:**  
+서버는 두 번 `write()`를 호출했지만, 클라이언트는 한 번의 `read()`로 두 메시지를 연속된 데이터로 받음.  
+이는 TCP가 데이터를 “메시지 단위”가 아닌 “연속된 바이트 스트림”으로 처리하기 때문임.  
+따라서 TCP에서는 메시지의 시작과 끝을 구분하려면 응용 계층에서 직접 구분자를 추가해야 함.
+
 
