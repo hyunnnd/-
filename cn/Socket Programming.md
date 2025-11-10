@@ -541,7 +541,7 @@ IPv4 통신에서 소켓 주소 정보를 저장하기 위한 구조체는 `<net
 ### ⚙️ 요약 비교
 
 | 구분        | Iterative Server   | Concurrent Server  |
-| --------- | ------------------ | ------------------ |
+|  |  |  |
 | 구조        | 단일 프로세스            | 클라이언트마다 자식 프로세스 생성 |
 | 동시 처리     | 불가능                | 가능                 |
 | 복잡도       | 단순                 | 비교적 복잡             |
@@ -620,7 +620,7 @@ TCP 통신은 애플리케이션이 직접 데이터를 주고받는 것이 아�
 ### ⚙️ 요약
 
 | 구분           | close()       | half-close()      |
-| ------------ | ------------- | ----------------- |
+|  | - | -- |
 | 종료 범위        | 입력 + 출력 모두 종료 | 입력 또는 출력 중 하나만 종료 |
 | 사용 함수        | `close()`     | `shutdown()`      |
 | 추가 송수신 가능 여부 | 불가능           | 한쪽 방향만 가능         |
@@ -652,7 +652,7 @@ Half-close는 TCP의 **양방향 통신을 한쪽 방향만 종료**하는 기�
 - **how:**  
     종료할 방향을 지정함
     |상수|값|의미|
-    |---|---|---|
+    ||||
     |`SHUT_RD`|0|더 이상 **수신(receive)** 불가능|
     |`SHUT_WR`|1|더 이상 **송신(send)** 불가능|
     |`SHUT_RDWR`|2|송신과 수신 모두 불가능|
@@ -673,5 +673,108 @@ Half-close는 TCP의 **양방향 통신을 한쪽 방향만 종료**하는 기�
 - 완전한 종료(`close()`) 전에 송신이나 수신을 단계적으로 중단할 수 있음.
 - 예를 들어, **데이터 전송을 모두 끝냈지만 상대방의 응답을 계속 받아야 하는 경우**,  
     `shutdown(sock, SHUT_WR)`을 사용함.
+
+
+## UDP 서버/클라이언트 함수 호출 과정 (UDP Server/Client Function Call)
+
+
+
+### 🔹 서버(Server)
+
+1. **socket()**
+    - 소켓 생성.
+    - `AF_INET`, `SOCK_DGRAM` 형식으로 UDP 소켓을 만듦.
+
+2. **bind()**    
+    - 서버의 IP 주소와 포트를 소켓에 할당함.
+    - 클라이언트가 데이터를 전송할 수 있도록 주소를 고정시킴.
+
+3. **recvfrom() / sendto()**    
+    - 클라이언트로부터 데이터를 수신하거나 전송함.
+    - UDP는 비연결형이므로, 각 패킷에 송신자 주소 정보가 함께 전달됨.
+
+4. **close()**    
+    - 소켓 종료.
+
+### 🔹 클라이언트(Client)
+
+1. **socket()**    
+    - 클라이언트용 UDP 소켓 생성.
+
+2. **sendto() / recvfrom()**    
+    - 서버의 주소(IP, 포트)를 지정하여 데이터 전송(`sendto()`).
+    - 서버로부터 데이터를 수신(`recvfrom()`).
+
+3. **close()**    
+    - 연결 종료.
+
+
+## `recvfrom()` 함수
+
+UDP에서 데이터를 **수신(receive)** 하는 함수임.
+
+`#include <sys/socket.h> ssize_t recvfrom(int sockfd, void *buffer, size_t length, int flags,                  struct sockaddr *src_addr, socklen_t *addrlen);`
+
+### 주요 매개변수
+
+- **sockfd:** 수신용 소켓 파일 디스크립터    
+- **buffer:** 수신한 데이터를 저장할 버퍼
+- **length:** 수신할 최대 바이트 크기
+- **flags:** 메시지 수신 방식 (일반적으로 0)
+- **src_addr:** 송신자(상대방)의 주소 정보를 저장할 구조체 포인터
+- **addrlen:** 주소 구조체의 크기를 담는 변수
+
+### 반환값
+
+- **성공:** 수신한 바이트 수
+- **EOF(연결 종료):** 0
+- **오류:** -1
+
+### 예시
+
+`str_len = recvfrom(serv_sock, message, BUF_SIZE, 0,                    (struct sockaddr*)&clnt_adr, &clnt_adr_sz);`
+
+## `sendto()` 함수
+
+UDP에서 데이터를 **전송(send)** 하는 함수임.
+
+`#include <sys/socket.h> ssize_t sendto(int sockfd, const void *buffer, size_t length, int flags,                const struct sockaddr *dest_addr, socklen_t addrlen);`
+
+### 주요 매개변수
+
+- **sockfd:** 송신용 소켓 파일 디스크립터
+- **buffer:** 전송할 데이터를 담은 버퍼
+- **length:** 전송할 데이터 크기
+- **flags:** 메시지 전송 방식 (일반적으로 0)
+- **dest_addr:** 데이터를 보낼 대상의 주소 구조체 포인터
+- **addrlen:** 주소 구조체의 크기
+
+### 반환값
+
+- **성공:** 전송한 바이트 수
+- **오류:** -1
+  
+
+### 예시
+
+`sendto(serv_sock, message, str_len, 0,        (struct sockaddr*)&clnt_adr, clnt_adr_sz);`
+
+
+
+### ⚙️ 요약
+
+|구분|함수명|역할|특징|
+|||||
+|서버|`socket()`|소켓 생성|UDP 소켓은 연결 과정 없음|
+|서버|`bind()`|IP/포트 할당|클라이언트가 접근할 수 있도록 설정|
+|양쪽|`recvfrom()`|데이터 수신|송신자 주소 정보 함께 수신|
+|양쪽|`sendto()`|데이터 전송|대상 주소를 직접 지정|
+|양쪽|`close()`|소켓 종료|리소스 해제|
+
+
+
+**정리:**  
+UDP는 TCP와 달리 **연결 설정(connect/accept 과정)** 이 없으며,  
+데이터 전송 시마다 `sendto()`와 `recvfrom()`을 통해 **주소 정보를 함께 주고받는 구조**를 가진다.
 
 
