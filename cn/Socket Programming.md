@@ -826,3 +826,56 @@ Connected UDP는 TCP처럼 실제 연결을 유지하지는 않지만,
 하나의 대상에만 지속적으로 통신할 때 **주소 설정을 단순화하고 시스템 오버헤드를 줄이는 방법**이다.
 
 
+### 🔹 `SO_RCVBUF`, `SO_SNDBUF` — 송수신 버퍼 크기 설정
+
+- **SO_RCVBUF:** 수신 버퍼의 최대 크기를 설정하거나 조회함.
+- **SO_SNDBUF:** 송신 버퍼의 최대 크기를 설정하거나 조회함.
+
+#### ✅ 사용 예시 (`set_buf.c`)
+
+`int sock; int snd_buf = 1024 * 3, rcv_buf = 1024 * 3; int state; socklen_t len;  sock = socket(PF_INET, SOCK_STREAM, 0);  state = setsockopt(sock, SOL_SOCKET, SO_RCVBUF, (void*)&rcv_buf, sizeof(rcv_buf)); state = setsockopt(sock, SOL_SOCKET, SO_SNDBUF, (void*)&snd_buf, sizeof(snd_buf));  len = sizeof(snd_buf); state = getsockopt(sock, SOL_SOCKET, SO_SNDBUF, (void*)&snd_buf, &len);  len = sizeof(rcv_buf); state = getsockopt(sock, SOL_SOCKET, SO_RCVBUF, (void*)&rcv_buf, &len);  printf("Input buffer size: %d\n", rcv_buf); printf("Output buffer size: %d\n", snd_buf);`
+
+#### ⚠️ 주의
+
+- 커널이 실제로 설정하는 값은 사용자가 지정한 값과 다를 수 있음.
+- 보통 **커널이 내부적으로 지정값의 약 2배 크기로 조정함.**
+
+### ⚙️ 요약 비교
+
+|옵션|기능|주요 사용 목적|
+|---|---|---|
+|`SO_REUSEADDR`|포트 재사용 허용|TIME_WAIT 상태나 다중 IP 환경에서 즉시 바인딩 가능|
+|`SO_RCVBUF`|수신 버퍼 크기 설정|네트워크 병목 방지, 대용량 데이터 처리|
+|`SO_SNDBUF`|송신 버퍼 크기 설정|대역폭 확보, 송신 성능 향상|
+
+
+**정리:**  
+`SO_REUSEADDR`은 서버 재시작 시 포트를 즉시 재사용할 수 있게 하는 중요한 옵션이며,  
+`SO_RCVBUF`과 `SO_SNDBUF`은 TCP 버퍼 크기를 조정해 통신 효율을 최적화하는 데 사용된다.
+
+
+## `SOL_SOCKET`: 소켓 옵션 설정
+
+### 🔹 `SO_REUSEADDR` — 포트 재사용 옵션
+
+- 이미 사용 중이거나 **TIME_WAIT** 상태에 있는 포트를 재사용할 수 있도록 허용함.
+- 서버가 재시작될 때, 이전 연결의 포트가 아직 완전히 해제되지 않아도 **즉시 bind() 가능**하게 해줌.
+
+#### ✅ 사용 예시
+
+`int option; socklen_t optlen;  optlen = sizeof(option); option = TRUE; setsockopt(serv_sock, SOL_SOCKET, SO_REUSEADDR, &option, optlen);`
+
+#### 📘 필요한 경우
+
+1. **TIME_WAIT 상태의 서버**
+    - 서버가 종료된 직후 같은 포트를 다시 열 때, 포트가 TIME_WAIT 상태라면 기본적으로 바인딩이 불가함.
+    - `SO_REUSEADDR`을 설정하면 해당 포트를 즉시 재사용할 수 있음.
+
+2. **멀티홈(Multi-home) 서버**    
+    - 여러 네트워크 인터페이스(IP)를 가진 서버가 동일 포트를 공유해야 하는 경우 사용됨.
+
+#### ⚙️ 동작 개요
+
+- TCP 연결 종료 시, 커널은 일정 시간 동안 TIME_WAIT 상태를 유지함.
+- 이 상태는 잔여 패킷 처리를 위해 필요하지만, `SO_REUSEADDR`을 설정하면 대기 없이 동일 포트를 재활용 가능함.
+- 
