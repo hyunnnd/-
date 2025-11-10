@@ -778,3 +778,51 @@ UDP는 TCP와 달리 **연결 설정(connect/accept 과정)** 이 없으며,
 데이터 전송 시마다 `sendto()`와 `recvfrom()`을 통해 **주소 정보를 함께 주고받는 구조**를 가진다.
 
 
+## Connected UDP (연결형 UDP)
+
+### 🔹 `sendto()` 함수의 내부 동작 과정
+
+UDP에서 `sendto()`가 호출될 때 내부적으로 다음 단계가 수행됨.
+
+1. **목적지 IP와 포트 할당 (Allocate)**  
+    UDP 소켓에 목적지 주소를 일시적으로 연결함.    
+2. **데이터 전송 (Send)**  
+    해당 IP와 포트로 데이터를 전송함.
+3. **주소 해제 (Deallocate)**  
+    데이터 전송 후, 목적지 주소 정보(IP/포트)를 소켓에서 해제함.
+
+### 🔸 Connected UDP란
+
+- **목적지 주소를 미리 지정해 둔 UDP 소켓**을 의미함.  
+    즉, 한 번 `connect()`를 호출하여 대상 주소를 고정해 두면,  
+    매번 `sendto()` 호출 시 주소를 다시 지정할 필요가 없음.    
+- **장점:**
+    - 주소 할당/해제 절차를 생략하므로 **성능 향상**
+    - `sendto()` / `recvfrom()` 대신 **`write()` / `read()`** 를 사용할 수 있음
+- **주의:**
+    - 이름은 “Connected UDP”이지만, **TCP처럼 연결형(신뢰성 보장)** 프로토콜이 되는 것은 아님.
+    - 여전히 UDP 특유의 **비연결성·비신뢰성**은 유지됨.
+
+### 🔹 Connected UDP 생성 방법
+
+`sock = socket(PF_INET, SOCK_DGRAM, 0); if (sock == -1)     error_handling("socket() error");  memset(&serv_adr, 0, sizeof(serv_adr)); serv_adr.sin_family = AF_INET; serv_adr.sin_addr.s_addr = inet_addr(argv[1]); serv_adr.sin_port = htons(atoi(argv[2]));  connect(sock, (struct sockaddr*)&serv_adr, sizeof(serv_adr));`
+
+- `socket()` : UDP 소켓 생성 (`SOCK_DGRAM`)    
+- `connect()` : 특정 서버 주소(IP, 포트)에 UDP 소켓을 논리적으로 연결  
+    → 이후에는 `sendto()` 대신 `write()`, `recvfrom()` 대신 `read()` 사용 가능
+
+### ⚙️ 요약 비교
+
+| 구분       | 일반 UDP                   | Connected UDP        |
+| -------- | ------------------------ | -------------------- |
+| 주소 지정    | 매번 `sendto()`에서 명시       | 한 번만 `connect()`로 설정 |
+| 송수신 함수   | `sendto()`, `recvfrom()` | `write()`, `read()`  |
+| 주소 할당/해제 | 매 전송마다 수행                | 최초 한 번만 수행           |
+| 연결 여부    | 비연결형                     | 논리적 연결(물리적 연결 아님)    |
+| 신뢰성      | 없음                       | 없음 (UDP 특성 동일)       |
+
+**정리:**  
+Connected UDP는 TCP처럼 실제 연결을 유지하지는 않지만,  
+하나의 대상에만 지속적으로 통신할 때 **주소 설정을 단순화하고 시스템 오버헤드를 줄이는 방법**이다.
+
+
