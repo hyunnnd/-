@@ -95,6 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "cn/Chapter 3. Transport Layer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +105,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "백링크"
+              "title": "Chapter 3. Transport Layer 의 백링크"
             }
           },
           {
@@ -113,11 +114,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "cn/Chapter 3. Transport Layer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "나가는 링크"
+              "title": "Chapter 3. Transport Layer 의 나가는 링크"
             }
           },
           {
@@ -191,6 +193,16 @@
   },
   "active": "bcc8742d84de4527",
   "lastOpenFiles": [
+    "cn/Socket Programming.md",
+    "cn/Chapter 3. Transport Layer.md",
+    "conflict-files-obsidian-git.md",
+    "무제.canvas",
+    "무제.base",
+    "무제 4.base",
+    "무제 3.base",
+    "무제 1.base",
+    "2025-11-08.md",
+    "무제 2.base",
     "Pasted image 20250929105624.png",
     "Pasted image 20250929105031.png",
     "Pasted image 20250929102327.png",
@@ -199,21 +211,11 @@
     "Pasted image 20250918105520.png",
     "Pasted image 20250918103346.png",
     "Pasted image 20250918102850.png",
-    "cn/Chapter 3. Transport Layer.md",
-    "conflict-files-obsidian-git.md",
     "cn/Chapter 2. Application Layer.md",
-    "무제.canvas",
-    "무제 4.base",
     "사진/2025-11-08.md",
-    "무제.base",
-    "무제 3.base",
-    "무제 2.base",
-    "무제 1.base",
-    "2025-11-08.md",
     "사진/무제 1.base",
     "사진/무제 3.base",
     "사진/Pasted image 20250929105624 1.png",
-    "cn/Socket Programming.md",
     "사진/무제 2.base",
     "사진/Pasted image 20250929105031 1.png",
     "사진/무제.base",
