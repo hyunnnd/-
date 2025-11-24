@@ -221,3 +221,83 @@
 | 대표 프로토콜/기술   | RIP, OSPF, BGP           | OpenFlow, ONOS, OpenDaylight |
 
 
+## 📌 Network service model (네트워크 서비스 모델)
+
+### 🔹 핵심 질문
+
+> 송신자에서 수신자로 데이터그램을 운반하는 **채널이 제공할 수 있는 서비스 모델은 무엇인가?**
+
+네트워크 계층은 모든 데이터그램을 그냥 “최선형 전달(best-effort)”로 보내는 것만이 아니라, 특정 서비스 품질(QoS)을 제공하도록 설계될 수도 있습니다.
+
+## 🔸 서비스 모델의 예시
+
+### 1) 개별 데이터그램을 위한 서비스 (individual datagrams)
+
+|서비스 예시|설명|
+|---|---|
+|guaranteed delivery|데이터그램의 **전달을 보장**|
+|guaranteed delivery with less than 40 ms delay|**40ms 이하의 지연을 보장하면서 전달**|
+
+→ 단일 패킷의 도착 여부 및 지연 시간에 초점을 둔 서비스
+
+### 2) 데이터그램 흐름(flow) 전체를 위한 서비스
+
+한 세션 또는 스트림 단위의 패킷 흐름(flow)에 대해 적용되는 서비스
+
+|서비스 예시|설명|
+|---|---|
+|in-order datagram delivery|패킷을 **전송한 순서대로 도착하도록 보장**|
+|guaranteed minimum bandwidth to flow|해당 흐름을 위해 **최소 대역폭을 보장**|
+|restrictions on changes in inter-packet spacing|**패킷 간 시간 간격(inter-packet spacing)의 변화를 제한**하여 지터(jitter) 억제|
+
+→ 실시간 스트리밍, 화상회의, 온라인 게임 등 연속적인 패킷 품질이 중요한 서비스에서 필요
+
+## 💡 정리 요약
+
+|서비스 범위|초점|예시|
+|---|---|---|
+|개별 데이터그램|하나의 패킷의 안전성과 지연|guaranteed delivery, low-delay delivery|
+|데이터그램 흐름|스트림 전체의 품질과 일관성|in-order delivery, bandwidth guarantee, jitter control|
+
+
+## 📌 Network-layer service model (네트워크 계층 서비스 모델)
+
+### 🔹 현재 인터넷의 네트워크 서비스 모델
+
+|Network Architecture|Service Model|QoS 보장 항목|
+|---|---|---|
+|Internet|best effort|Bandwidth: none / Loss: no / Order: no / Timing: no|
+
+인터넷은 **best effort** 방식을 사용하며, 이는 **전송 품질을 보장하지 않는 모델**을 의미합니다.
+
+### 🔹 Best-effort 서비스 모델의 특징
+
+**보장하지 않는 항목**
+
+1. **데이터그램이 목적지까지 성공적으로 전달된다는 보장 없음**
+2. **도착 시간(timing) 또는 순서(order)에 대한 보장 없음**
+3. **종단 간(end-to-end) 흐름에 대해 사용 가능한 대역폭 보장 없음**
+
+즉, 네트워크 계층은 패킷을 “가능한 한 전달해 보려는 노력”만 수행하며,  
+**지연, 손실, 재전송, 순서 유지, 대역폭 확보 등에 대한 책임을 지지 않습니다.**
+
+### 💡 추가 설명
+
+- TCP, UDP 등의 전송 계층이 **신뢰성 보완 역할을 담당하는 이유**가 바로 이 best-effort 모델 때문입니다.
+    - TCP는 손실 복구, 순서 재정렬, 흐름 제어 등을 제공
+    - UDP는 보장을 하지 않고 지연을 최소화하는 방향 선택
+
+- 네트워크 계층 자체는 **QoS 지원이 없지만**, 멀티미디어·스트리밍 시대 이후  
+    **DiffServ, IntServ, MPLS 등 QoS 기술이 별도로 연구 및 적용**되고 있습니다.    
+
+### ✔ 핵심 요약
+
+|항목|Best-effort 네트워크의 동작 방식|
+|---|---|
+|패킷 손실|허용됨 (보장하지 않음)|
+|전달 순서|보장하지 않음|
+|지연 시간|보장하지 않음|
+|대역폭|보장하지 않음|
+|역할|가능한 한 전달하려고 시도함|
+
+
