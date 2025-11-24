@@ -566,3 +566,25 @@ Longest Prefix Matching의 목적은 다음과 같습니다.
 따라서 오늘날 인터넷 라우터는 모두 **Longest Prefix Matching + CIDR 주소 체계**를 기반으로 동작합니다.
 
 
+## 📌 Longest prefix matching — 번역
+
+- 주소 지정(addressing)을 공부할 때, 왜 longest prefix matching이 사용되는지 곧 보게 될 것입니다.
+- longest prefix matching은 보통 **삼진 내용 주소 지정 메모리(TCAM, Ternary Content Addressable Memories)** 를 이용하여 수행됩니다.
+    - **content addressable**: 주소를 TCAM에 제시하면, 테이블의 크기와 무관하게 **한 클록 사이클 내에** 해당 주소를 검색합니다.
+    - Cisco Catalyst: TCAM 안에 약 **100만 개(1M) 라우팅 테이블 엔트리** 저장 가능
+
+
+## 📌 Switching fabrics — 번역
+
+- 입력 링크에서 적절한 출력 링크로 패킷을 전달한다.
+- **switching rate**: 패킷이 입력에서 출력으로 전송될 수 있는 속도
+    - 입력/출력 회선 속도의 배수로 측정되는 경우가 많다.
+    - N개의 입력이 있을 때, 스위칭 속도가 회선 속도의 **N배가 되는 것이 바람직하다.**
+
+그림 설명:
+
+- 왼쪽에는 **N개의 입력 포트**, 오른쪽에는 **N개의 출력 포트**가 존재하며,  
+    가운데의 **고속 스위칭 패브릭**이 입력 포트에서 출력 포트로 패킷을 전달한다.
+- 이상적으로는 스위칭 속도가 **NR (회선 속도 × N)** 이 되는 것이 목표이다.
+
+
