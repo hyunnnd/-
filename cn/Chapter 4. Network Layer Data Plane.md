@@ -720,4 +720,36 @@ Longest Prefix Matching의 목적은 다음과 같습니다.
 5. 버퍼 부족 시 일부 패킷 Drop
 
 
+# 📘 Buffer Management
+
+## 📌 번역
+
+### **Buffer Management**
+
+네트워크 장비 내부에서는 패킷이 스위치 패브릭을 통해 들어오면, 먼저 **데이터그램 버퍼(queueing scheduling)** 에 저장된다. 이후 **링크 계층 프로토콜(send)** 을 거쳐 **라인 종단(line termination)** 을 통해 전송된다.
+
+### **Abstraction: queue**
+
+패킷이 도착하면 큐(대기 구역)에 저장되고, 링크(서버)에 의해 순차적으로 처리되어 전송된다.
+
+## **Buffer management:**
+
+### **1. Drop(삭제)**
+
+버퍼가 가득 찼을 때 어떤 패킷을 버릴지 결정하는 메커니즘이다.
+
+- **Tail drop**: 도착한 새 패킷을 즉시 버림
+- **Priority drop**: 우선순위에 따라 패킷을 선택적으로 제거함
+
+### **2. Marking(마킹)**
+
+혼잡을 보내는 쪽에 알리기 위해 특정 패킷에 표시를 추가함  
+– 사용 예: **ECN**, **RED**
+
+# 📌 요약
+
+- **버퍼 관리(Buffer Management)** 는 스위치 내부에서 패킷을 저장하고 처리하는 과정에서 **어떤 패킷을 버릴지(drop)**, **어떤 패킷을 혼잡 표시(marking)** 할지 결정하는 기술이다.
+- **Drop 방식**에는 도착 패킷을 바로 버리는 _tail drop_, 우선순위 기반 제거인 _priority drop_이 있다.
+- **Marking 방식**은 네트워크 혼잡을 알리기 위해 패킷에 표시를 하고, ECN·RED 같은 혼잡 제어 메커니즘에서 사용된다.
+
 
