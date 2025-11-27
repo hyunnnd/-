@@ -20,8 +20,21 @@
               "icon": "lucide-file",
               "title": "Chapter 4. Network Layer Data Plane"
             }
+          },
+          {
+            "id": "fb7ad09d82c5658c",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.10.3"
+              },
+              "icon": "lucide-book-up",
+              "title": "릴리즈 노트 1.10.3"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -135,6 +148,20 @@
               "icon": "lucide-tags",
               "title": "태그"
             }
+          },
+          {
+            "id": "11b3279badd39a77",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "개요"
+            }
           }
         ],
         "currentTab": 2
@@ -156,7 +183,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "567a7429c3d28169",
+  "active": "fb7ad09d82c5658c",
   "lastOpenFiles": [
     "cn/Chapter 4. Network Layer Data Plane.md",
     "conflict-files-obsidian-git.md",
