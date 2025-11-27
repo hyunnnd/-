@@ -850,3 +850,50 @@ w_i/∑_j w_j​​
 - RR보다 공평하며, Priority Queue보다 starvation 문제가 없다
 
 
+# 📘 IP Datagram Format
+
+## 📌 번역
+
+### **IP 헤더 필드 설명**
+
+- **version**  
+    IP 프로토콜 버전 번호(IPv4/IPv6).
+- **header length (IHL)**  
+    헤더 길이(바이트 단위).
+- **type of service (ToS)**  
+    패킷 우선순위 관련 필드.
+    - DiffServ(비트 0~5)
+    - ECN(비트 6~7)
+- **total length**  
+    전체 IP 데이터그램 길이(바이트).  
+    최대 약 64KB, 일반적으로 1500바이트 이하(MTU).
+- **16-bit identifier, flags, fragment offset**  
+    단편화(fragmentation) 및 재조립(reassembly)에 사용됨.
+- **TTL (Time To Live)**  
+    남은 최대 홉 수. 각 라우터를 지날 때마다 1씩 감소.
+- **upper layer protocol**  
+    상위 계층 프로토콜(TCP, UDP 등)을 나타냄.
+- **header checksum**  
+    IP 헤더에 대한 오류 검출용 체크섬.
+- **source IP address**  
+    32비트 출발지 IP 주소.
+- **destination IP address**  
+    32비트 목적지 IP 주소.
+- **options** (있을 경우)  
+    예: 타임스탬프, 경로 기록 등.
+- **payload data**  
+    가변 길이 데이터. 보통 TCP/UDP 세그먼트가 포함됨.
+
+### **Overhead**
+
+- TCP 헤더: 20 bytes    
+- IP 헤더: 20 bytes  
+    → TCP/IP 기본 오버헤드 = **40 bytes + 애플리케이션 계층 오버헤드**
+# 📌 요약
+
+- IP 데이터그램은 **고정된 헤더 부분 + 가변 길이 페이로드**로 구성된다.    
+- 주요 기능: **라우팅, 단편화, 오류 검출, QoS 정보 전달**
+- 헤더는 출발지·목적지 주소, TTL, 프로토콜 정보, 단편화 정보 등을 포함한다.
+- TCP/IP 스택에서 최소 **40바이트의 헤더 오버헤드**가 발생한다.
+
+
