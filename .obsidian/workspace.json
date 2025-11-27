@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "567a7429c3d28169",
+            "id": "fb7ad09d82c5658c",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -20,21 +20,8 @@
               "icon": "lucide-file",
               "title": "Chapter 4. Network Layer Data Plane"
             }
-          },
-          {
-            "id": "fb7ad09d82c5658c",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.10.3"
-              },
-              "icon": "lucide-book-up",
-              "title": "릴리즈 노트 1.10.3"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -155,12 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "cn/Chapter 4. Network Layer Data Plane.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "개요"
+              "title": "Chapter 4. Network Layer Data Plane 의 개요"
             }
           }
         ],
@@ -185,6 +173,7 @@
   },
   "active": "fb7ad09d82c5658c",
   "lastOpenFiles": [
+    "cn/Socket Programming.md",
     "cn/Chapter 4. Network Layer Data Plane.md",
     "conflict-files-obsidian-git.md",
     "무제.canvas",
@@ -194,7 +183,6 @@
     "무제 1.base",
     "2025-11-08.md",
     "cn/Chapter 3. Transport Layer.md",
-    "cn/Socket Programming.md",
     "무제",
     "cn/Chapter 2. Application Layer.md",
     "cn/Chapter 1.Computer Networks and the Interne.md",
