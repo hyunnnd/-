@@ -753,3 +753,33 @@ Longest Prefix Matching의 목적은 다음과 같습니다.
 - **Marking 방식**은 네트워크 혼잡을 알리기 위해 패킷에 표시를 하고, ECN·RED 같은 혼잡 제어 메커니즘에서 사용된다.
 
 
+# 📘 Packet Scheduling: FCFS
+
+### **Packet scheduling**
+
+링크에서 다음으로 어떤 패킷을 전송할지 결정하는 방식이다.  
+대표적인 스케줄링 방식은 다음과 같다.
+
+- **first come, first served**
+- **priority**
+- **round robin**
+- **weighted fair queueing**
+
+### **Abstraction: queue**
+
+패킷이 도착하면 큐(대기구역)에 저장되고, 링크(서버)에 의해 순서대로 전송된다.
+
+### **FCFS (First Come, First Served)**
+
+도착한 순서대로 패킷을 출력 포트로 전송하는 방식이다.
+- **FIFO(First-In-First-Out)** 로도 불린다.
+- 실세계 예: 은행 대기줄, 주차장 입구 순번, 티켓 줄 등
+
+# 📌 요약
+
+- **패킷 스케줄링**은 링크에서 어떤 패킷을 먼저 보낼지 결정하는 과정이다.    
+- 대표 방식: FCFS, 우선순위(priority), 라운드 로빈, WFQ 등
+- **FCFS(FIFO)** 는 패킷이 들어온 순서대로 처리하는 가장 단순한 방식이다.
+- 실생활에서도 흔히 볼 수 있는 "선착순" 처리 방식과 동일하다.
+
+
