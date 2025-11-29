@@ -20,8 +20,21 @@
               "icon": "lucide-file",
               "title": "Chapter 4. Network Layer Data Plane"
             }
+          },
+          {
+            "id": "7fce96bffd5fc4e3",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.10.6"
+              },
+              "icon": "lucide-book-up",
+              "title": "릴리즈 노트 1.10.6"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -171,7 +184,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "fb7ad09d82c5658c",
+  "active": "7fce96bffd5fc4e3",
   "lastOpenFiles": [
     "cn/Socket Programming.md",
     "cn/Chapter 4. Network Layer Data Plane.md",
