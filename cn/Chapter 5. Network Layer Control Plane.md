@@ -459,3 +459,60 @@ D_x(y)←min⁡v{c_x,v+D_v(y)}(모든 목적지 y∈N)
 - 이웃 노드는 필요할 때만 다시 그 이웃에게 알린다.
 - 변경이 없다면 어떤 노드도 아무 행동을 하지 않는다.
 
+### **1) Distance Vector Example (b가 a, c, e로부터 DV 수신)**
+
+- b 노드는 a, c, e 노드의 DV를 받아서  
+    **Bellman-Ford 식으로 b 자신의 DV 값을 갱신**함.
+    
+- 갱신 결과:  
+    Db(a)=8, Db(c)=1, Db(d)=2, Db(e)=1, Db(f)=2
+    
+
+---
+
+### **2) Distance Vector Example (b가 DV 계산 과정 상세)**
+
+- 실제 수식으로 b가 각 목적지까지 최소 비용을 계산하는 과정 표시.
+    
+- DV 갱신 후 b의 DV는 위와 동일하게 결정됨.
+    
+
+---
+
+### **3) Distance Vector Example (c가 b의 DV를 수신 후 계산)**
+
+- c는 b의 DV를 받아 Bellman-Ford 식 수행.
+    
+- 갱신 결과:  
+    Dc(a)=9, Dc(b)=1, Dc(d)=∞, Dc(e)=2
+    
+
+---
+
+### **4) Distance Vector Example (e가 b, d, f, h로부터 DV 수신)**
+
+- e는 이웃 b, d, f, h 의 DV를 받아 **모든 목적지 비용을 재계산**함.
+    
+- e는 d와 f, h의 경로 정보를 이용해 비용을 낮출 수 있음.
+    
+
+---
+
+### **5) Distance Vector Another Example (x, y, z 간 DV 교환 1단계)**
+
+- x, y, z 세 노드가 처음 DV를 교환한 뒤  
+    **x는 y를 통해 z로 가는 비용(=3)** 을 계산함.
+    
+- x→y→z 경로(2+1)가 직접 연결 비용(7)보다 짧음.
+    
+
+---
+
+### **6) Distance Vector Another Example (DV 반복 교환 후 수렴)**
+
+- DV가 계속 교환되며 값이 점차 **최소 비용으로 수렴**함.
+    
+- 최종적으로 x, y, z 모두 정확한 최소 비용 값을 가지게 됨.
+
+
+
