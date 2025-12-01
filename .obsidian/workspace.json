@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "cn/Chapter 5. Network Layer Control Plane.md",
-                "mode": "source",
+                "file": "cn/Chapter 4. Network Layer Data Plane.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Chapter 5. Network Layer Control Plane"
+              "title": "Chapter 4. Network Layer Data Plane"
             }
           },
           {
@@ -90,7 +90,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "87d1eea742953826",
@@ -185,10 +186,10 @@
   },
   "active": "fb7ad09d82c5658c",
   "lastOpenFiles": [
-    "무제.canvas",
     "cn/Chapter 5. Network Layer Control Plane.md",
-    "무제.base",
     "cn/Chapter 4. Network Layer Data Plane.md",
+    "무제.canvas",
+    "무제.base",
     "cn/Socket Programming.md",
     "conflict-files-obsidian-git.md",
     "무제 4.base",
