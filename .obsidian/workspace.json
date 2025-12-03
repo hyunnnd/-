@@ -13,27 +13,30 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "cn/Chapter 4. Network Layer Data Plane.md",
+                "file": "cn/Chapter 5. Network Layer Control Plane.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Chapter 4. Network Layer Data Plane"
+              "title": "Chapter 5. Network Layer Control Plane"
             }
           },
           {
             "id": "7fce96bffd5fc4e3",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.10.6"
+                "file": "cn/Chapter 4. Network Layer Data Plane.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-book-up",
-              "title": "릴리즈 노트 1.10.6"
+              "icon": "lucide-file",
+              "title": "Chapter 4. Network Layer Data Plane"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -163,9 +166,19 @@
               "icon": "lucide-list",
               "title": "Chapter 4. Network Layer Data Plane 의 개요"
             }
+          },
+          {
+            "id": "e0b2d93605b2927f",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -184,12 +197,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "fb7ad09d82c5658c",
+  "active": "7fce96bffd5fc4e3",
   "lastOpenFiles": [
+    "-",
     "cn/Chapter 5. Network Layer Control Plane.md",
-    "cn/Chapter 4. Network Layer Data Plane.md",
     "무제.canvas",
     "무제.base",
+    "cn/Chapter 4. Network Layer Data Plane.md",
     "cn/Socket Programming.md",
     "conflict-files-obsidian-git.md",
     "무제 4.base",
