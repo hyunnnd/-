@@ -28,14 +28,15 @@
               "type": "markdown",
               "state": {
                 "file": "cn/Chapter 5. Network Layer Control Plane.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
               "title": "Chapter 5. Network Layer Control Plane"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -128,12 +129,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "cn/Chapter 4. Network Layer Data Plane.md",
+                "file": "cn/Chapter 5. Network Layer Control Plane.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Chapter 4. Network Layer Data Plane 의 나가는 링크"
+              "title": "Chapter 5. Network Layer Control Plane 의 나가는 링크"
             }
           },
           {
@@ -171,7 +172,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -185,10 +187,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "fb7ad09d82c5658c",
+  "active": "7fce96bffd5fc4e3",
   "lastOpenFiles": [
-    "cn/Chapter 5. Network Layer Control Plane.md",
     "cn/Chapter 4. Network Layer Data Plane.md",
+    "cn/Chapter 5. Network Layer Control Plane.md",
     "무제 1.base",
     "2025-12-03.md",
     "무제.canvas",
