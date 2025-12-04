@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "cn/Chapter 5. Network Layer Control Plane.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
@@ -35,8 +35,7 @@
               "title": "Chapter 4. Network Layer Data Plane"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -182,8 +181,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -197,19 +195,20 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "7fce96bffd5fc4e3",
+  "active": "fb7ad09d82c5658c",
   "lastOpenFiles": [
-    "-",
+    "conflict-files-obsidian-git.md",
+    "cn/Chapter 4. Network Layer Data Plane.md",
     "cn/Chapter 5. Network Layer Control Plane.md",
+    "무제 1.base",
+    "2025-12-03.md",
+    "-",
     "무제.canvas",
     "무제.base",
-    "cn/Chapter 4. Network Layer Data Plane.md",
     "cn/Socket Programming.md",
-    "conflict-files-obsidian-git.md",
     "무제 4.base",
     "무제 3.base",
     "무제 2.base",
-    "무제 1.base",
     "2025-11-08.md",
     "cn/Chapter 3. Transport Layer.md",
     "무제",
@@ -238,7 +237,6 @@
     "os/8 Deadlocks.md",
     "사진",
     "os/10 VirtualMemory/무제.md",
-    "os/10 VirtualMemory",
     "무제 1.md",
     "Welcome.md"
   ]
