@@ -35,7 +35,8 @@
               "title": "Chapter 5. Network Layer Control Plane"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -92,7 +93,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "87d1eea742953826",
@@ -185,10 +187,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "fb7ad09d82c5658c",
+  "active": "7fce96bffd5fc4e3",
   "lastOpenFiles": [
-    "2025-12-03.md",
     "cn/Chapter 4. Network Layer Data Plane.md",
+    "2025-12-03.md",
     "무제.canvas",
     "무제.base",
     "무제 1.base",
