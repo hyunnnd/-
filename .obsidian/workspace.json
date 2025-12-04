@@ -92,8 +92,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "87d1eea742953826",
@@ -188,12 +187,12 @@
   },
   "active": "fb7ad09d82c5658c",
   "lastOpenFiles": [
-    "cn/Chapter 5. Network Layer Control Plane.md",
-    "cn/Chapter 4. Network Layer Data Plane.md",
-    "무제 1.base",
     "2025-12-03.md",
+    "cn/Chapter 4. Network Layer Data Plane.md",
     "무제.canvas",
     "무제.base",
+    "무제 1.base",
+    "cn/Chapter 5. Network Layer Control Plane.md",
     "cn/Socket Programming.md",
     "conflict-files-obsidian-git.md",
     "무제 4.base",
