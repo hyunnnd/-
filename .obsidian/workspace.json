@@ -25,14 +25,14 @@
             "id": "7fce96bffd5fc4e3",
             "type": "leaf",
             "state": {
-              "type": "split-diff-view",
+              "type": "markdown",
               "state": {
-                "aFile": ".obsidian/plugins/obsidian-git/data.json",
-                "bFile": ".obsidian/plugins/obsidian-git/data.json",
-                "aRef": ""
+                "file": "cn/Chapter 4. Network Layer Data Plane.md",
+                "mode": "preview",
+                "source": false
               },
-              "icon": "diff",
-              "title": "Diff: data.json"
+              "icon": "lucide-file",
+              "title": "Chapter 4. Network Layer Data Plane"
             }
           }
         ],
@@ -93,7 +93,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "87d1eea742953826",
@@ -181,7 +182,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -197,9 +199,9 @@
   },
   "active": "7fce96bffd5fc4e3",
   "lastOpenFiles": [
+    "cn/Chapter 5. Network Layer Control Plane.md",
     "cn/Chapter 4. Network Layer Data Plane.md",
     "conflict-files-obsidian-git.md",
-    "cn/Chapter 5. Network Layer Control Plane.md",
     "무제 1.base",
     "2025-12-03.md",
     "-",
