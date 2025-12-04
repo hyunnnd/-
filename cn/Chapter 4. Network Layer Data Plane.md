@@ -833,7 +833,7 @@ Longest Prefix Matching의 목적은 다음과 같습니다.
 ### **Weighted Fair Queueing (WFQ)**
 
 - WFQ는 **라운드 로빈(RR)의 일반화된 형태**이다.
-- 각 클래스 iii 는 **가중치 wiw_iwi​** 를 가지며,  
+- 각 클래스 i 는 **가중치 w_i** 를 가지며,  
     한 사이클에서 **가중치 비율만큼 서비스량**을 배정받는다:
 
 w_i/∑_j w_j​​
