@@ -979,3 +979,55 @@ BGP는 경로 광고를 통해 네트워크 간 경로 정보를 공유하고, �
 
 
 
+## ICMP(Internet Control Message Protocol)
+
+### 1. **역할**
+
+호스트(PC)와 라우터가 **네트워크 계층 수준의 정보를 주고받기 위해 사용하는 프로토콜**입니다.
+사용 목적은 크게 두 가지입니다.
+
+#### (1) **오류 보고(error reporting)**
+
+도달할 수 없는 목적지나 네트워크 문제를 알려줍니다. 예:
+- 호스트 unreachable
+- 네트워크 unreachable
+- 포트 unreachable
+- 프로토콜 unreachable
+
+#### (2) **진단 및 테스트 (ping에서 사용)**
+
+- Echo request (type 8)
+- Echo reply (type 0)
+
+### 2. **IP 위의 계층(network-layer “above” IP)**
+
+ICMP 메시지는 **IP 데이터그램 내부에 실려서 전송**됩니다.  
+즉, IP에 의해 전달되는 "payload"의 한 형태입니다.
+
+### 3. **ICMP 메시지 형식**
+
+ICMP 메시지는 다음으로 구성됩니다:
+
+- **Type**    
+- **Code**
+- **오류를 유발한 IP 데이터그램의 앞 8바이트**
+
+## 주요 ICMP Type/Code 설명
+
+| Type   | Code | Description                        |
+| ------ | ---- | ---------------------------------- |
+| **0**  | 0    | Echo reply (ping 응답)               |
+| **3**  | 0    | 목적지 네트워크 unreachable               |
+| 3      | 1    | 목적지 호스트 unreachable                |
+| 3      | 2    | 목적지 프로토콜 unreachable               |
+| 3      | 3    | 목적지 포트 unreachable                 |
+| 3      | 6    | 목적지 네트워크 unknown                   |
+| 3      | 7    | 목적지 호스트 unknown                    |
+| **4**  | 0    | Source quench(혼잡 제어 – 현재는 사용되지 않음) |
+| **8**  | 0    | Echo request (ping 요청)             |
+| **9**  | 0    | Route advertisement                |
+| **10** | 0    | Router discovery                   |
+| **11** | 0    | TTL expired (Traceroute에서 사용됨)     |
+| **12** | 0    | Bad IP header                      |
+
+
