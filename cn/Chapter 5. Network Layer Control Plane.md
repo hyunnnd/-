@@ -1031,3 +1031,28 @@ ICMP 메시지는 다음으로 구성됩니다:
 | **12** | 0    | Bad IP header                      |
 
 
+# 🔵 **번역 (Translation)**
+
+### **Traceroute and ICMP**
+
+- 출발지는 목적지로 UDP 세그먼트의 집합을 보낸다.
+    - 첫 번째 집합은 TTL=1, 두 번째 집합은 TTL=2, … 이런 식으로 증가한다.
+- n번째 집합의 데이터그램이 n번째 라우터에 도착하면:
+    - 라우터는 데이터그램을 폐기하고, 출발지로 ICMP 메시지(type 11, code 0)를 보낸다.
+    - ICMP 메시지에는 라우터의 이름과 IP 주소가 포함될 수 있다.
+
+- ICMP 메시지가 출발지에 도착하면: 출발지는 RTT(왕복 시간)를 기록한다.    
+
+### **멈추는 조건 (stopping criteria):**
+
+- UDP 세그먼트가 결국 목적지 호스트에 도착했을 때
+- 목적지는 ICMP "port unreachable" 메시지(type 3, code 3)를 반환한다.
+- 출발지는 traceroute를 중단한다.
+
+# 🔵 **간단 요약**
+
+- traceroute는 TTL을 1부터 증가시키며 UDP 패킷을 보내고    
+- 각 라우터가 TTL 초과로 보내는 ICMP 메시지(type 11)를 이용해 경로를 알아낸다.
+- 최종 목적지에 도달하면 ICMP type 3(code 3)이 와서 탐색이 종료된다.
+
+
