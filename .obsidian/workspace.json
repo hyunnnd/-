@@ -35,8 +35,7 @@
               "title": "Chapter 5. Network Layer Control Plane"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -187,14 +186,14 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "7fce96bffd5fc4e3",
+  "active": "fb7ad09d82c5658c",
   "lastOpenFiles": [
+    "cn/Chapter 5. Network Layer Control Plane.md",
     "cn/Chapter 4. Network Layer Data Plane.md",
     "2025-12-03.md",
     "무제.canvas",
     "무제.base",
     "무제 1.base",
-    "cn/Chapter 5. Network Layer Control Plane.md",
     "cn/Socket Programming.md",
     "conflict-files-obsidian-git.md",
     "무제 4.base",
