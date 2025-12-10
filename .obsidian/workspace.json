@@ -28,7 +28,7 @@
               "type": "markdown",
               "state": {
                 "file": "cn/Chapter 5. Network Layer Control Plane.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
@@ -93,8 +93,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "87d1eea742953826",
@@ -189,10 +188,11 @@
   },
   "active": "7fce96bffd5fc4e3",
   "lastOpenFiles": [
-    "cn/Chapter 4. Network Layer Data Plane.md",
+    "무제 1.canvas",
     "cn/Chapter 5. Network Layer Control Plane.md",
-    "2025-12-03.md",
     "무제.canvas",
+    "cn/Chapter 4. Network Layer Data Plane.md",
+    "2025-12-03.md",
     "무제.base",
     "무제 1.base",
     "cn/Socket Programming.md",
