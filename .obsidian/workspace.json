@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "cn/Chapter 6. The Link Layer and LANs.md",
+                "file": "2025-12-03.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Chapter 6. The Link Layer and LANs"
+              "title": "2025-12-03"
             }
           }
         ],
@@ -181,8 +181,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -196,10 +195,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "049af71169bb9639",
+  "active": "41bfe5628e1a01bf",
   "lastOpenFiles": [
-    "cn/Chapter 5. Network Layer Control Plane.md",
     "cn/Chapter 6. The Link Layer and LANs.md",
+    "cn/Chapter 5. Network Layer Control Plane.md",
     "무제 1.base",
     "cn/Chapter 4. Network Layer Data Plane.md",
     "conflict-files-obsidian-git.md",
