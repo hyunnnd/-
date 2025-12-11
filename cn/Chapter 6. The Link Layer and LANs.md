@@ -567,3 +567,70 @@ R은 자신의 MAC이 목적지 MAC과 일치함을 확인하고 프레임을 �
     **매체(copper/fiber)** 와 **전기적/광학적 특성**이 다름.
 
 
+# 📌 **Ethernet switch – 번역**
+
+### ▪ 스위치는 **링크 계층(link-layer)** 장치이며 **능동적(active)** 역할을 수행한다
+
+- 이더넷 프레임을 저장하고(store), 전달(forward)한다
+- 들어오는 프레임의 MAC 주소를 검사하고,  
+    해당 프레임을 전달해야 할 경우 **하나 또는 여러 개의 출력 링크로 선택적으로(selectively)** 전달한다
+- 프레임을 전송해야 하는 세그먼트에서는 **CSMA/CD**를 사용하여 채널 접근을 수행한다
+
+### ▪ **transparent(투명)**
+
+- 호스트는 스위치의 존재를 인식하지 못한 채 동작한다    
+
+### ▪ **plug-and-play, self-learning**
+
+- 스위치는 별도의 설정(configuration) 없이도 동작 가능하다    
+- MAC 주소 학습 기능을 통해 자동으로 네트워크를 이해하고 동작한다
+
+# ⭐ **핵심 요약**
+
+- 스위치는 **링크 계층(L2)** 장치로, 프레임의 **MAC 주소를 기반으로 지능적으로 전달**하는 장치이다.    
+- 호스트는 스위치가 있는지 몰라도 통신할 수 있으며(**투명**),
+- 스위치는 **MAC 학습(self-learning)** 으로 자동 구성 가능하다(**플러그 앤 플레이**).
+- 허브와 달리 **충돌 도메인을 분리**하여 효율적인 전송이 가능하다.
+
+
+# **Switch: multiple simultaneous transmissions – 설명**
+
+### ▪ **hosts have dedicated, direct connection to switch**
+
+각 호스트는 스위치와 **전용으로 직접 연결**되어 있음  
+→ 더 이상 허브처럼 공유 매체를 사용하지 않음
+
+### ▪ **switches buffer packets**
+
+스위치는 들어오는 패킷을 **버퍼에 저장**하여 충돌 없이 처리 가능함
+
+### ▪ **Ethernet protocol used on each incoming link, so:**
+
+각 링크마다 개별적으로 이더넷 프로토콜이 적용되므로:
+#### • **no collisions; full duplex**
+
+- 충돌이 발생하지 않음    
+- 송신과 수신이 동시에 가능한 **전이중(full duplex)** 지원
+
+#### • **each link is its own collision domain**
+
+각 링크가 독립적인 collision domain이 됨  
+→ 링크 1에서 충돌이 발생해도 링크 2에는 영향을 주지 않음
+
+### ▪ **switching: A-to-A′ and B-to-B′ can transmit simultaneously, without collisions**
+
+스위치는 목적지 MAC 주소를 기반으로 프레임을 선택적으로 전달하므로,
+
+- A → A′ 전송    
+- B → B′ 전송
+
+이 **동시에 충돌 없이** 일어날 수 있음
+즉, 스위치는 여러 쌍의 통신을 **병렬적(multiple simultaneous)** 으로 처리할 수 있음.
+
+# ⭐ 핵심 요약
+
+- 스위치는 각 호스트와 독립적인 링크를 가지므로 **충돌이 사라짐**    
+- **전이중 통신 가능**
+- **여러 쌍의 통신을 동시에 처리**하여 네트워크 성능 크게 향상
+- 충돌 도메인이 호스트별로 분리되어 허브의 한계를 극복
+
