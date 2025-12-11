@@ -13,31 +13,15 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "cn/Chapter 5. Network Layer Control Plane.md",
+                "file": "cn/Chapter 6. The Link Layer and LANs.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Chapter 5. Network Layer Control Plane"
-            }
-          },
-          {
-            "id": "b9eec45c3d1ef4eb",
-            "type": "leaf",
-            "state": {
-              "type": "split-diff-view",
-              "state": {
-                "aFile": "2025-12-10.md",
-                "bFile": "2025-12-10.md",
-                "aRef": "HEAD",
-                "bRef": ""
-              },
-              "icon": "diff",
-              "title": "Diff: 2025-12-10"
+              "title": "Chapter 6. The Link Layer and LANs"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -196,8 +180,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "41bfe5628e1a01bf",
+  "active": "f99209ef6629b43e",
   "lastOpenFiles": [
+    "cn/Chapter 5. Network Layer Control Plane.md",
     "conflict-files-obsidian-git.md",
     "무제.canvas",
     "무제.base",
@@ -206,7 +191,6 @@
     "2025-12-10.md",
     "2025-12-03.md",
     "cn/Chapter 6. The Link Layer and LANs.md",
-    "cn/Chapter 5. Network Layer Control Plane.md",
     "cn/Chapter 4. Network Layer Data Plane.md",
     "-",
     "cn/Socket Programming.md",
