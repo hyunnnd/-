@@ -22,17 +22,18 @@
             }
           },
           {
-            "id": "049af71169bb9639",
+            "id": "b9eec45c3d1ef4eb",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "split-diff-view",
               "state": {
-                "file": "2025-12-03.md",
-                "mode": "source",
-                "source": false
+                "aFile": "2025-12-10.md",
+                "bFile": "2025-12-10.md",
+                "aRef": "HEAD",
+                "bRef": ""
               },
-              "icon": "lucide-file",
-              "title": "2025-12-03"
+              "icon": "diff",
+              "title": "Diff: 2025-12-10"
             }
           }
         ],
@@ -195,21 +196,22 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "41bfe5628e1a01bf",
+  "active": "e0b2d93605b2927f",
   "lastOpenFiles": [
-    "cn/Chapter 6. The Link Layer and LANs.md",
-    "cn/Chapter 5. Network Layer Control Plane.md",
-    "무제 1.base",
-    "cn/Chapter 4. Network Layer Data Plane.md",
-    "conflict-files-obsidian-git.md",
     "2025-12-03.md",
-    "-",
+    "conflict-files-obsidian-git.md",
     "무제.canvas",
     "무제.base",
+    "무제 2.base",
+    "무제 1.base",
+    "2025-12-10.md",
+    "cn/Chapter 6. The Link Layer and LANs.md",
+    "cn/Chapter 5. Network Layer Control Plane.md",
+    "cn/Chapter 4. Network Layer Data Plane.md",
+    "-",
     "cn/Socket Programming.md",
     "무제 4.base",
     "무제 3.base",
-    "무제 2.base",
     "2025-11-08.md",
     "cn/Chapter 3. Transport Layer.md",
     "무제",
