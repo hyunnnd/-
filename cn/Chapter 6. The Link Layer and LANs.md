@@ -514,3 +514,56 @@ R은 자신의 MAC이 목적지 MAC과 일치함을 확인하고 프레임을 �
 - **CRC**는 오류 검출용
 
 
+# 📌 **Ethernet: unreliable, connectionless – 번역**
+
+### ■ connectionless:
+
+- 송신 NIC과 수신 NIC 사이에 **핸드셰이킹(handshaking)이 없음**
+### ■ unreliable:
+
+- 수신 NIC은 송신 NIC에게 **ACK**(수신 확인)이나 **NAK**(에러 알림)을 보내지 않음
+- 프레임이 드롭된 경우, 데이터는
+    - **상위 계층 rdt(TCP 등)** 을 사용한 경우에만 재전송으로 복구 가능
+    - 그렇지 않으면 해당 데이터는 **영구적으로 손실**
+### ■ Ethernet의 MAC 프로토콜:
+
+- **un-slotted CSMA/CD** (비분할 CSMA/CD)
+- **binary backoff**(이진 지연 알고리즘) 사용
+
+# ⭐ **핵심 요약**
+
+- Ethernet은 **연결 설정 없이(connectionless)** 바로 보내고, 수신 확인이 없기 때문에 **신뢰성이 낮음(unreliable)**
+- 충돌을 감지하고 재시도하는 방식은 **CSMA/CD + 이진 백오프 알고리즘**
+- 데이터 손실 복구는 Ethernet이 아니라 **상위 계층(TCP)** 이 책임짐
+
+
+# 📌 **802.3 Ethernet standards: link & physical layers – 번역**
+
+### ▪ 많은 종류의 Ethernet 표준이 존재함
+
+- 공통된 MAC 프로토콜과 프레임 형식을 사용함
+- 다양한 속도 지원: **2 Mbps, 10 Mbps, 100 Mbps, 1 Gbps, 10 Gbps, 40 Gbps …**
+- 다양한 물리 계층 매체: **광섬유(fiber), 케이블(copper)**
+
+# 📌 그림 설명 (번역)
+
+- MAC 프로토콜과 프레임 포맷은 동일하지만  
+    속도와 물리 계층 구성(광섬유/트위스티드 페어)에 따라 여러 표준이 존재함.    
+- **파란색(blue)**: 구리선(copper, twisted pair) 기반 물리 계층
+    - 100BASE-TX
+    - 100BASE-T4
+    - 100BASE-T2
+- **빨간색(red)**: 광섬유(fiber) 기반 물리 계층
+    - 100BASE-FX
+    - 100BASE-SX
+    - 100BASE-BX
+
+# ⭐ **핵심 요약**
+
+- Ethernet은 **MAC 계층은 동일**하지만  
+    **물리 계층과 속도는 다양하게 표준화**되어 있음.    
+- 즉, “이더넷 프레임 형식은 같지만, 전송 매체와 속도는 다를 수 있다”는 의미임.
+- 100BASE-TX, 100BASE-FX 등은 동일한 100Mbps 이더넷이지만  
+    **매체(copper/fiber)** 와 **전기적/광학적 특성**이 다름.
+
+
