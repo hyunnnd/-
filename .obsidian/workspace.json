@@ -4,11 +4,25 @@
     "type": "split",
     "children": [
       {
-        "id": "3679a6a5bb2e733a",
+        "id": "316b7d9104534176",
         "type": "tabs",
         "children": [
           {
-            "id": "f99209ef6629b43e",
+            "id": "fb7ad09d82c5658c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "cn/Chapter 4. Network Layer Data Plane.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Chapter 4. Network Layer Data Plane"
+            }
+          },
+          {
+            "id": "7fce96bffd5fc4e3",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -78,7 +92,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "87d1eea742953826",
@@ -94,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "os/10 VirtualMemory.md",
+                "file": "cn/Chapter 6. The Link Layer and LANs.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +119,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "10 VirtualMemory 의 백링크"
+              "title": "Chapter 6. The Link Layer and LANs 의 백링크"
             }
           },
           {
@@ -113,12 +128,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "os/10 VirtualMemory.md",
+                "file": "cn/Chapter 6. The Link Layer and LANs.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "10 VirtualMemory 의 나가는 링크"
+              "title": "Chapter 6. The Link Layer and LANs 의 나가는 링크"
             }
           },
           {
@@ -129,7 +144,7 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true,
-                "showSearch": false,
+                "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-tags",
@@ -142,31 +157,22 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "cn/Chapter 4. Network Layer Data Plane.md",
+                "file": "cn/Chapter 6. The Link Layer and LANs.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Chapter 4. Network Layer Data Plane 의 개요"
-            }
-          },
-          {
-            "id": "e0b2d93605b2927f",
-            "type": "leaf",
-            "state": {
-              "type": "git-view",
-              "state": {},
-              "icon": "git-pull-request",
-              "title": "Source Control"
+              "title": "Chapter 6. The Link Layer and LANs 의 개요"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -180,19 +186,19 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f99209ef6629b43e",
+  "active": "fb7ad09d82c5658c",
   "lastOpenFiles": [
-    "cn/Chapter 5. Network Layer Control Plane.md",
-    "conflict-files-obsidian-git.md",
-    "무제.canvas",
-    "무제.base",
-    "무제 2.base",
-    "무제 1.base",
-    "2025-12-10.md",
-    "2025-12-03.md",
     "cn/Chapter 6. The Link Layer and LANs.md",
+    "무제 2.base",
+    "2025-12-10.md",
+    "무제.canvas",
+    "무제 1.base",
+    "cn/Chapter 5. Network Layer Control Plane.md",
+    "무제.base",
+    "conflict-files-obsidian-git.md",
+    "무제 1.canvas",
     "cn/Chapter 4. Network Layer Data Plane.md",
-    "-",
+    "2025-12-03.md",
     "cn/Socket Programming.md",
     "무제 4.base",
     "무제 3.base",
@@ -224,6 +230,7 @@
     "os/8 Deadlocks.md",
     "사진",
     "os/10 VirtualMemory/무제.md",
+    "os/10 VirtualMemory",
     "무제 1.md",
     "Welcome.md"
   ]
