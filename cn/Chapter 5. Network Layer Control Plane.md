@@ -1030,7 +1030,7 @@ ICMP 메시지는 다음으로 구성됩니다:
 | **11** | 0    | TTL expired (Traceroute에서 사용됨)     |
 | **12** | 0    | Bad IP header                      |
 
-## **Traceroute and ICMP**
+		## **Traceroute and ICMP**
 
 - 출발지는 목적지로 UDP 세그먼트의 집합을 보낸다.
     - 첫 번째 집합은 TTL=1, 두 번째 집합은 TTL=2, … 이런 식으로 증가한다.
