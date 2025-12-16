@@ -28,7 +28,7 @@
               "type": "markdown",
               "state": {
                 "file": "cn/Chapter 5. Network Layer Control Plane.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
@@ -49,7 +49,8 @@
               "title": "Chapter 6. The Link Layer and LANs"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -200,11 +201,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "fb7ad09d82c5658c",
+  "active": "86913544d2f3b87b",
   "lastOpenFiles": [
+    "cn/Chapter 4. Network Layer Data Plane.md",
     "cn/Chapter 6. The Link Layer and LANs.md",
     "cn/Chapter 5. Network Layer Control Plane.md",
-    "cn/Chapter 4. Network Layer Data Plane.md",
     "무제 2.base",
     "2025-12-10.md",
     "무제.canvas",
