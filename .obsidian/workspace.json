@@ -49,8 +49,7 @@
               "title": "Chapter 6. The Link Layer and LANs"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -201,11 +200,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "7fce96bffd5fc4e3",
+  "active": "fb7ad09d82c5658c",
   "lastOpenFiles": [
+    "cn/Chapter 6. The Link Layer and LANs.md",
     "cn/Chapter 5. Network Layer Control Plane.md",
     "cn/Chapter 4. Network Layer Data Plane.md",
-    "cn/Chapter 6. The Link Layer and LANs.md",
     "무제 2.base",
     "2025-12-10.md",
     "무제.canvas",
