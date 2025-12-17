@@ -63,8 +63,7 @@
               "title": "Socket Programming"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -215,10 +214,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "cb0b742da257bd65",
+  "active": "fb7ad09d82c5658c",
   "lastOpenFiles": [
-    "cn/Chapter 6. The Link Layer and LANs.md",
     "cn/Socket Programming.md",
+    "cn/Chapter 6. The Link Layer and LANs.md",
     "무제.base",
     "cn/Chapter 5. Network Layer Control Plane.md",
     "cn/Chapter 4. Network Layer Data Plane.md",
